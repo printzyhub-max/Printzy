@@ -3,17 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>PRINTZY - Print Your Ideas</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --pink:#f51663;
@@ -23,18 +18,18 @@ padding:0;
 --yellow:#ffd21c;
 --text:#071b3a;
 --muted:#68758a;
---bg:#ffffff;
---card:#ffffff;
+--bg:#fff;
+--card:#fff;
 --soft:#f5f8fd;
 --border:#e3e9f2;
---green:#19a957;
+--green:#19a957
 }
 
 body{
 font-family:Arial,Helvetica,sans-serif;
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
+overflow-x:hidden
 }
 
 body.dark{
@@ -43,25 +38,18 @@ body.dark{
 --bg:#0b1220;
 --card:#141e30;
 --soft:#101a2b;
---border:#283650;
+--border:#283650
 }
 
-button,input,select,textarea{
-font-family:inherit;
-}
-
-button{
-cursor:pointer;
-}
-
-/* HEADER */
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
 
 header{
 position:sticky;
 top:0;
 z-index:100;
 background:var(--card);
-border-bottom:1px solid var(--border);
+border-bottom:1px solid var(--border)
 }
 
 .nav{
@@ -71,7 +59,7 @@ min-height:76px;
 padding:12px 22px;
 display:flex;
 align-items:center;
-gap:18px;
+gap:18px
 }
 
 .logo{
@@ -79,7 +67,7 @@ display:flex;
 align-items:center;
 gap:8px;
 min-width:185px;
-cursor:pointer;
+cursor:pointer
 }
 
 .logo-mark{
@@ -92,28 +80,26 @@ justify-content:center;
 align-items:center;
 color:#fff;
 font-size:25px;
-font-weight:900;
+font-weight:900
 }
 
 .logo-text{
 font-size:25px;
 font-weight:900;
-color:#102c61;
+color:#102c61
 }
 
-body.dark .logo-text{
-color:#fff;
-}
+body.dark .logo-text{color:#fff}
 
 .logo-sub{
 font-size:11px;
 margin-top:2px;
-color:var(--muted);
+color:var(--muted)
 }
 
 .search-wrap{
 flex:1;
-position:relative;
+position:relative
 }
 
 .search-icon{
@@ -121,7 +107,7 @@ position:absolute;
 left:17px;
 top:50%;
 transform:translateY(-50%);
-font-size:22px;
+font-size:22px
 }
 
 .search{
@@ -132,31 +118,25 @@ border-radius:30px;
 background:var(--soft);
 color:var(--text);
 outline:none;
-font-size:15px;
+font-size:15px
 }
 
-.search:focus{
-border-color:var(--pink);
-}
+.search:focus{border-color:var(--pink)}
 
 .nav-actions{
 display:flex;
 gap:9px;
-align-items:center;
+align-items:center
 }
 
-.icon-btn{
+.icon-btn,.menu-btn{
 width:43px;
 height:43px;
 border:0;
 border-radius:50%;
 background:var(--soft);
 font-size:20px;
-color:var(--text);
-}
-
-.icon-btn:hover{
-background:#ffe5ef;
+color:var(--text)
 }
 
 .cart-btn{
@@ -164,33 +144,18 @@ border:0;
 border-radius:24px;
 padding:12px 17px;
 background:var(--pink);
-color:white;
-font-weight:bold;
+color:#fff;
+font-weight:bold
 }
 
 /* MENU */
-
-.menu-btn{
-width:43px;
-height:43px;
-border:0;
-border-radius:50%;
-background:var(--soft);
-color:var(--text);
-font-size:24px;
-font-weight:bold;
-}
-
-.menu-btn:hover{
-background:#ffe5ef;
-}
 
 .menu-overlay{
 position:fixed;
 inset:0;
 background:rgba(0,0,0,.55);
 z-index:800;
-display:none;
+display:none
 }
 
 .menu-panel{
@@ -203,7 +168,7 @@ height:100%;
 background:var(--card);
 color:var(--text);
 box-shadow:-10px 0 35px rgba(0,0,0,.2);
-overflow-y:auto;
+overflow-y:auto
 }
 
 .menu-head{
@@ -211,30 +176,26 @@ padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-border-bottom:1px solid var(--border);
+border-bottom:1px solid var(--border)
 }
 
-.menu-head h2{
-color:var(--pink);
-}
+.menu-head h2{color:var(--pink)}
 
 .menu-close{
 border:0;
 background:none;
 font-size:30px;
-color:var(--text);
+color:var(--text)
 }
 
 .menu-user{
 padding:18px;
 background:linear-gradient(135deg,#ffe8ef,#e8f3ff);
 margin:15px;
-border-radius:16px;
+border-radius:16px
 }
 
-.menu-user strong{
-font-size:18px;
-}
+.menu-user strong{font-size:18px}
 
 .menu-item{
 width:100%;
@@ -247,17 +208,15 @@ align-items:center;
 gap:14px;
 font-size:15px;
 text-align:left;
-border-bottom:1px solid var(--border);
+border-bottom:1px solid var(--border)
 }
 
-.menu-item:hover{
-background:var(--soft);
-}
+.menu-item:hover{background:var(--soft)}
 
 .menu-icon{
 width:28px;
 font-size:21px;
-text-align:center;
+text-align:center
 }
 
 .menu-section{
@@ -265,12 +224,10 @@ padding:15px 20px 8px;
 font-size:12px;
 font-weight:bold;
 color:var(--muted);
-text-transform:uppercase;
+text-transform:uppercase
 }
 
-.language-box{
-padding:15px 20px;
-}
+.language-box{padding:15px 20px}
 
 .language-select{
 width:100%;
@@ -280,7 +237,7 @@ border-radius:10px;
 background:var(--soft);
 color:var(--text);
 outline:none;
-font-size:14px;
+font-size:14px
 }
 
 /* HERO */
@@ -293,39 +250,36 @@ padding:38px 48px;
 border-radius:24px;
 overflow:hidden;
 position:relative;
-color:white;
+color:#fff;
 background:
 radial-gradient(circle at 88% 15%,#ffe800 0 18%,transparent 18.5%),
-linear-gradient(110deg,#062c73,#074ab5 62%,#ffd400 62%);
+linear-gradient(110deg,#062c73,#074ab5 62%,#ffd400 62%)
 }
 
 .hero-content{
 position:relative;
 z-index:2;
-max-width:570px;
+max-width:570px
 }
 
 .hero h1{
 font-size:43px;
 line-height:1.15;
-margin-bottom:14px;
+margin-bottom:14px
 }
 
-.hero h1 span{
-color:#ffe000;
-}
+.hero h1 span{color:#ffe000}
 
 .hero p{
 font-size:17px;
-line-height:1.6;
-max-width:520px;
+line-height:1.6
 }
 
 .hero-features{
 display:flex;
 gap:28px;
 margin-top:25px;
-flex-wrap:wrap;
+flex-wrap:wrap
 }
 
 .hero-feature{
@@ -333,12 +287,10 @@ display:flex;
 align-items:center;
 gap:8px;
 font-size:14px;
-font-weight:bold;
+font-weight:bold
 }
 
-.hero-feature b{
-font-size:22px;
-}
+.hero-feature b{font-size:22px}
 
 .hero-btn{
 margin-top:25px;
@@ -346,9 +298,9 @@ border:0;
 border-radius:25px;
 padding:14px 28px;
 background:var(--pink);
-color:white;
+color:#fff;
 font-size:16px;
-font-weight:bold;
+font-weight:bold
 }
 
 .hero-products{
@@ -359,11 +311,11 @@ width:390px;
 height:245px;
 display:flex;
 justify-content:center;
-align-items:center;
+align-items:center
 }
 
 .print-stack{
-background:white;
+background:#fff;
 color:#123;
 width:230px;
 height:135px;
@@ -374,7 +326,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-weight:900;
-font-size:24px;
+font-size:24px
 }
 
 .mug{
@@ -383,26 +335,14 @@ right:20px;
 bottom:15px;
 width:90px;
 height:85px;
-background:white;
+background:#fff;
 color:#123;
 border-radius:8px 8px 22px 22px;
 display:flex;
 align-items:center;
 justify-content:center;
 font-size:35px;
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-
-.mug:after{
-content:"";
-position:absolute;
-right:-23px;
-top:20px;
-width:28px;
-height:38px;
-border:8px solid white;
-border-left:0;
-border-radius:0 20px 20px 0;
+box-shadow:0 10px 25px rgba(0,0,0,.25)
 }
 
 /* MAIN */
@@ -410,26 +350,24 @@ border-radius:0 20px 20px 0;
 .container{
 max-width:1200px;
 margin:auto;
-padding:0 22px 90px;
+padding:0 22px 90px
 }
 
 .section-head{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin:30px 0 17px;
+margin:30px 0 17px
 }
 
-.section-head h2{
-font-size:28px;
-}
+.section-head h2{font-size:28px}
 
 .view-all{
 color:var(--pink);
 font-weight:bold;
 border:0;
 background:none;
-font-size:15px;
+font-size:15px
 }
 
 /* CATEGORIES */
@@ -437,7 +375,7 @@ font-size:15px;
 .categories{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:16px;
+gap:16px
 }
 
 .category{
@@ -452,17 +390,15 @@ gap:12px;
 font-size:16px;
 font-weight:bold;
 color:var(--text);
-transition:.2s;
+transition:.2s
 }
 
 .category:hover{
 transform:translateY(-4px);
-box-shadow:0 10px 25px rgba(0,0,0,.08);
+box-shadow:0 10px 25px rgba(0,0,0,.08)
 }
 
-.cat-icon{
-font-size:60px;
-}
+.cat-icon{font-size:60px}
 
 .c1{background:#e8f3ff}
 .c2{background:#ffe8ef}
@@ -478,7 +414,7 @@ font-size:60px;
 .products{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:18px;
+gap:18px
 }
 
 .product{
@@ -488,12 +424,12 @@ border-radius:17px;
 overflow:hidden;
 position:relative;
 box-shadow:0 4px 15px rgba(10,40,90,.06);
-transition:.25s;
+transition:.25s
 }
 
 .product:hover{
 transform:translateY(-5px);
-box-shadow:0 12px 28px rgba(10,40,90,.12);
+box-shadow:0 12px 28px rgba(10,40,90,.12)
 }
 
 .product-img{
@@ -504,31 +440,15 @@ align-items:center;
 justify-content:center;
 font-size:90px;
 position:relative;
+cursor:pointer
 }
 
-.product-img.tshirt{
-background:linear-gradient(135deg,#e8f3ff,#fff);
-}
-
-.product-img.mugimg{
-background:linear-gradient(135deg,#fff2e8,#fff);
-}
-
-.product-img.frameimg{
-background:linear-gradient(135deg,#eef8ff,#fff);
-}
-
-.product-img.hoodie{
-background:linear-gradient(135deg,#eeeaff,#fff);
-}
-
-.product-img.cap{
-background:linear-gradient(135deg,#e7fff3,#fff);
-}
-
-.product-img.gift{
-background:linear-gradient(135deg,#ffe8ef,#fff);
-}
+.product-img.tshirt{background:linear-gradient(135deg,#e8f3ff,#fff)}
+.product-img.mugimg{background:linear-gradient(135deg,#fff2e8,#fff)}
+.product-img.frameimg{background:linear-gradient(135deg,#eef8ff,#fff)}
+.product-img.hoodie{background:linear-gradient(135deg,#eeeaff,#fff)}
+.product-img.cap{background:linear-gradient(135deg,#e7fff3,#fff)}
+.product-img.gift{background:linear-gradient(135deg,#ffe8ef,#fff)}
 
 .wishlist{
 position:absolute;
@@ -538,36 +458,34 @@ width:38px;
 height:38px;
 border:0;
 border-radius:50%;
-background:white;
+background:#fff;
 color:#6b7280;
 font-size:21px;
 z-index:5;
-box-shadow:0 4px 12px rgba(0,0,0,.1);
+box-shadow:0 4px 12px rgba(0,0,0,.1)
 }
 
 .wishlist.active{
 color:var(--pink);
-background:#ffe8ef;
+background:#ffe8ef
 }
 
-.product-info{
-padding:15px;
-}
+.product-info{padding:15px}
 
 .product-info h3{
 font-size:17px;
 margin-bottom:6px;
+cursor:pointer
 }
 
 .price{
 font-size:18px;
-font-weight:bold;
-color:var(--text);
+font-weight:bold
 }
 
 .starting{
 color:var(--muted);
-font-size:12px;
+font-size:12px
 }
 
 .product-desc{
@@ -575,35 +493,35 @@ color:var(--muted);
 font-size:12px;
 line-height:1.5;
 margin-top:7px;
-min-height:36px;
+min-height:36px
 }
 
 .product-buttons{
 display:flex;
 gap:7px;
-margin-top:13px;
+margin-top:13px
 }
 
 .customize{
 flex:1;
 border:1.5px solid var(--pink);
 color:var(--pink);
-background:white;
+background:#fff;
 padding:10px 5px;
 border-radius:20px;
 font-weight:bold;
-font-size:12px;
+font-size:12px
 }
 
 .order{
 flex:1;
 border:0;
 background:var(--pink);
-color:white;
+color:#fff;
 padding:10px 5px;
 border-radius:20px;
 font-weight:bold;
-font-size:12px;
+font-size:12px
 }
 
 /* DELIVERY */
@@ -616,79 +534,67 @@ background:linear-gradient(90deg,#ffe1eb,#ffeef4);
 display:grid;
 grid-template-columns:1.5fr 1fr 1fr 1fr;
 gap:15px;
-align-items:center;
+align-items:center
 }
 
 .delivery-main{
 display:flex;
 align-items:center;
-gap:14px;
+gap:14px
 }
 
-.delivery-icon{
-font-size:42px;
-}
+.delivery-icon{font-size:42px}
 
 .delivery h3{
 font-size:20px;
-color:#091e42;
+color:#091e42
 }
 
 .delivery p{
 margin-top:5px;
 color:#475569;
-font-size:13px;
+font-size:13px
 }
 
-.delivery-item{
-text-align:center;
-}
+.delivery-item{text-align:center}
 
-.delivery-item div{
-font-size:26px;
-}
+.delivery-item div{font-size:26px}
 
 .delivery-item span{
 display:block;
 font-size:12px;
 margin-top:5px;
-color:#26364e;
+color:#26364e
 }
 
 /* FOOTER */
 
 footer{
 background:#071f4d;
-color:white;
+color:#fff;
 padding:38px 20px 90px;
-text-align:center;
+text-align:center
 }
 
-footer h2{
-font-size:26px;
-}
+footer h2{font-size:26px}
 
 footer p{
 margin-top:7px;
-color:#c9d6ee;
+color:#c9d6ee
 }
 
-.footer-links{
-margin-top:18px;
-}
+.footer-links{margin-top:18px}
 
 .footer-links button{
 background:none;
 border:0;
-color:white;
-margin:5px 12px;
+color:#fff;
+margin:5px 12px
 }
 
 /* BOTTOM NAV */
 
-.bottom-nav{
-display:none;
-}
+.bottom-nav{display:none}
 
 /* MODAL */
 
@@ -700,19 +606,19 @@ background:rgba(0,0,0,.65);
 display:none;
 align-items:center;
 justify-content:center;
-padding:15px;
+padding:15px
 }
 
 .modal-box{
 width:100%;
 max-width:650px;
-max-height:90vh;
+max-height:92vh;
 overflow:auto;
 background:var(--card);
 color:var(--text);
 border-radius:22px;
 padding:25px;
-position:relative;
+position:relative
 }
 
 .close{
@@ -723,52 +629,13 @@ border:0;
 background:none;
 color:var(--text);
 font-size:30px;
+z-index:10
 }
 
 .modal-box h2{
 color:var(--blue2);
-margin-bottom:10px;
+margin-bottom:10px
 }
-
-/* CART */
-
-.cart-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-padding:14px 0;
-border-bottom:1px solid var(--border);
-}
-
-.remove{
-border:0;
-background:#ffe6eb;
-color:#e21d4d;
-padding:7px 10px;
-border-radius:8px;
-margin-left:8px;
-}
-
-.cart-total{
-margin:20px 0;
-font-size:21px;
-font-weight:bold;
-color:var(--pink);
-}
-
-.checkout{
-width:100%;
-border:0;
-padding:14px;
-background:var(--pink);
-color:white;
-border-radius:12px;
-font-weight:bold;
-font-size:14px;
-}
-
-/* AUTH */
 
 .auth-input{
 width:100%;
@@ -778,54 +645,41 @@ border:1px solid var(--border);
 border-radius:10px;
 background:var(--soft);
 color:var(--text);
-outline:none;
+outline:none
 }
 
-.auth-input:focus{
-border-color:var(--pink);
-}
-
-.auth-submit{
+.auth-submit,.checkout{
 width:100%;
 padding:13px;
 margin-top:10px;
 border:0;
 border-radius:10px;
 background:var(--pink);
-color:white;
-font-weight:bold;
+color:#fff;
+font-weight:bold
 }
 
-.password-wrap{
-position:relative;
-}
+.password-wrap{position:relative}
 
 .password-wrap button{
 position:absolute;
 right:5px;
 top:8px;
 border:0;
-background:none;
-}
-
-/* CHECKOUT */
-
-.checkout-title{
-margin-top:10px;
-font-size:18px;
+background:none
 }
 
 .checkout-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:8px;
+gap:8px
 }
 
 .checkout-summary{
 background:var(--soft);
 padding:12px;
 border-radius:12px;
-margin-top:8px;
+margin-top:8px
 }
 
 .checkout-summary-item{
@@ -833,11 +687,7 @@ display:flex;
 justify-content:space-between;
 gap:10px;
 padding:12px 0;
-border-bottom:1px solid var(--border);
-}
-
-.checkout-summary-item:last-child{
-border-bottom:0;
+border-bottom:1px solid var(--border)
 }
 
 .checkout-total{
@@ -845,47 +695,10 @@ display:flex;
 justify-content:space-between;
 padding-top:15px;
 font-size:20px;
-font-weight:bold;
+font-weight:bold
 }
 
-.checkout-total span:last-child{
-color:var(--pink);
-}
-
-/* FRAME */
-
-.frame-option{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-margin:9px 0;
-border:2px solid var(--border);
-border-radius:12px;
-background:var(--soft);
-}
-
-.frame-option.selected{
-border-color:var(--pink);
-background:#fff0f5;
-}
-
-.frame-option strong:last-child{
-color:var(--pink);
-}
-
-.upload{
-padding:18px;
-margin-top:15px;
-border:2px dashed var(--pink);
-border-radius:12px;
-text-align:center;
-}
-
-.upload input{
-margin-top:12px;
-width:100%;
-}
+.checkout-total span:last-child{color:var(--pink)}
 
 /* PROFILE */
 
@@ -893,7 +706,7 @@ width:100%;
 background:var(--soft);
 padding:20px;
 border-radius:16px;
-margin-top:15px;
+margin-top:15px
 }
 
 .profile-avatar{
@@ -905,7 +718,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:42px;
-margin:0 auto 15px;
+margin:0 auto 15px
 }
 
 .profile-required{
@@ -915,12 +728,12 @@ padding:12px;
 border-radius:10px;
 font-size:13px;
 line-height:1.5;
-margin:12px 0;
+margin:12px 0
 }
 
 body.dark .profile-required{
 background:#302611;
-color:#ffd98a;
+color:#ffd98a
 }
 
 .profile-section-title{
@@ -928,7 +741,7 @@ font-size:15px;
 font-weight:bold;
 margin-top:17px;
 margin-bottom:5px;
-color:var(--blue2);
+color:var(--blue2)
 }
 
 .profile-label{
@@ -936,7 +749,7 @@ display:block;
 font-size:12px;
 font-weight:bold;
 color:var(--muted);
-margin:8px 0 3px;
+margin:8px 0 3px
 }
 
 .location-btn{
@@ -947,19 +760,7 @@ border-radius:10px;
 background:#fff0f5;
 color:var(--pink);
 font-weight:bold;
-margin-top:8px;
-}
-
-body.dark .location-btn{
-background:#2c1620;
-}
-
-.location-status{
-font-size:12px;
-color:var(--muted);
-margin-top:8px;
-text-align:center;
-line-height:1.5;
+margin-top:8px
 }
 
 .profile-complete{
@@ -969,100 +770,425 @@ padding:11px;
 border-radius:10px;
 font-size:13px;
 font-weight:bold;
-margin-top:12px;
-}
-
-body.dark .profile-complete{
-background:#102d20;
-color:#6ee7a5;
+margin-top:12px
 }
 
 .profile-row{
 padding:12px 0;
-border-bottom:1px solid var(--border);
-}
-
-.profile-row:last-child{
-border-bottom:0;
+border-bottom:1px solid var(--border)
 }
 
 .profile-value{
 font-size:15px;
 font-weight:bold;
-word-break:break-word;
+word-break:break-word
 }
 
-/* MOBILE */
+/* ORDERS */
+
+.order-card{
+border:1px solid var(--border);
+border-radius:14px;
+padding:16px;
+margin-bottom:14px;
+background:var(--soft)
+}
+
+.status{
+font-weight:800;
+color:var(--pink);
+text-transform:capitalize
+}
+
+/* TOAST */
+
+.toast{
+position:fixed;
+left:50%;
+bottom:85px;
+transform:translateX(-50%);
+background:#071b3a;
+color:#fff;
+padding:12px 20px;
+border-radius:25px;
+z-index:1000;
+font-size:14px;
+box-shadow:0 8px 25px rgba(0,0,0,.25)
+}
+
+/* PRODUCT DETAIL */
+
+.product-page{
+display:none;
+position:fixed;
+inset:0;
+z-index:450;
+background:var(--bg);
+overflow-y:auto
+}
+
+.product-page.active{display:block}
+
+.product-page-header{
+position:sticky;
+top:0;
+z-index:5;
+background:var(--card);
+border-bottom:1px solid var(--border);
+height:64px;
+display:flex;
+align-items:center;
+gap:12px;
+padding:0 18px
+}
+
+.back-btn{
+border:0;
+background:var(--soft);
+color:var(--text);
+width:40px;
+height:40px;
+border-radius:50%;
+font-size:22px
+}
+
+.pp-title{
+font-weight:800;
+font-size:17px;
+flex:1
+}
+
+.pp-head-cart{
+border:0;
+background:var(--pink);
+color:#fff;
+border-radius:20px;
+padding:10px 14px;
+font-weight:bold
+}
+
+.product-page-inner{
+max-width:1150px;
+margin:auto;
+padding:22px 20px 100px
+}
+
+.detail-top{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:28px
+}
+
+.detail-gallery{
+background:var(--soft);
+border:1px solid var(--border);
+border-radius:20px;
+min-height:430px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden
+}
+
+.detail-main-icon{font-size:180px}
+
+.detail-wish{
+position:absolute;
+right:15px;
+top:15px
+}
+
+.detail-side h1{
+font-size:30px;
+line-height:1.2;
+margin:5px 0 10px
+}
+
+.rating-line{
+display:flex;
+align-items:center;
+gap:8px;
+margin:10px 0
+}
+
+.rating{
+background:#078a48;
+color:#fff;
+padding:5px 9px;
+border-radius:7px;
+font-weight:bold;
+font-size:13px
+}
+
+.review-count{
+color:var(--muted);
+font-size:13px
+}
+
+.detail-price{
+font-size:32px;
+font-weight:900;
+margin-top:15px
+}
+
+.mrp{
+text-decoration:line-through;
+color:var(--muted);
+font-size:15px;
+margin-left:8px
+}
+
+.discount{
+color:#078a48;
+font-weight:bold;
+margin-left:8px
+}
+
+.detail-short{
+color:var(--muted);
+line-height:1.6;
+margin-top:10px
+}
+
+.delivery-box,
+.spec-box,
+.description-box,
+.review-box,
+.related-box{
+border:1px solid var(--border);
+border-radius:16px;
+padding:18px;
+margin-top:18px;
+background:var(--card)
+}
+
+.detail-section-title{
+font-size:19px;
+font-weight:900;
+margin-bottom:12px
+}
+
+.benefits{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+
+.benefit{
+background:var(--soft);
+border-radius:12px;
+padding:12px;
+text-align:center;
+font-size:12px
+}
+
+.benefit b{
+display:block;
+font-size:23px;
+margin-bottom:5px
+}
+
+.spec-table{
+width:100%;
+border-collapse:collapse
+}
+
+.spec-table td{
+padding:10px 6px;
+border-bottom:1px solid var(--border);
+font-size:13px
+}
+
+.spec-table td:first-child{
+color:var(--muted);
+width:38%
+}
+
+.custom-box{
+background:linear-gradient(135deg,#fff1f6,#eef6ff);
+border-radius:16px;
+padding:18px;
+margin-top:18px
+}
+
+.custom-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
+
+.qty{
+display:flex;
+align-items:center;
+gap:0;
+margin-top:12px
+}
+
+.qty button{
+width:40px;
+height:40px;
+border:1px solid var(--border);
+background:var(--card);
+color:var(--text);
+font-size:20px
+}
+
+.qty span{
+width:45px;
+text-align:center;
+font-weight:bold
+}
+
+.detail-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:15px;
+position:sticky;
+bottom:10px
+}
+
+.detail-cart{
+background:#fff;
+color:var(--pink);
+border:2px solid var(--pink);
+padding:14px;
+border-radius:12px;
+font-weight:900
+}
+
+.detail-buy{
+background:var(--pink);
+color:#fff;
+border:0;
+padding:14px;
+border-radius:12px;
+font-weight:900
+}
+
+.review-summary{
+display:grid;
+grid-template-columns:130px 1fr;
+gap:20px;
+align-items:center
+}
+
+.big-rating{
+font-size:38px;
+font-weight:900;
+text-align:center
+}
+
+.stars{
+color:#f5a400;
+font-size:19px
+}
+
+.review{
+padding:14px 0;
+border-top:1px solid var(--border)
+}
+
+.review:first-child{border-top:0}
+
+.review-name{font-weight:bold}
+
+.review-text{
+color:var(--muted);
+font-size:13px;
+line-height:1.5;
+margin-top:6px
+}
+
+.related-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
+}
+
+.related-card{
+border:1px solid var(--border);
+border-radius:12px;
+overflow:hidden;
+background:var(--card);
+cursor:pointer
+}
+
+.related-img{
+height:100px;
+background:var(--soft);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px
+}
+
+.related-info{padding:9px}
+
+.related-info b{font-size:13px}
+
+.related-info div{
+color:var(--pink);
+font-weight:bold;
+margin-top:5px
+}
+
+/* RESPONSIVE */
 
 @media(max-width:900px){
 
 .nav{
 padding:10px 15px;
-flex-wrap:wrap;
+flex-wrap:wrap
 }
 
-.logo{
-min-width:auto;
-}
+.logo{min-width:auto}
 
 .search-wrap{
 order:5;
-flex-basis:100%;
-}
-
-.cart-btn{
-padding:10px 12px;
+flex-basis:100%
 }
 
 .hero{
 margin:15px;
 padding:32px 25px;
 min-height:360px;
-background:
-radial-gradient(circle at 90% 12%,#ffe800 0 20%,transparent 20.5%),
-linear-gradient(110deg,#062c73,#0751c3);
+background:linear-gradient(110deg,#062c73,#0751c3)
 }
 
-.hero h1{
-font-size:34px;
-}
+.hero h1{font-size:34px}
 
 .hero-products{
 opacity:.35;
 right:-70px;
-bottom:-15px;
+bottom:-15px
 }
 
 .categories{
 grid-template-columns:repeat(4,1fr);
-gap:10px;
+gap:10px
 }
 
-.category{
-min-height:125px;
-}
+.category{min-height:125px}
 
-.cat-icon{
-font-size:45px;
-}
+.cat-icon{font-size:45px}
 
 .products{
 grid-template-columns:repeat(2,1fr);
-gap:12px;
+gap:12px
 }
 
 .product-img{
 height:145px;
-font-size:65px;
+font-size:65px
 }
 
 .delivery{
-grid-template-columns:1fr 1fr 1fr;
+grid-template-columns:1fr 1fr 1fr
 }
 
-.delivery-main{
-grid-column:1/-1;
-}
+.delivery-main{grid-column:1/-1}
 
 .bottom-nav{
 position:fixed;
@@ -1076,147 +1202,127 @@ background:var(--card);
 border-top:1px solid var(--border);
 justify-content:space-around;
 align-items:center;
-box-shadow:0 -5px 20px rgba(0,0,0,.08);
+box-shadow:0 -5px 20px rgba(0,0,0,.08)
 }
 
 .bottom-nav button{
 border:0;
 background:none;
 color:var(--muted);
-font-size:11px;
+font-size:11px
 }
 
 .bottom-nav button div{
 font-size:23px;
-margin-bottom:3px;
+margin-bottom:3px
 }
 
-.bottom-nav .active{
-color:var(--pink);
-}
+.bottom-nav .active{color:var(--pink)}
 
+.detail-top{grid-template-columns:1fr}
+
+.detail-gallery{min-height:320px}
+
+.detail-side h1{font-size:26px}
+
+.related-grid{
+grid-template-columns:repeat(2,1fr)
+}
 }
 
 @media(max-width:550px){
 
 .logo-mark{
 width:38px;
-height:38px;
+height:38px
 }
 
-.logo-text{
-font-size:20px;
-}
+.logo-text{font-size:20px}
 
-.logo-sub{
-font-size:9px;
-}
+.logo-sub{font-size:9px}
 
 .nav-actions .icon-btn,
 .menu-btn{
 width:38px;
-height:38px;
+height:38px
 }
 
-.cart-btn{
-font-size:12px;
-}
+.cart-btn{font-size:12px}
 
 .hero{
 border-radius:18px;
-margin:12px;
+margin:12px
 }
 
-.hero h1{
-font-size:30px;
-}
+.hero h1{font-size:30px}
 
-.hero p{
-font-size:14px;
-}
+.hero p{font-size:14px}
 
-.hero-features{
-gap:12px;
-}
+.hero-features{gap:12px}
 
-.hero-feature{
-font-size:11px;
-}
+.hero-feature{font-size:11px}
 
 .container{
-padding:0 12px 85px;
+padding:0 12px 85px
 }
 
-.section-head h2{
-font-size:23px;
-}
+.section-head h2{font-size:23px}
 
 .categories{
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(2,1fr)
 }
 
-.category{
-min-height:115px;
-}
+.category{min-height:115px}
 
-.cat-icon{
-font-size:45px;
-}
+.cat-icon{font-size:45px}
 
-.product-info h3{
-font-size:14px;
-}
+.product-info h3{font-size:14px}
 
-.price{
-font-size:16px;
-}
+.price{font-size:16px}
 
-.product-desc{
-display:none;
-}
+.product-desc{display:none}
 
-.customize,
-.order{
-font-size:10px;
-}
+.customize,.order{font-size:10px}
 
 .delivery{
 padding:18px 12px;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(3,1fr)
 }
 
-.delivery h3{
-font-size:16px;
-}
+.delivery h3{font-size:16px}
 
-.delivery-icon{
-font-size:34px;
-}
+.delivery-icon{font-size:34px}
 
-.delivery-item span{
-font-size:10px;
-}
+.delivery-item span{font-size:10px}
 
-.menu-panel{
-width:330px;
-}
+.menu-panel{width:330px}
 
 .modal-box{
-padding:20px 16px;
+padding:20px 16px
 }
 
-.auth-input{
-font-size:14px;
+.checkout-grid,
+.custom-grid{
+grid-template-columns:1fr
 }
 
-.checkout{
-font-size:14px;
+.detail-gallery{min-height:270px}
+
+.detail-main-icon{font-size:130px}
+
+.detail-price{font-size:28px}
+
+.benefits{
+grid-template-columns:1fr 1fr 1fr
 }
 
-.checkout-grid{
-grid-template-columns:1fr;
+.detail-actions{
+grid-template-columns:1fr 1fr
 }
 
+.product-page-inner{
+padding:14px 12px 100px
+}
 }
 </style>
 </head>
@@ -1224,299 +1330,92 @@ grid-template-columns:1fr;
 <body>
 
 <header>
-
 <div class="nav">
 
-<div class="logo"
-onclick="window.scrollTo({top:0,behavior:'smooth'})">
-
+<div class="logo" onclick="closeProductPage();window.scrollTo({top:0,behavior:'smooth'})">
 <div class="logo-mark">P</div>
-
 <div>
 <div class="logo-text">PRINTZY</div>
-<div class="logo-sub" data-i18n="subtitle">Print Your Ideas</div>
+<div class="logo-sub">Print Your Ideas</div>
 </div>
-
 </div>
 
 <div class="search-wrap">
-
 <span class="search-icon">⌕</span>
-
 <input
 class="search"
 id="search"
 type="search"
-data-placeholder="search"
 placeholder="Search for products like Visiting Card, Banner, etc..."
 oninput="searchProducts()">
-
 </div>
 
 <div class="nav-actions">
-
-<button class="menu-btn"
-onclick="openMenu()"
-title="Menu">
-☰
-</button>
-
-<button class="icon-btn"
-onclick="toggleDark()">
-🌙
-</button>
-
-<button class="icon-btn"
-onclick="openWishlist()">
-♡
-</button>
-
-<button class="cart-btn"
-onclick="openCart()">
-🛒 <span id="cartCount">0</span>
-</button>
-
+<button class="menu-btn" onclick="openMenu()">☰</button>
+<button class="icon-btn" onclick="toggleDark()">🌙</button>
+<button class="icon-btn" onclick="openWishlist()">♡</button>
+<button class="cart-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
 </div>
 
 </div>
-
 </header>
-
 
 <!-- MENU -->
 
-<div class="menu-overlay"
-id="menuOverlay"
-onclick="closeMenuOutside(event)">
-
-<div class="menu-panel"
-onclick="event.stopPropagation()">
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenuOutside(event)">
+<div class="menu-panel" onclick="event.stopPropagation()">
 
 <div class="menu-head">
-
 <h2>PRINTZY</h2>
-
-<button class="menu-close"
-onclick="closeMenu()">
-×
-</button>
-
+<button class="menu-close" onclick="closeMenu()">×</button>
 </div>
 
 <div class="menu-user">
-
 <div style="font-size:30px">👤</div>
-
-<strong id="menuUserName">
-Customer
-</strong>
-
-<p id="menuUserEmail"
-style="font-size:12px;color:var(--muted);margin-top:4px">
+<strong id="menuUserName">Customer</strong>
+<p id="menuUserEmail" style="font-size:12px;color:var(--muted);margin-top:4px">
 Login to your account
 </p>
-
 </div>
 
+<div class="menu-section">Account</div>
 
-<div class="menu-section">
-Account
-</div>
-
-<button class="menu-item"
-onclick="openProfile();closeMenu()">
-
+<button class="menu-item" onclick="openProfile();closeMenu()">
 <span class="menu-icon">👤</span>
-
-<span data-i18n="profile">
-My Profile / Login
-</span>
-
+<span>My Profile / Login</span>
 </button>
 
-
-<button class="menu-item"
-onclick="openOrders();closeMenu()">
-
+<button class="menu-item" onclick="openOrders();closeMenu()">
 <span class="menu-icon">📦</span>
-
-<span data-i18n="orders">
-My Orders
-</span>
-
+<span>My Orders</span>
 </button>
 
-
-<button class="menu-item"
-onclick="openWishlist();closeMenu()">
-
+<button class="menu-item" onclick="openWishlist();closeMenu()">
 <span class="menu-icon">❤️</span>
-
-<span data-i18n="wishlist">
-Wishlist
-</span>
-
+<span>Wishlist</span>
 </button>
 
-
-<button class="menu-item"
-onclick="openCart();closeMenu()">
-
+<button class="menu-item" onclick="openCart();closeMenu()">
 <span class="menu-icon">🛒</span>
-
-<span data-i18n="cart">
-My Cart
-</span>
-
+<span>My Cart</span>
 </button>
 
-
-<div class="menu-section">
-Settings
-</div>
+<div class="menu-section">Settings</div>
 
 <div class="language-box">
-
-<div style="
-font-weight:bold;
-margin-bottom:8px">
-
-🌐 <span data-i18n="language">
-Language
-</span>
-
-</div>
-
-<select
-class="language-select"
-id="languageSelect"
-onchange="changeLanguage(this.value)">
-
-<option value="hi">हिन्दी</option>
-<option value="en">English</option>
-<option value="mr">मराठी</option>
-<option value="gu">ગુજરાતી</option>
-<option value="bn">বাংলা</option>
-<option value="pa">ਪੰਜਾਬੀ</option>
-<option value="ta">தமிழ்</option>
-<option value="te">తెలుగు</option>
-<option value="kn">ಕನ್ನಡ</option>
-<option value="ml">മലയാളം</option>
-<option value="ur">اردو</option>
-<option value="or">ଓଡ଼ିଆ</option>
-<option value="as">অসমীয়া</option>
-<option value="ne">नेपाली</option>
-<option value="sa">संस्कृत</option>
-<option value="kok">कोंकणी</option>
-<option value="mai">मैथिली</option>
-<option value="mni">মৈতৈলোন</option>
-<option value="bho">भोजपुरी</option>
-<option value="ks">कॉशुर</option>
-<option value="sd">سنڌي</option>
-<option value="dogri">डोगरी</option>
-
+<select id="languageSelect" class="language-select" onchange="changeLanguage(this.value)">
+<option value="hi">🇮🇳 Hindi</option>
+<option value="en">🇬🇧 English</option>
 </select>
-
 </div>
 
-
-<button class="menu-item"
-onclick="toggleDark();closeMenu()">
-
-<span class="menu-icon">🌙</span>
-
-<span data-i18n="theme">
-Dark / Light Mode
-</span>
-
-</button>
-
-
-<div class="menu-section">
-Services
-</div>
-
-
-<button class="menu-item"
-onclick="openProfile();closeMenu()">
-
-<span class="menu-icon">📍</span>
-
-<span data-i18n="address">
-Delivery Address
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showNotifications();closeMenu()">
-
+<button class="menu-item" onclick="showNotifications();closeMenu()">
 <span class="menu-icon">🔔</span>
-
-<span data-i18n="notifications">
-Notifications
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showInfo('Contact Us');closeMenu()">
-
-<span class="menu-icon">🎧</span>
-
-<span data-i18n="support">
-Help & Support
-</span>
-
-</button>
-
-
-<div class="menu-section">
-Printzy
-</div>
-
-
-<button class="menu-item"
-onclick="showInfo('About Printzy');closeMenu()">
-
-<span class="menu-icon">ℹ️</span>
-
-<span data-i18n="about">
-About Printzy
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showInfo('Terms & Conditions');closeMenu()">
-
-<span class="menu-icon">📄</span>
-
-<span data-i18n="terms">
-Terms & Conditions
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showInfo('Privacy Policy');closeMenu()">
-
-<span class="menu-icon">🔐</span>
-
-<span data-i18n="privacy">
-Privacy Policy
-</span>
-
+<span>Notifications</span>
 </button>
 
 </div>
-
 </div>
-
 
 <!-- HERO -->
 
@@ -1525,14 +1424,14 @@ Privacy Policy
 <div class="hero-content">
 
 <h1>
-आपका हर प्रिंट,<br>
-<span>एक ही जगह</span>
+आपका हर <span>प्रिंट</span>,<br>
+एक ही जगह
 </h1>
 
 <p>
 Visiting Card, Wedding Card, Poster, Banner,
 Pamphlet, Sticker और Photo Print —
-सभी printing products आसानी से order करें।
+सब कुछ Printzy पर।
 </p>
 
 <div class="hero-features">
@@ -1542,344 +1441,432 @@ Pamphlet, Sticker और Photo Print —
 </div>
 
 <div class="hero-feature">
-<b>🚚</b> Fast Delivery
+<b>⚡</b> Fast Delivery
 </div>
 
 <div class="hero-feature">
-<b>🛡</b> Easy Ordering
+<b>🛒</b> Easy Ordering
 </div>
 
 </div>
 
-<button class="hero-btn"
-onclick="scrollProducts()">
+<button class="hero-btn" onclick="document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">
 Order Now →
 </button>
 
 </div>
 
 <div class="hero-products">
-
-<div class="print-stack">
-PRINTZY
-</div>
-
-<div class="mug">
-☕
-</div>
-
+<div class="print-stack">PRINTZY</div>
+<div class="mug">☕</div>
 </div>
 
 </section>
 
+<!-- MAIN -->
 
-<div class="container">
+<main class="container">
 
 <div class="section-head">
-
-<h2>Our Categories</h2>
-
-<button class="view-all"
-onclick="showAllCategories()">
+<h2>Categories</h2>
+<button class="view-all" onclick="document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">
 View All →
 </button>
-
 </div>
-
 
 <div class="categories">
 
-<button class="category c1"
-onclick="categorySearch('Visiting Card')">
-
-<div class="cat-icon">
-💳
-</div>
-
+<button class="category c1" onclick="filterCategory('Visiting Card')">
+<div class="cat-icon">💳</div>
 Visiting Card
-
 </button>
 
-
-<button class="category c2"
-onclick="categorySearch('Wedding Card')">
-
-<div class="cat-icon">
-💌
-</div>
-
+<button class="category c2" onclick="filterCategory('Wedding Card')">
+<div class="cat-icon">💌</div>
 Wedding Card
-
 </button>
 
-
-<button class="category c3"
-onclick="categorySearch('Poster')">
-
-<div class="cat-icon">
-🖼️
-</div>
-
+<button class="category c3" onclick="filterCategory('Poster')">
+<div class="cat-icon">🖼️</div>
 Poster
-
 </button>
 
-
-<button class="category c4"
-onclick="categorySearch('Banner')">
-
-<div class="cat-icon">
-🪧
-</div>
-
+<button class="category c4" onclick="filterCategory('Banner')">
+<div class="cat-icon">🏳️</div>
 Banner
-
 </button>
 
-
-<button class="category c5"
-onclick="categorySearch('Pamphlet')">
-
-<div class="cat-icon">
-📖
-</div>
-
+<button class="category c5" onclick="filterCategory('Pamphlet')">
+<div class="cat-icon">📄</div>
 Pamphlet
-
 </button>
 
-
-<button class="category c6"
-onclick="categorySearch('Sticker')">
-
-<div class="cat-icon">
-🏷️
-</div>
-
+<button class="category c6" onclick="filterCategory('Sticker')">
+<div class="cat-icon">🏷️</div>
 Sticker
-
 </button>
 
-
-<button class="category c7"
-onclick="categorySearch('Photo Print')">
-
-<div class="cat-icon">
-📸
-</div>
-
+<button class="category c7" onclick="filterCategory('Photo Print')">
+<div class="cat-icon">📸</div>
 Photo Print
-
 </button>
 
-
-<button class="category c8"
-onclick="categorySearch('Other Printing')">
-
-<div class="cat-icon">
-🖨️
-</div>
-
+<button class="category c8" onclick="filterCategory('Other Printing')">
+<div class="cat-icon">🖨️</div>
 Other Printing
-
 </button>
 
 </div>
 
-
-<div class="section-head">
-
-<h2>
-Popular Products
-</h2>
-
-<button class="view-all"
-onclick="showProducts(products)">
-View All →
-</button>
-
+<div class="section-head" id="productsSection">
+<h2>Popular Products</h2>
+<button class="view-all" onclick="showProducts()">All Products</button>
 </div>
 
-
-<div class="products"
-id="productList">
-</div>
-
+<div class="products" id="products"></div>
 
 <div class="delivery">
 
 <div class="delivery-main">
-
-<div class="delivery-icon">
-🚚
-</div>
-
+<div class="delivery-icon">🚚</div>
 <div>
-
-<h3>
-Fast & Safe Delivery
-</h3>
-
-<p>
-Your prints, our priority!
-</p>
-
+<h3>Fast & Reliable Delivery</h3>
+<p>आपका order सुरक्षित तरीके से आपके address तक पहुँचाया जाएगा।</p>
 </div>
-
 </div>
-
 
 <div class="delivery-item">
-
-<div>🛡️</div>
-
-<span>
-Secure<br>
-Payment
-</span>
-
+<div>🎨</div>
+<span>Quality Print</span>
 </div>
-
 
 <div class="delivery-item">
-
-<div>🕐</div>
-
-<span>
-On-Time<br>
-Delivery
-</span>
-
+<div>⚡</div>
+<span>Fast Processing</span>
 </div>
-
 
 <div class="delivery-item">
-
-<div>🎧</div>
-
-<span>
-24/7<br>
-Support
-</span>
-
+<div>📦</div>
+<span>Safe Packing</span>
 </div>
 
 </div>
 
-</div>
+</main>
 
+<!-- FOOTER -->
 
 <footer>
 
-<h2>
-PRINTZY
-</h2>
+<h2>PRINTZY</h2>
 
-<p>
-Print Your Ideas
-</p>
+<p>Print Your Ideas</p>
 
 <div class="footer-links">
 
-<button onclick="showInfo('Terms & Conditions')">
-Terms & Conditions
-</button>
-
-<button onclick="showInfo('Privacy Policy')">
-Privacy Policy
-</button>
-
-<button onclick="showInfo('Contact Us')">
-Contact
-</button>
+<button onclick="showInfo('About Printzy')">About Us</button>
+<button onclick="showInfo('Contact Us')">Contact Us</button>
+<button onclick="showInfo('Privacy Policy')">Privacy Policy</button>
+<button onclick="showInfo('Terms & Conditions')">Terms & Conditions</button>
 
 </div>
 
-<p style="margin-top:20px">
-© 2026 Printzy. All rights reserved.
+<p style="margin-top:22px;font-size:12px">
+© 2026 PRINTZY. All Rights Reserved.
 </p>
 
 </footer>
-
 
 <!-- BOTTOM NAV -->
 
 <div class="bottom-nav">
 
-<button class="active"
-onclick="window.scrollTo({top:0,behavior:'smooth'})">
-
-<div>⌂</div>
-
+<button class="active" onclick="closeProductPage();window.scrollTo({top:0,behavior:'smooth'})">
+<div>🏠</div>
 Home
-
 </button>
 
-
-<button onclick="showAllCategories()">
-
-<div>▦</div>
-
-Categories
-
+<button onclick="openWishlist()">
+<div>❤️</div>
+Wishlist
 </button>
-
 
 <button onclick="openCart()">
-
 <div>🛒</div>
-
 Cart
-
 </button>
-
 
 <button onclick="openOrders()">
-
-<div>▤</div>
-
-My Orders
-
+<div>📦</div>
+Orders
 </button>
 
-
 <button onclick="openProfile()">
-
-<div>♙</div>
-
+<div>👤</div>
 Profile
-
 </button>
 
 </div>
 
-
 <!-- MODAL -->
 
-<div class="modal"
-id="modal"
-onclick="outsideModal(event)">
+<div class="modal" id="modal" onclick="outsideModal(event)">
+<div class="modal-box">
 
-<div class="modal-box"
-onclick="event.stopPropagation()">
-
-<button class="close"
-onclick="closeModal()">
-×
-</button>
+<button class="close" onclick="closeModal()">×</button>
 
 <div id="modalContent"></div>
 
 </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+
+<div class="product-page" id="productPage">
+
+<div class="product-page-header">
+
+<button class="back-btn" onclick="closeProductPage()">←</button>
+
+<div class="pp-title" id="ppTitle">Product</div>
+
+<button class="pp-head-cart" onclick="openCart()">🛒 <span id="ppCartCount">0</span></button>
 
 </div>
 
+<div class="product-page-inner">
+
+<div class="detail-top">
+
+<div>
+
+<div class="detail-gallery">
+
+<div class="detail-main-icon" id="detailIcon">🖨️</div>
+
+<button class="wishlist detail-wish" id="detailWishBtn">
+♡
+</button>
+
+</div>
+
+</div>
+
+<div class="detail-side">
+
+<h1 id="detailName">Product</h1>
+
+<div class="rating-line">
+<span class="rating">4.8 ★</span>
+<span class="review-count">128 Reviews</span>
+</div>
+
+<div>
+<span class="detail-price" id="detailPrice">₹99</span>
+<span class="mrp" id="detailMrp">₹149</span>
+<span class="discount" id="detailDiscount">33% OFF</span>
+</div>
+
+<p class="detail-short" id="detailShort">
+High quality professional printing with premium finish.
+</p>
+
+<div class="delivery-box">
+
+<div class="detail-section-title">🚚 Delivery & Benefits</div>
+
+<div class="benefits">
+
+<div class="benefit">
+<b>✓</b>
+Quality Print
+</div>
+
+<div class="benefit">
+<b>⚡</b>
+Fast Processing
+</div>
+
+<div class="benefit">
+<b>📦</b>
+Safe Packing
+</div>
+
+</div>
+
+</div>
+
+<div class="spec-box">
+
+<div class="detail-section-title">Product Details</div>
+
+<table class="spec-table">
+
+<tr>
+<td>Material</td>
+<td>Premium Quality</td>
+</tr>
+
+<tr>
+<td>Finish</td>
+<td>Matte / Glossy</td>
+</tr>
+
+<tr>
+<td>Printing</td>
+<td>High Resolution</td>
+</tr>
+
+<tr>
+<td>Customization</td>
+<td>Available</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="custom-box">
+
+<div class="detail-section-title">Customize Your Product</div>
+
+<div class="custom-grid">
+
+<div>
+<label class="profile-label">Paper / Quality</label>
+
+<select class="auth-input" id="customQuality">
+<option>Standard</option>
+<option>Premium</option>
+</select>
+</div>
+
+<div>
+<label class="profile-label">Finish</label>
+
+<select class="auth-input" id="customFinish">
+<option>Matte</option>
+<option>Glossy</option>
+</select>
+</div>
+
+</div>
+
+<div class="upload">
+
+📤 Upload Design / Photo
+
+<input
+type="file"
+id="productUpload"
+accept="image/*"
+style="width:100%;margin-top:12px">
+
+<div id="uploadStatus"
+style="font-size:12px;color:var(--muted);margin-top:8px">
+Optional
+</div>
+
+</div>
+
+<div class="qty">
+
+<button onclick="changeDetailQty(-1)">−</button>
+
+<span id="detailQty">1</span>
+
+<button onclick="changeDetailQty(1)">+</button>
+
+</div>
+
+<div class="detail-actions">
+
+<button class="detail-cart" onclick="addDetailToCart()">
+🛒 Add to Cart
+</button>
+
+<button class="detail-buy" onclick="buyDetailNow()">
+Buy Now →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="description-box">
+
+<div class="detail-section-title">Description</div>
+
+<p id="detailDescription"
+style="color:var(--muted);line-height:1.7;font-size:14px">
+Print your ideas with Printzy's high-quality printing service.
+Choose your preferred options, upload your design and place your order easily.
+</p>
+
+</div>
+
+<div class="review-box">
+
+<div class="detail-section-title">Customer Reviews</div>
+
+<div class="review-summary">
+
+<div>
+<div class="big-rating">4.8</div>
+<div class="stars">★★★★★</div>
+</div>
+
+<div style="color:var(--muted);font-size:13px">
+Excellent quality<br>
+Fast processing<br>
+Good packaging
+</div>
+
+</div>
+
+<div class="review">
+
+<div class="review-name">Rahul ⭐⭐⭐⭐⭐</div>
+
+<div class="review-text">
+Print quality बहुत अच्छी थी और delivery भी time पर मिली।
+</div>
+
+</div>
+
+<div class="review">
+
+<div class="review-name">Priya ⭐⭐⭐⭐⭐</div>
+
+<div class="review-text">
+Design customization आसान था। Product अच्छा मिला।
+</div>
+
+</div>
+
+</div>
+
+<div class="related-box">
+
+<div class="detail-section-title">You May Also Like</div>
+
+<div class="related-grid" id="relatedProducts"></div>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
-/* =====================================================
+/* =========================
 SUPABASE
-===================================================== */
+========================= */
 
 const SUPABASE_URL =
 "https://yxssyblhziyfbqxzjgxr.supabase.co";
@@ -1894,398 +1881,114 @@ SUPABASE_KEY
 );
 
 
-/* =====================================================
+/* =========================
 PRODUCTS
-===================================================== */
+========================= */
 
-const products=[
+const products = [
 
 {
 name:"Visiting Card",
 price:99,
-category:"Visiting Card",
 icon:"💳",
 className:"tshirt",
-description:"Professional visiting card printing."
+desc:"Professional visiting cards for your business.",
+description:"High quality professional visiting cards suitable for business, shops, services and personal branding."
 },
 
 {
 name:"Wedding Card",
 price:149,
-category:"Wedding Card",
 icon:"💌",
-className:"mugimg",
-description:"Beautiful wedding invitation cards."
+className:"gift",
+desc:"Beautiful wedding invitation printing.",
+description:"Create beautiful wedding invitation cards with premium printing and customizable designs."
 },
 
 {
 name:"Poster",
 price:79,
-category:"Poster",
 icon:"🖼️",
 className:"frameimg",
-description:"High quality poster printing."
+desc:"High quality poster printing.",
+description:"Premium poster printing for promotions, events, shops, advertisements and special occasions."
 },
 
 {
 name:"Banner",
 price:199,
-category:"Banner",
-icon:"🪧",
+icon:"🏳️",
 className:"hoodie",
-description:"Premium flex and banner printing."
+desc:"Durable promotional banner printing.",
+description:"Professional banner printing for shops, events, promotions and outdoor advertising."
 },
 
 {
 name:"Pamphlet",
 price:99,
-category:"Pamphlet",
-icon:"📖",
+icon:"📄",
 className:"cap",
-description:"Professional pamphlet printing."
+desc:"Affordable promotional pamphlets.",
+description:"High quality pamphlet printing for business promotions, events and advertisements."
 },
 
 {
 name:"Sticker",
 price:49,
-category:"Sticker",
 icon:"🏷️",
-className:"gift",
-description:"Custom sticker printing."
+className:"mugimg",
+desc:"Custom printed stickers.",
+description:"Custom sticker printing for branding, packaging, products and personal use."
 },
 
 {
 name:"Photo Print",
 price:199,
-category:"Photo Print",
 icon:"📸",
 className:"frameimg",
-description:"High quality photo prints."
+desc:"High quality photo printing.",
+description:"Print your memorable photos with excellent color quality and professional finishing."
 },
 
 {
 name:"Other Printing",
 price:99,
-category:"Other Printing",
 icon:"🖨️",
 className:"tshirt",
-description:"Other customized printing services."
+desc:"Other customized printing requirements.",
+description:"Have another printing requirement? Choose this category and contact Printzy for customization."
 }
 
 ];
 
 
-let cart=
-JSON.parse(
-localStorage.getItem("printzyCart")||"[]"
-);
+/* =========================
+STATE
+========================= */
 
-let wishlist=
-JSON.parse(
-localStorage.getItem("printzyWishlist")||"[]"
-);
+let cart =
+JSON.parse(localStorage.getItem("printzyCart") || "[]");
+
+let wishlist =
+JSON.parse(localStorage.getItem("printzyWishlist") || "[]");
+
+let currentDetailProduct = null;
+
+let detailQty = 1;
 
 
-/* =====================================================
+/* =========================
 HELPERS
-===================================================== */
+========================= */
 
 function escapeHtml(value){
 
-return String(value||"")
+return String(value ?? "")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
-
-}
-
-
-async function getCurrentUser(){
-
-try{
-
-const {data,error}=
-await supabaseClient.auth.getUser();
-
-if(error){
-
-return null;
-
-}
-
-return data.user||null;
-
-}catch(error){
-
-console.log(error);
-
-return null;
-
-}
-
-}
-
-
-/* =====================================================
-SHOW PRODUCTS
-===================================================== */
-
-function showProducts(list=products){
-
-const box=
-document.getElementById("productList");
-
-box.innerHTML="";
-
-if(!list.length){
-
-box.innerHTML=`
-
-<div style="
-grid-column:1/-1;
-text-align:center;
-padding:50px">
-
-<h2>
-😕 Product Not Found
-</h2>
-
-<p style="
-margin-top:10px;
-color:var(--muted)">
-
-Try another search.
-
-</p>
-
-</div>`;
-
-return;
-
-}
-
-list.forEach(p=>{
-
-const liked=
-wishlist.includes(p.name);
-
-box.innerHTML+=`
-
-<div class="product">
-
-<div class="product-img ${p.className}">
-
-<button
-class="wishlist ${liked?"active":""}"
-onclick="toggleWishlist('${p.name}')">
-
-${liked?"♥":"♡"}
-
-</button>
-
-${p.icon}
-
-</div>
-
-
-<div class="product-info">
-
-<h3>
-${p.name}
-</h3>
-
-<div class="starting">
-Starting from
-</div>
-
-<div class="price">
-₹${p.price}
-</div>
-
-<p class="product-desc">
-${p.description}
-</p>
-
-
-<div class="product-buttons">
-
-<button
-class="customize"
-onclick="openProduct('${p.name}')">
-
-Customize
-
-</button>
-
-
-<button
-class="order"
-onclick="addToCart('${p.name}')">
-
-Order Now
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-updateCartCount();
-
-}
-
-
-/* =====================================================
-SEARCH
-===================================================== */
-
-function searchProducts(){
-
-const q=
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-if(!q){
-
-showProducts(products);
-return;
-
-}
-
-const result=
-products.filter(p=>
-p.name.toLowerCase().includes(q) ||
-p.category.toLowerCase().includes(q) ||
-p.description.toLowerCase().includes(q)
-);
-
-showProducts(result);
-
-}
-
-
-function categorySearch(name){
-
-document.getElementById("search").value=name;
-
-searchProducts();
-
-scrollProducts();
-
-}
-
-
-function showAllCategories(){
-
-window.scrollTo({
-top:
-document.querySelector(".categories").offsetTop-100,
-behavior:"smooth"
-});
-
-}
-
-
-/* =====================================================
-PRODUCT DETAILS
-===================================================== */
-
-function openProduct(name){
-
-const p=
-products.find(x=>x.name===name);
-
-if(!p)return;
-
-showModal(`
-
-<h2>
-${p.icon} ${escapeHtml(p.name)}
-</h2>
-
-<div style="
-font-size:100px;
-text-align:center;
-padding:25px">
-
-${p.icon}
-
-</div>
-
-<p style="
-color:var(--muted);
-line-height:1.6">
-
-${escapeHtml(p.description)}
-
-</p>
-
-<h2 style="
-margin-top:18px;
-color:var(--pink)">
-
-₹${p.price}
-
-</h2>
-
-<button
-class="checkout"
-style="margin-top:15px"
-onclick="addToCart('${p.name}')">
-
-🛒 Add to Cart
-
-</button>
-
-`);
-
-}
-
-
-/* =====================================================
-CART
-===================================================== */
-
-function addToCart(name){
-
-const p=
-products.find(x=>x.name===name);
-
-if(!p)return;
-
-const item=
-cart.find(x=>x.name===name);
-
-if(item){
-
-item.qty++;
-
-}else{
-
-cart.push({
-name:p.name,
-price:p.price,
-qty:1
-});
-
-}
-
-saveCart();
-
-showToast(
-"Product added to cart 🛒"
-);
 
 }
 
@@ -2304,52 +2007,604 @@ updateCartCount();
 
 function updateCartCount(){
 
-const count=
+const count =
 cart.reduce(
-(sum,item)=>sum+item.qty,
+(sum,item)=>sum + Number(item.qty || 0),
 0
 );
 
-const el=
+const el =
 document.getElementById("cartCount");
 
-if(el){
-el.innerText=count;
+if(el) el.innerText = count;
+
+const pp =
+document.getElementById("ppCartCount");
+
+if(pp) pp.innerText = count;
+
+}
+
+
+async function getCurrentUser(){
+
+try{
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.getUser();
+
+if(error) return null;
+
+return data.user || null;
+
+}catch(e){
+
+return null;
+
 }
 
 }
 
 
-async function openCart(){
+/* =========================
+PRODUCT DISPLAY
+========================= */
 
-let html=
-`<h2>🛒 Your Cart</h2>`;
+function showProducts(list=products){
+
+const box =
+document.getElementById("products");
+
+if(!box) return;
+
+if(!list.length){
+
+box.innerHTML = `
+<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--muted)">
+<div style="font-size:60px">🔍</div>
+<h3 style="margin-top:10px">Product नहीं मिला</h3>
+<p style="margin-top:8px">Search करके दूसरा product try करें।</p>
+</div>
+`;
+
+return;
+
+}
+
+box.innerHTML = list.map(p=>{
+
+const active =
+wishlist.includes(p.name);
+
+return `
+
+<div class="product">
+
+<div
+class="product-img ${p.className || ""}"
+onclick="openProduct('${escapeHtml(p.name)}')">
+
+<button
+class="wishlist ${active ? "active" : ""}"
+onclick="event.stopPropagation();toggleWishlist('${escapeHtml(p.name)}')">
+
+${active ? "♥" : "♡"}
+
+</button>
+
+${p.icon}
+
+</div>
+
+<div class="product-info">
+
+<h3 onclick="openProduct('${escapeHtml(p.name)}')">
+${escapeHtml(p.name)}
+</h3>
+
+<div class="price">₹${p.price}</div>
+
+<div class="starting">Starting price</div>
+
+<div class="product-desc">
+${escapeHtml(p.desc)}
+</div>
+
+<div class="product-buttons">
+
+<button
+class="customize"
+onclick="openProduct('${escapeHtml(p.name)}')">
+Customize
+</button>
+
+<button
+class="order"
+onclick="quickOrder('${escapeHtml(p.name)}')">
+Order
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+function searchProducts(){
+
+const q =
+document.getElementById("search").value
+.trim()
+.toLowerCase();
+
+if(!q){
+
+showProducts();
+
+return;
+
+}
+
+const result =
+products.filter(p=>
+p.name.toLowerCase().includes(q) ||
+p.desc.toLowerCase().includes(q)
+);
+
+showProducts(result);
+
+}
+
+
+function filterCategory(name){
+
+const result =
+products.filter(p=>p.name===name);
+
+showProducts(result);
+
+document.getElementById("productsSection")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+/* =========================
+PRODUCT DETAIL
+========================= */
+
+function openProduct(name){
+
+const p =
+products.find(x=>x.name===name);
+
+if(!p) return;
+
+currentDetailProduct = p;
+
+detailQty = 1;
+
+document.getElementById("detailQty").innerText =
+detailQty;
+
+document.getElementById("ppTitle").innerText =
+p.name;
+
+document.getElementById("detailName").innerText =
+p.name;
+
+document.getElementById("detailIcon").innerText =
+p.icon;
+
+document.getElementById("detailPrice").innerText =
+"₹" + p.price;
+
+document.getElementById("detailMrp").innerText =
+"₹" + Math.round(p.price * 1.5);
+
+document.getElementById("detailShort").innerText =
+p.desc;
+
+document.getElementById("detailDescription").innerText =
+p.description;
+
+const wish =
+document.getElementById("detailWishBtn");
+
+wish.innerText =
+wishlist.includes(p.name) ? "♥" : "♡";
+
+wish.classList.toggle(
+"active",
+wishlist.includes(p.name)
+);
+
+wish.onclick =
+()=>toggleWishlist(p.name);
+
+const upload =
+document.getElementById("productUpload");
+
+if(upload) upload.value="";
+
+const status =
+document.getElementById("uploadStatus");
+
+if(status)
+status.innerText="Optional";
+
+renderRelatedProducts();
+
+document.getElementById("productPage")
+.classList.add("active");
+
+document.body.style.overflow="hidden";
+
+}
+
+
+function closeProductPage(){
+
+document.getElementById("productPage")
+.classList.remove("active");
+
+document.body.style.overflow="";
+
+}
+
+
+function changeDetailQty(change){
+
+detailQty += change;
+
+if(detailQty < 1)
+detailQty = 1;
+
+if(detailQty > 100)
+detailQty = 100;
+
+document.getElementById("detailQty").innerText =
+detailQty;
+
+}
+
+
+function renderRelatedProducts(){
+
+const box =
+document.getElementById("relatedProducts");
+
+if(!box || !currentDetailProduct)
+return;
+
+const related =
+products
+.filter(p=>p.name!==currentDetailProduct.name)
+.slice(0,4);
+
+box.innerHTML =
+related.map(p=>`
+
+<div
+class="related-card"
+onclick="openProduct('${escapeHtml(p.name)}')">
+
+<div class="related-img">
+${p.icon}
+</div>
+
+<div class="related-info">
+<b>${escapeHtml(p.name)}</b>
+<div>₹${p.price}</div>
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function addDetailToCart(){
+
+if(!currentDetailProduct)
+return;
+
+const quality =
+document.getElementById("customQuality")?.value ||
+"Standard";
+
+const finish =
+document.getElementById("customFinish")?.value ||
+"Matte";
+
+const existing =
+cart.find(i=>
+i.name===currentDetailProduct.name &&
+i.quality===quality &&
+i.finish===finish
+);
+
+if(existing){
+
+existing.qty += detailQty;
+
+}else{
+
+cart.push({
+
+name:currentDetailProduct.name,
+
+price:currentDetailProduct.price,
+
+qty:detailQty,
+
+quality:quality,
+
+finish:finish
+
+});
+
+}
+
+saveCart();
+
+showToast(
+currentDetailProduct.name +
+" cart में add हो गया 🛒"
+);
+
+}
+
+
+function buyDetailNow(){
+
+addDetailToCart();
+
+closeProductPage();
+
+setTimeout(
+()=>openCart(),
+200
+);
+
+}
+
+
+function quickOrder(name){
+
+openProduct(name);
+
+setTimeout(
+()=>buyDetailNow(),
+250
+);
+
+}
+
+
+/* =========================
+WISHLIST
+========================= */
+
+function toggleWishlist(name){
+
+if(wishlist.includes(name)){
+
+wishlist =
+wishlist.filter(x=>x!==name);
+
+showToast("Wishlist से removed");
+
+}else{
+
+wishlist.push(name);
+
+showToast("Wishlist में added ❤️");
+
+}
+
+localStorage.setItem(
+"printzyWishlist",
+JSON.stringify(wishlist)
+);
+
+showProducts();
+
+if(
+currentDetailProduct &&
+currentDetailProduct.name===name
+){
+
+const b =
+document.getElementById("detailWishBtn");
+
+if(b){
+
+b.innerText =
+wishlist.includes(name) ? "♥" : "♡";
+
+b.classList.toggle(
+"active",
+wishlist.includes(name)
+);
+
+}
+
+}
+
+}
+
+
+function openWishlist(){
+
+const items =
+products.filter(p=>
+wishlist.includes(p.name)
+);
+
+let html =
+"<h2>❤️ Wishlist</h2>";
+
+if(!items.length){
+
+html += `
+
+<div style="text-align:center;padding:35px">
+
+<div style="font-size:60px">♡</div>
+
+<h3>No wishlist products</h3>
+
+<p style="color:var(--muted);margin-top:8px">
+Tap ♡ on products to save them.
+</p>
+
+</div>
+
+`;
+
+}else{
+
+items.forEach(p=>{
+
+html += `
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+padding:14px 0;
+border-bottom:1px solid var(--border)
+">
+
+<div>
+<strong>${p.icon} ${escapeHtml(p.name)}</strong>
+<div style="color:var(--pink);margin-top:5px">
+₹${p.price}
+</div>
+</div>
+
+<button
+class="order"
+style="padding:8px 14px"
+onclick="closeModal();openProduct('${escapeHtml(p.name)}')">
+View
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+showModal(html);
+
+}
+
+
+/* =========================
+MENU / MODAL
+========================= */
+
+function openMenu(){
+
+document.getElementById("menuOverlay")
+.style.display="block";
+
+checkUser();
+
+}
+
+function closeMenu(){
+
+document.getElementById("menuOverlay")
+.style.display="none";
+
+}
+
+function closeMenuOutside(e){
+
+if(e.target.id==="menuOverlay")
+closeMenu();
+
+}
+
+
+function showModal(content){
+
+document.getElementById("modalContent")
+.innerHTML=content;
+
+document.getElementById("modal")
+.style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById("modal")
+.style.display="none";
+
+}
+
+
+function outsideModal(e){
+
+if(e.target.id==="modal")
+closeModal();
+
+}
+
+
+/* =========================
+CART
+========================= */
+
+function openCart(){
+
+let html="<h2>🛒 My Cart</h2>";
 
 if(!cart.length){
 
-html+=`
+html += `
 
-<div style="
-text-align:center;
-padding:35px">
+<div style="text-align:center;padding:40px">
 
-<div style="font-size:60px">
-🛒
-</div>
+<div style="font-size:65px">🛒</div>
 
-<h3>
-Your cart is empty
-</h3>
+<h3>Your cart is empty</h3>
 
-<p style="
-color:var(--muted);
-margin-top:8px">
-
-Add some products to continue.
-
+<p style="color:var(--muted);margin-top:8px">
+Products add करके checkout करें।
 </p>
 
-</div>`;
+<button
+class="checkout"
+onclick="closeModal();window.scrollTo({top:0,behavior:'smooth'})">
+Continue Shopping
+</button>
+
+</div>
+
+`;
 
 showModal(html);
 
@@ -2361,45 +2616,56 @@ let total=0;
 
 cart.forEach((item,index)=>{
 
-const amount=
-item.price*item.qty;
+const amount =
+Number(item.price) *
+Number(item.qty);
 
-total+=amount;
+total += amount;
 
-html+=`
+html += `
 
-<div class="cart-item">
+<div
+style="
+padding:15px 0;
+border-bottom:1px solid var(--border);
+display:flex;
+justify-content:space-between;
+gap:12px
+">
 
-<div>
+<div style="flex:1">
 
-<strong>
-${escapeHtml(item.name)}
-</strong>
+<strong>${escapeHtml(item.name)}</strong>
 
-<div style="
-color:var(--muted);
-font-size:13px;
-margin-top:4px">
+<div style="font-size:12px;color:var(--muted);margin-top:5px">
+${escapeHtml(item.quality || "Standard")}
+ •
+${escapeHtml(item.finish || "Matte")}
+</div>
 
+<div style="color:var(--pink);font-weight:bold;margin-top:6px">
 ₹${item.price} × ${item.qty}
-
 </div>
 
 </div>
 
+<div style="text-align:right">
 
-<div>
+<strong>₹${amount}</strong>
 
-<strong>
-₹${amount}
-</strong>
+<br>
 
 <button
-class="remove"
-onclick="removeCart(${index})">
-
+style="
+margin-top:8px;
+border:0;
+background:#ffe6eb;
+color:#e21d4d;
+padding:7px 10px;
+border-radius:8px
+"
+onclick="removeFromCart(${index})">
 Remove
-
 </button>
 
 </div>
@@ -2410,18 +2676,29 @@ Remove
 
 });
 
-html+=`
+html += `
 
-<div class="cart-total">
-Total: ₹${total}
+<div
+style="
+display:flex;
+justify-content:space-between;
+font-size:21px;
+font-weight:bold;
+padding-top:18px
+">
+
+<span>Total</span>
+
+<span style="color:var(--pink)">
+₹${total}
+</span>
+
 </div>
 
 <button
 class="checkout"
 onclick="checkout()">
-
 Proceed to Checkout →
-
 </button>
 
 `;
@@ -2431,7 +2708,7 @@ showModal(html);
 }
 
 
-function removeCart(index){
+function removeFromCart(index){
 
 cart.splice(index,1);
 
@@ -2439,36 +2716,37 @@ saveCart();
 
 openCart();
 
+showToast("Product removed");
+
 }
 
 
-/* =====================================================
-PROFILE DATA
-MIDDLE NAME COMPLETELY REMOVED
-===================================================== */
+/* =========================
+PROFILE
+========================= */
 
 function getProfileData(user){
 
-const m=
-user?.user_metadata||{};
+const m =
+user?.user_metadata || {};
 
 return {
 
-name:(m.name||"").trim(),
+name:(m.name || "").trim(),
 
-last_name:(m.last_name||"").trim(),
+last_name:(m.last_name || "").trim(),
 
-mobile:(m.mobile||"").trim(),
+mobile:(m.mobile || "").trim(),
 
-house:(m.house||"").trim(),
+house:(m.house || "").trim(),
 
-road:(m.road||"").trim(),
+road:(m.road || "").trim(),
 
-city:(m.city||"").trim(),
+city:(m.city || "").trim(),
 
-state:(m.state||"").trim(),
+state:(m.state || "").trim(),
 
-pincode:(m.pincode||"").trim()
+pincode:(m.pincode || "").trim()
 
 };
 
@@ -2477,10 +2755,11 @@ pincode:(m.pincode||"").trim()
 
 function isProfileComplete(user){
 
-const p=
+const p =
 getProfileData(user);
 
 return !!(
+
 p.name &&
 p.last_name &&
 /^[0-9]{10}$/.test(p.mobile) &&
@@ -2489,6 +2768,7 @@ p.road &&
 p.city &&
 p.state &&
 /^[0-9]{6}$/.test(p.pincode)
+
 );
 
 }
@@ -2496,66 +2776,62 @@ p.state &&
 
 function profileMissingFields(user){
 
-const p=
+const p =
 getProfileData(user);
 
-const missing=[];
+const m=[];
 
 if(!p.name)
-missing.push("Name");
+m.push("Name");
 
 if(!p.last_name)
-missing.push("Last Name");
+m.push("Last Name");
 
 if(!/^[0-9]{10}$/.test(p.mobile))
-missing.push("Mobile Number");
+m.push("Mobile Number");
 
 if(!p.house)
-missing.push("House No. / Building Name");
+m.push("House No. / Building Name");
 
 if(!p.road)
-missing.push("Road / Area / Colony Name");
+m.push("Road / Area / Colony Name");
 
 if(!p.city)
-missing.push("City");
+m.push("City");
 
 if(!p.state)
-missing.push("State");
+m.push("State");
 
 if(!/^[0-9]{6}$/.test(p.pincode))
-missing.push("Pincode");
+m.push("Pincode");
 
-return missing;
+return m;
 
 }
 
 
-/* =====================================================
+/* =========================
 CHECKOUT
-===================================================== */
+========================= */
 
 async function checkout(){
 
 if(!cart.length){
 
-alert(
-"Your cart is empty."
-);
+alert("Your cart is empty.");
 
 return;
 
 }
 
-
-const user=
+const user =
 await getCurrentUser();
-
 
 if(!user){
 
-alert(
-"पहले Customer Login करें।"
-);
+alert("पहले Customer Login करें।");
+
+closeModal();
 
 openAuth();
 
@@ -2563,17 +2839,13 @@ return;
 
 }
 
-
 if(!isProfileComplete(user)){
 
-const missing=
-profileMissingFields(user);
-
 alert(
-"Profile पूरी करें।\n\n"+
-"इन details की जरूरत है:\n"+
-missing.map(x=>"• "+x).join("\n")+
-"\n\nProfile save करने के बाद ही Checkout आगे बढ़ेगा।"
+"Profile पूरी करें।\n\n" +
+profileMissingFields(user)
+.map(x=>"• "+x)
+.join("\n")
 );
 
 openProfile(true);
@@ -2582,35 +2854,28 @@ return;
 
 }
 
-
 let total=0;
 
-let orderItems="";
+let items="";
 
-cart.forEach(item=>{
+cart.forEach(i=>{
 
-const amount=
-item.price*item.qty;
+const amount =
+Number(i.price) *
+Number(i.qty);
 
-total+=amount;
+total += amount;
 
-orderItems+=`
+items += `
 
 <div class="checkout-summary-item">
 
 <div>
 
-<strong>
-${escapeHtml(item.name)}
-</strong>
+<strong>${escapeHtml(i.name)}</strong>
 
-<div style="
-font-size:12px;
-color:var(--muted);
-margin-top:4px">
-
-₹${item.price} × ${item.qty}
-
+<div style="font-size:12px;color:var(--muted)">
+₹${i.price} × ${i.qty}
 </div>
 
 </div>
@@ -2625,128 +2890,105 @@ margin-top:4px">
 
 });
 
-
-const profile=
+const p =
 getProfileData(user);
 
-const fullName=
-[
-profile.name,
-profile.last_name
-]
+const full =
+[p.name,p.last_name]
 .filter(Boolean)
 .join(" ");
 
-
-const fullAddress=
-[
-profile.house,
-profile.road
-]
+const addr =
+[p.house,p.road]
 .filter(Boolean)
 .join(", ");
 
-
 showModal(`
 
-<h2>
-📦 Checkout
-</h2>
+<h2>📦 Checkout</h2>
 
 <div class="profile-complete">
-✓ Profile Complete — Delivery details loaded automatically.
+✓ Profile Complete
 </div>
 
-<h3 class="checkout-title">
+<h3 style="margin-top:15px">
 👤 Customer Details
 </h3>
 
 <input
 class="auth-input"
-id="checkoutName"
-type="text"
-value="${escapeHtml(fullName)}"
+value="${escapeHtml(full)}"
 readonly>
-
 
 <input
 class="auth-input"
-id="checkoutMobile"
-type="tel"
-value="${escapeHtml(profile.mobile)}"
+value="${escapeHtml(p.mobile)}"
 readonly>
 
-
-<h3 class="checkout-title">
+<h3 style="margin-top:15px">
 📍 Delivery Address
 </h3>
 
 <textarea
 class="auth-input"
-id="checkoutAddress"
-rows="4"
-readonly>${escapeHtml(fullAddress)}</textarea>
-
+rows="3"
+readonly>${escapeHtml(addr)}</textarea>
 
 <div class="checkout-grid">
 
 <input
 class="auth-input"
-id="checkoutCity"
-type="text"
-value="${escapeHtml(profile.city)}"
+value="${escapeHtml(p.city)}"
 readonly>
-
 
 <input
 class="auth-input"
-id="checkoutState"
-type="text"
-value="${escapeHtml(profile.state)}"
+value="${escapeHtml(p.state)}"
 readonly>
 
 </div>
 
-
 <input
 class="auth-input"
-id="checkoutPincode"
-type="tel"
-value="${escapeHtml(profile.pincode)}"
+value="${escapeHtml(p.pincode)}"
 readonly>
 
-
-<h3 class="checkout-title">
+<h3 style="margin-top:15px">
 🛒 Order Summary
 </h3>
 
-
 <div class="checkout-summary">
 
-${orderItems}
+${items}
 
 <div class="checkout-total">
 
-<span>
-Total
-</span>
+<span>Total</span>
 
-<span>
-₹${total}
-</span>
+<span>₹${total}</span>
 
 </div>
 
 </div>
 
+<div
+style="
+margin-top:15px;
+padding:13px;
+background:#fff7dc;
+border-radius:10px;
+font-size:13px
+">
+
+💵 <b>Payment Method:</b> Cash on Delivery (COD)
+
+</div>
 
 <button
 class="checkout"
 style="margin-top:20px"
 onclick="placeOrder()">
-
 Place Order →
-
 </button>
 
 `);
@@ -2754,276 +2996,171 @@ Place Order →
 }
 
 
-/* =====================================================
+/* =========================
 PLACE ORDER
-===================================================== */
+========================= */
 
 async function placeOrder(){
 
-if(!cart || cart.length === 0){
-
-alert("Cart खाली है।");
+if(!cart.length)
 return;
-
-}
-
 
 const user =
 await getCurrentUser();
 
-
-if(!user){
-
-alert("Account required.");
+if(!user)
 return;
-
-}
-
 
 if(!isProfileComplete(user)){
 
 alert("Profile पूरी करना जरूरी है।");
+
 openProfile(true);
+
 return;
 
 }
 
-
 try{
 
-const profile =
+const p =
 getProfileData(user);
 
-
-const fullName =
-[
-profile.name,
-profile.last_name
-]
+const full =
+[p.name,p.last_name]
 .filter(Boolean)
 .join(" ");
 
-
-const shippingAddress =
+const addr =
 [
-profile.house,
-profile.road,
-profile.city,
-profile.state,
-profile.pincode
+p.house,
+p.road,
+p.city,
+p.state,
+p.pincode
 ]
 .filter(Boolean)
 .join(", ");
 
+let total=0;
 
-let totalAmount = 0;
+let items=[];
 
+cart.forEach(i=>{
 
-cart.forEach(item => {
+const amount =
+Number(i.price) *
+Number(i.qty);
 
-totalAmount +=
-Number(item.price) *
-Number(item.qty);
+total += amount;
+
+items.push(
+`${i.name} × ${i.qty} = ₹${amount}`
+);
 
 });
 
-
 const orderNumber =
 "PZ-" +
-Date.now().toString().slice(-10);
+Date.now()
+.toString()
+.slice(-10);
 
-
-const orderItems =
-cart
-.map(item => {
-
-const price =
-Number(item.price);
-
-const qty =
-Number(item.qty);
-
-const amount =
-price * qty;
-
-return (
-item.name +
-" × " +
-qty +
-" = ₹" +
-amount
-);
-
-})
-.join("\n");
-
-
-const { data, error } =
+const {error} =
 await supabaseClient
 .from("orders")
 .insert({
 
-order_number:
-orderNumber,
+order_number:orderNumber,
 
-customer_id:
-null,
+customer_id:null,
 
-customer_name:
-fullName,
+customer_name:full,
 
-customer_phone:
-profile.mobile,
+customer_phone:p.mobile,
 
-customer_email:
-user.email || "",
+customer_email:user.email || "",
 
-shipping_address:
-shippingAddress,
+shipping_address:addr,
 
-total_amount:
-totalAmount,
+total_amount:total,
 
-payment_status:
-"pending",
+payment_status:"pending",
 
-order_status:
-"pending",
+order_status:"pending",
 
-payment_method:
-"COD",
+payment_method:"COD",
 
 notes:
 "Order Items:\n" +
-orderItems
+items.join("\n")
 
-})
-.select()
-.single();
+});
 
+if(error)
+throw error;
 
-if(error){
-
-console.error(
-"Place Order Error:",
-error
-);
-
-alert(
-"Order place nahi ho paya ❌\n\n" +
-error.message
-);
-
-return;
-
-}
-
-
-cart = [];
+cart=[];
 
 saveCart();
 
-updateCartCount();
-
-closeModal();
-
-
 showModal(`
 
-<div style="
-text-align:center;
-padding:20px 10px;
-">
+<div style="text-align:center;padding:20px">
 
-<div style="
-font-size:65px;
-margin-bottom:10px;
-">
+<div style="font-size:65px">
 ✅
 </div>
 
-
-<h2 style="
-color:var(--green);
-margin-bottom:10px;
-">
+<h2 style="color:var(--green)">
 Order Placed Successfully!
 </h2>
 
-
-<p style="
-color:var(--muted);
-line-height:1.6;
-">
+<p style="color:var(--muted);margin:10px">
 आपका order successfully place हो गया है।
 </p>
 
-
-<div style="
+<div
+style="
 margin:20px 0;
 padding:18px;
 background:var(--soft);
-border:1px solid var(--border);
-border-radius:14px;
+border-radius:14px
 ">
 
-<div style="
-font-size:13px;
-color:var(--muted);
-">
-Order Number
-</div>
+<small>Order Number</small>
 
-
-<div style="
-margin-top:7px;
+<div
+style="
 font-size:22px;
 font-weight:900;
 color:var(--pink);
+margin-top:7px
 ">
-${escapeHtml(orderNumber)}
-</div>
+
+${orderNumber}
 
 </div>
 
-
-<div style="
-font-size:18px;
-font-weight:800;
-margin-bottom:18px;
-">
-Total: ₹${totalAmount}
 </div>
-
 
 <button
 class="checkout"
 onclick="closeModal()">
-
 Continue Shopping
-
 </button>
 
 </div>
 
 `);
 
+showToast("Order placed successfully ✅");
 
-showToast(
-"Order placed successfully ✅"
-);
-
-
-}catch(error){
-
-console.error(
-"Place Order Exception:",
-error
-);
+}catch(e){
 
 alert(
-"Order place karte waqt error aa gaya ❌\n\n" +
-error.message
+"Order place nahi ho paya ❌\n\n" +
+e.message
 );
 
 }
@@ -3031,144 +3168,13 @@ error.message
 }
 
 
-/* =====================================================
-WISHLIST
-===================================================== */
-
-function toggleWishlist(name){
-
-if(wishlist.includes(name)){
-
-wishlist=
-wishlist.filter(x=>x!==name);
-
-showToast(
-"Removed from wishlist"
-);
-
-}else{
-
-wishlist.push(name);
-
-showToast(
-"Added to wishlist ❤️"
-);
-
-}
-
-localStorage.setItem(
-"printzyWishlist",
-JSON.stringify(wishlist)
-);
-
-const q=
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-showProducts(
-q
-?
-products.filter(p=>
-p.name.toLowerCase().includes(q) ||
-p.category.toLowerCase().includes(q) ||
-p.description.toLowerCase().includes(q)
-)
-:
-products
-);
-
-}
-
-
-function openWishlist(){
-
-const items=
-products.filter(p=>
-wishlist.includes(p.name)
-);
-
-let html=
-`<h2>❤️ Wishlist</h2>`;
-
-if(!items.length){
-
-html+=`
-
-<div style="
-text-align:center;
-padding:35px">
-
-<div style="font-size:60px">
-♡
-</div>
-
-<h3>
-No wishlist products
-</h3>
-
-<p style="
-color:var(--muted);
-margin-top:8px">
-
-Tap ♡ on products to save them.
-
-</p>
-
-</div>`;
-
-}else{
-
-items.forEach(p=>{
-
-html+=`
-
-<div class="cart-item">
-
-<div>
-
-<strong>
-${p.icon} ${escapeHtml(p.name)}
-</strong>
-
-<div style="color:var(--pink)">
-₹${p.price}
-</div>
-
-</div>
-
-<button
-class="order"
-style="padding:8px 14px"
-onclick="addToCart('${p.name}')">
-
-Add
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-showModal(html);
-
-}
-
-
-/* =====================================================
+/* =========================
 AUTH
-===================================================== */
+========================= */
 
-async function openAuth(){
+function openAuth(){
 
-const user=
-await getCurrentUser();
+getCurrentUser().then(user=>{
 
 if(user){
 
@@ -3178,13 +3184,9 @@ return;
 
 }
 
+const html = `
 
-showModal(`
-
-<h2>
-👤 Login / Sign Up
-</h2>
-
+<h2>👤 Login / Sign Up</h2>
 
 <div id="loginForm">
 
@@ -3192,9 +3194,7 @@ showModal(`
 class="auth-input"
 id="authEmail"
 type="email"
-autocomplete="email"
 placeholder="Email address">
-
 
 <div class="password-wrap">
 
@@ -3202,286 +3202,178 @@ placeholder="Email address">
 class="auth-input"
 id="authPassword"
 type="password"
-autocomplete="current-password"
 placeholder="Password">
 
-
-<button
-type="button"
-onclick="togglePassword()">
-
+<button onclick="togglePassword()">
 👁️
-
 </button>
 
 </div>
 
-
 <button
 class="auth-submit"
 onclick="loginUser()">
-
 Login
-
 </button>
-
 
 <button
 class="auth-submit"
 style="
 background:transparent;
 color:var(--pink);
-border:2px solid var(--pink)"
+border:2px solid var(--pink)
+"
 onclick="showSignup()">
-
 Create New Account
-
 </button>
 
 </div>
 
-
-<div id="signupForm"
+<div
+id="signupForm"
 style="display:none">
 
 <input
 class="auth-input"
 id="signupName"
-type="text"
-autocomplete="given-name"
 placeholder="Name">
-
 
 <input
 class="auth-input"
 id="signupLastName"
-type="text"
-autocomplete="family-name"
 placeholder="Last Name">
-
 
 <input
 class="auth-input"
 id="signupMobile"
-type="tel"
-autocomplete="tel"
 maxlength="10"
+inputmode="numeric"
 placeholder="Mobile Number">
-
 
 <input
 class="auth-input"
 id="signupEmail"
 type="email"
-autocomplete="email"
 placeholder="Email address">
-
-
-<div class="password-wrap">
 
 <input
 class="auth-input"
 id="signupPassword"
 type="password"
-autocomplete="new-password"
 placeholder="Password">
-
-
-<button
-type="button"
-onclick="toggleSignupPassword()">
-
-👁️
-
-</button>
-
-</div>
-
 
 <input
 class="auth-input"
 id="signupConfirmPassword"
 type="password"
-autocomplete="new-password"
 placeholder="Confirm Password">
-
 
 <button
 class="auth-submit"
 onclick="signupUser()">
-
 Create Account
-
 </button>
-
 
 <button
 class="auth-submit"
 style="
 background:transparent;
 color:var(--pink);
-border:2px solid var(--pink)"
+border:2px solid var(--pink)
+"
 onclick="showLogin()">
-
 ← Back to Login
-
 </button>
 
 </div>
 
+`;
 
-<p style="
-margin-top:15px;
-color:var(--muted);
-font-size:12px;
-text-align:center">
+showModal(html);
 
-Account बनाने के बाद Profile में बाकी delivery details भरना जरूरी होगा।
-
-</p>
-
-`);
+});
 
 }
 
 
 function showLogin(){
 
-const login=
-document.getElementById("loginForm");
+document.getElementById("loginForm")
+.style.display="block";
 
-const signup=
-document.getElementById("signupForm");
-
-if(login)
-login.style.display="block";
-
-if(signup)
-signup.style.display="none";
+document.getElementById("signupForm")
+.style.display="none";
 
 }
 
 
 function showSignup(){
 
-const login=
-document.getElementById("loginForm");
+document.getElementById("loginForm")
+.style.display="none";
 
-const signup=
-document.getElementById("signupForm");
-
-if(login)
-login.style.display="none";
-
-if(signup)
-signup.style.display="block";
+document.getElementById("signupForm")
+.style.display="block";
 
 }
 
 
 function togglePassword(){
 
-const input=
+const x =
 document.getElementById("authPassword");
 
-if(!input)return;
-
-input.type=
-input.type==="password"
-?
-"text"
-:
-"password";
+x.type =
+x.type==="password"
+? "text"
+: "password";
 
 }
 
 
-function toggleSignupPassword(){
-
-const input=
-document.getElementById("signupPassword");
-
-if(!input)return;
-
-input.type=
-input.type==="password"
-?
-"text"
-:
-"password";
-
-}
-
-
-/* =====================================================
-LOGIN
-===================================================== */
+/* LOGIN */
 
 async function loginUser(){
 
-const email=
-document
-.getElementById("authEmail")
-.value
-.trim();
+const email =
+document.getElementById("authEmail")
+.value.trim();
 
-const password=
-document
-.getElementById("authPassword")
+const password =
+document.getElementById("authPassword")
 .value;
 
+if(!email || !password){
 
-if(!email){
-
-alert(
-"Email address डालें।"
-);
+alert("Email और Password डालें।");
 
 return;
 
 }
-
-if(!password){
-
-alert(
-"Password डालें।"
-);
-
-return;
-
-}
-
 
 try{
 
-const {data,error}=
-await supabaseClient.auth.signInWithPassword({
-
-email:email,
-
-password:password
-
+const {data,error} =
+await supabaseClient.auth
+.signInWithPassword({
+email,
+password
 });
-
 
 if(error)
 throw error;
-
 
 closeModal();
 
 updateMenuUser(data.user);
 
-showToast(
-"Login successful ✅"
-);
+showToast("Login successful ✅");
 
-
-}catch(error){
+}catch(e){
 
 alert(
-"Login failed ❌\n\n"+
-error.message
+"Login failed ❌\n\n" +
+e.message
 );
 
 }
@@ -3489,183 +3381,86 @@ error.message
 }
 
 
-/* =====================================================
-SIGNUP
-MIDDLE NAME REMOVED
-===================================================== */
+/* SIGNUP */
 
 async function signupUser(){
 
 const name =
-document
-.getElementById("signupName")
-?.value
-.trim();
+document.getElementById("signupName")
+.value.trim();
 
-
-const lastName =
-document
-.getElementById("signupLastName")
-?.value
-.trim();
-
+const last =
+document.getElementById("signupLastName")
+.value.trim();
 
 const mobile =
-document
-.getElementById("signupMobile")
-?.value
-.trim();
-
+document.getElementById("signupMobile")
+.value.trim();
 
 const email =
-document
-.getElementById("signupEmail")
-?.value
-.trim();
+document.getElementById("signupEmail")
+.value.trim();
 
+const pass =
+document.getElementById("signupPassword")
+.value;
 
-const password =
-document
-.getElementById("signupPassword")
-?.value;
+const confirm =
+document.getElementById("signupConfirmPassword")
+.value;
 
+if(
+!name ||
+!last ||
+!/^[0-9]{10}$/.test(mobile) ||
+!email ||
+!pass
+){
 
-const confirmPassword =
-document
-.getElementById("signupConfirmPassword")
-?.value;
-
-
-if(!name){
-
-alert("Name डालें।");
-return;
-
-}
-
-
-if(!lastName){
-
-alert("Last Name डालें।");
-return;
-
-}
-
-
-if(!/^[0-9]{10}$/.test(mobile)){
-
-alert(
-"Valid 10 digit Mobile Number डालें।"
-);
+alert("सभी required details सही भरें।");
 
 return;
 
 }
 
+if(pass.length<6){
 
-if(!email){
-
-alert(
-"Email address डालें।"
-);
+alert("Password कम से कम 6 characters का होना चाहिए।");
 
 return;
 
 }
 
+if(pass!==confirm){
 
-if(!password){
-
-alert(
-"Password डालें।"
-);
+alert("Confirm Password match नहीं कर रहा।");
 
 return;
 
 }
-
-
-if(password.length < 6){
-
-alert(
-"Password कम से कम 6 characters का होना चाहिए।"
-);
-
-return;
-
-}
-
-
-if(password !== confirmPassword){
-
-alert(
-"Password और Confirm Password match नहीं कर रहे।"
-);
-
-return;
-
-}
-
 
 try{
 
 const {data,error} =
-await supabaseClient.auth.signUp({
+await supabaseClient.auth
+.signUp({
 
-email:email,
+email,
 
-password:password,
+password:pass,
 
 options:{
 data:{
 name:name,
-last_name:lastName,
+last_name:last,
 mobile:mobile
 }
 }
 
 });
 
-
-console.log(
-"SIGNUP RESPONSE:",
-data
-);
-
-console.log(
-"SIGNUP ERROR:",
-error
-);
-
-
-if(error){
-
-console.error(
-"Supabase Signup Error:",
-error
-);
-
-alert(
-"Account creation failed ❌\n\n" +
-error.message
-);
-
-return;
-
-}
-
-
-if(!data || !data.user){
-
-alert(
-"Account create नहीं हुआ ❌\n\n" +
-"Supabase ने user return नहीं किया।"
-);
-
-return;
-
-}
-
+if(error)
+throw error;
 
 if(data.session){
 
@@ -3677,37 +3472,27 @@ showToast(
 "Account created successfully ✅"
 );
 
+setTimeout(
+()=>openProfile(true),
+500
+);
 
-setTimeout(()=>{
-
-openProfile(true);
-
-},500);
-
-return;
-
-}
-
+}else{
 
 alert(
 "Account create हो गया है ✅\n\n" +
-"लेकिन login session नहीं मिला।\n\n" +
-"Supabase Authentication settings check करनी होंगी."
+"अगर email confirmation enabled है तो पहले email verify करें, फिर login करें।"
 );
 
 showLogin();
 
+}
 
-}catch(error){
-
-console.error(
-"Signup Exception:",
-error
-);
+}catch(e){
 
 alert(
 "Account creation failed ❌\n\n" +
-(error?.message || "Unknown error")
+e.message
 );
 
 }
@@ -3715,97 +3500,64 @@ alert(
 }
 
 
-/* =====================================================
-SESSION
-===================================================== */
+/* AUTH STATE */
 
 async function checkUser(){
 
 try{
 
-const {data}=
-await supabaseClient.auth.getSession();
-
-
-if(data.session){
+const {data} =
+await supabaseClient.auth
+.getSession();
 
 updateMenuUser(
-data.session.user
+data.session?.user || null
 );
 
-}else{
-
-updateMenuUser(null);
-
-}
-
-}catch(error){
-
-console.log(error);
-
-}
+}catch(e){}
 
 }
 
 
-/* =====================================================
-AUTH STATE
-===================================================== */
-
-supabaseClient.auth.onAuthStateChange(
-(event,session)=>{
-
+supabaseClient.auth
+.onAuthStateChange(
+(event,session)=>
 updateMenuUser(
-session?.user||null
+session?.user || null
+)
 );
 
-}
-);
-
-
-/* =====================================================
-UPDATE MENU USER
-===================================================== */
 
 function updateMenuUser(user){
 
-const nameEl=
+const n =
 document.getElementById("menuUserName");
 
-const emailEl=
+const e =
 document.getElementById("menuUserEmail");
 
-
-if(!nameEl||!emailEl)
+if(!n || !e)
 return;
-
 
 if(user){
 
-const p=
+const p =
 getProfileData(user);
 
-const name=
-[
-p.name,
-p.last_name
-]
+n.innerText =
+[p.name,p.last_name]
 .filter(Boolean)
 .join(" ") ||
 "Customer";
 
-
-nameEl.innerText=name;
-
-emailEl.innerText=
-user.email||"";
+e.innerText =
+user.email || "";
 
 }else{
 
-nameEl.innerText=
-"Customer";
+n.innerText="Customer";
 
-emailEl.innerText=
+e.innerText=
 "Login to your account";
 
 }
@@ -3813,15 +3565,14 @@ emailEl.innerText=
 }
 
 
-/* =====================================================
-PROFILE
-===================================================== */
+/* =========================
+PROFILE MODAL
+========================= */
 
-async function openProfile(forceEdit=false){
+async function openProfile(force=false){
 
-const user=
+const user =
 await getCurrentUser();
-
 
 if(!user){
 
@@ -3831,23 +3582,18 @@ return;
 
 }
 
-
-const p=
+const p =
 getProfileData(user);
 
-const complete=
+const complete =
 isProfileComplete(user);
 
-const missing=
+const missing =
 profileMissingFields(user);
-
 
 showModal(`
 
-<h2>
-👤 My Profile
-</h2>
-
+<h2>👤 My Profile</h2>
 
 <div class="profile-box">
 
@@ -3855,19 +3601,23 @@ showModal(`
 👤
 </div>
 
-
-<div style="
+<div
+style="
 text-align:center;
-font-size:13px;
 color:var(--muted);
-margin-bottom:15px">
+margin-bottom:15px
+">
 
-${escapeHtml(user.email||"")}
+${escapeHtml(user.email || "")}
 
 </div>
 
+${
+complete && !force
 
-${complete && !forceEdit ? `
+?
+
+`
 
 <div class="profile-complete">
 ✓ Profile Complete
@@ -3876,7 +3626,6 @@ ${complete && !forceEdit ? `
 <div class="profile-section-title">
 Personal Details
 </div>
-
 
 <div class="profile-row">
 
@@ -3890,7 +3639,6 @@ ${escapeHtml(p.name)}
 
 </div>
 
-
 <div class="profile-row">
 
 <div class="profile-label">
@@ -3903,11 +3651,10 @@ ${escapeHtml(p.last_name)}
 
 </div>
 
-
 <div class="profile-row">
 
 <div class="profile-label">
-MOBILE NUMBER
+MOBILE
 </div>
 
 <div class="profile-value">
@@ -3916,16 +3663,14 @@ ${escapeHtml(p.mobile)}
 
 </div>
 
-
 <div class="profile-section-title">
 Delivery Address
 </div>
 
-
 <div class="profile-row">
 
 <div class="profile-label">
-HOUSE NO. / BUILDING NAME
+HOUSE / BUILDING
 </div>
 
 <div class="profile-value">
@@ -3934,11 +3679,10 @@ ${escapeHtml(p.house)}
 
 </div>
 
-
 <div class="profile-row">
 
 <div class="profile-label">
-ROAD / AREA / COLONY NAME
+ROAD / AREA
 </div>
 
 <div class="profile-value">
@@ -3946,7 +3690,6 @@ ${escapeHtml(p.road)}
 </div>
 
 </div>
-
 
 <div class="profile-row">
 
@@ -3960,7 +3703,6 @@ ${escapeHtml(p.city)}
 
 </div>
 
-
 <div class="profile-row">
 
 <div class="profile-label">
@@ -3972,7 +3714,6 @@ ${escapeHtml(p.state)}
 </div>
 
 </div>
-
 
 <div class="profile-row">
 
@@ -3986,46 +3727,28 @@ ${escapeHtml(p.pincode)}
 
 </div>
 
-
 <button
 class="checkout"
-style="margin-top:18px"
 onclick="openProfile(true)">
-
 ✏️ Edit Profile
-
 </button>
 
-` : `
+`
+
+:
+
+`
 
 <div class="profile-required">
 
-<strong>
-⚠️ Profile Complete करना जरूरी है
-</strong>
+<b>⚠️ Profile Complete करना जरूरी है</b>
 
 <br><br>
 
-${
-missing.length
-?
-"बाकी details: "+
-missing.join(", ")
-:
-"सभी delivery details भरें।"
-}
-
-<br><br>
-
-Profile complete होने तक Checkout / Order आगे नहीं बढ़ेगा।
+बाकी details:
+${missing.join(", ")}
 
 </div>
-
-
-<div class="profile-section-title">
-Personal Details
-</div>
-
 
 <label class="profile-label">
 Name *
@@ -4034,10 +3757,7 @@ Name *
 <input
 class="auth-input"
 id="profileName"
-type="text"
-value="${escapeHtml(p.name)}"
-placeholder="Name">
-
+value="${escapeHtml(p.name)}">
 
 <label class="profile-label">
 Last Name *
@@ -4046,10 +3766,7 @@ Last Name *
 <input
 class="auth-input"
 id="profileLastName"
-type="text"
-value="${escapeHtml(p.last_name)}"
-placeholder="Last Name">
-
+value="${escapeHtml(p.last_name)}">
 
 <label class="profile-label">
 Mobile Number *
@@ -4058,35 +3775,32 @@ Mobile Number *
 <input
 class="auth-input"
 id="profileMobile"
-type="tel"
 maxlength="10"
-value="${escapeHtml(p.mobile)}"
-placeholder="10 digit Mobile Number">
-
+inputmode="numeric"
+value="${escapeHtml(p.mobile)}">
 
 <div class="profile-section-title">
 Delivery Address
 </div>
 
-
 <button
-type="button"
 class="location-btn"
 onclick="useCurrentLocation()">
-
 📍 Use Current Location
-
 </button>
-
 
 <div
 id="locationStatus"
-class="location-status">
+style="
+font-size:12px;
+color:var(--muted);
+margin-top:8px;
+text-align:center
+">
 
-Current location से address automatically fill करने के लिए ऊपर button दबाएँ।
+Address automatically fill करने के लिए button दबाएँ।
 
 </div>
-
 
 <label class="profile-label">
 House No. / Building Name *
@@ -4095,95 +3809,58 @@ House No. / Building Name *
 <input
 class="auth-input"
 id="profileHouse"
-type="text"
-value="${escapeHtml(p.house)}"
-placeholder="House No. / Building Name">
-
+value="${escapeHtml(p.house)}">
 
 <label class="profile-label">
-Road Name / Area Name / Colony Name *
+Road / Area / Colony Name *
 </label>
 
 <input
 class="auth-input"
 id="profileRoad"
-type="text"
-value="${escapeHtml(p.road)}"
-placeholder="Road / Area / Colony Name">
-
+value="${escapeHtml(p.road)}">
 
 <div class="checkout-grid">
-
-<div>
-
-<label class="profile-label">
-City *
-</label>
 
 <input
 class="auth-input"
 id="profileCity"
-type="text"
 value="${escapeHtml(p.city)}"
 placeholder="City">
-
-</div>
-
-
-<div>
-
-<label class="profile-label">
-State *
-</label>
 
 <input
 class="auth-input"
 id="profileState"
-type="text"
 value="${escapeHtml(p.state)}"
 placeholder="State">
 
 </div>
 
-</div>
-
-
-<label class="profile-label">
-Pincode *
-</label>
-
 <input
 class="auth-input"
 id="profilePincode"
-type="tel"
 maxlength="6"
+inputmode="numeric"
 value="${escapeHtml(p.pincode)}"
-placeholder="6 digit Pincode">
-
+placeholder="Pincode">
 
 <button
 class="checkout"
-style="margin-top:18px"
 onclick="saveProfile()">
-
 💾 Save Profile
-
 </button>
 
-`}
+`
+
+}
 
 </div>
 
-
 <button
 class="checkout"
-style="
-margin-top:18px;
-background:#e21d4d"
+style="margin-top:18px;background:#e21d4d"
 onclick="logoutUser()">
-
 Logout
-
 </button>
 
 `);
@@ -4191,192 +3868,77 @@ Logout
 }
 
 
-/* =====================================================
-SAVE PROFILE
-===================================================== */
+/* SAVE PROFILE */
 
 async function saveProfile(){
 
-const user=
+const user =
 await getCurrentUser();
 
+if(!user)
+return;
 
-if(!user){
+const v =
+id =>
+document.getElementById(id)
+?.value.trim() || "";
+
+const name=v("profileName");
+
+const last=v("profileLastName");
+
+const mobile=v("profileMobile");
+
+const house=v("profileHouse");
+
+const road=v("profileRoad");
+
+const city=v("profileCity");
+
+const state=v("profileState");
+
+const pin=v("profilePincode");
+
+if(
+!name ||
+!last ||
+!/^[0-9]{10}$/.test(mobile) ||
+!house ||
+!road ||
+!city ||
+!state ||
+!/^[0-9]{6}$/.test(pin)
+){
 
 alert(
-"Session expired. Please login again."
-);
-
-openAuth();
-
-return;
-
-}
-
-
-const name=
-document
-.getElementById("profileName")
-?.value
-.trim();
-
-
-const lastName=
-document
-.getElementById("profileLastName")
-?.value
-.trim();
-
-
-const mobile=
-document
-.getElementById("profileMobile")
-?.value
-.trim();
-
-
-const house=
-document
-.getElementById("profileHouse")
-?.value
-.trim();
-
-
-const road=
-document
-.getElementById("profileRoad")
-?.value
-.trim();
-
-
-const city=
-document
-.getElementById("profileCity")
-?.value
-.trim();
-
-
-const state=
-document
-.getElementById("profileState")
-?.value
-.trim();
-
-
-const pincode=
-document
-.getElementById("profilePincode")
-?.value
-.trim();
-
-
-if(!name){
-
-alert("Name डालें.");
-return;
-
-}
-
-
-if(!lastName){
-
-alert("Last Name डालें.");
-return;
-
-}
-
-
-if(!/^[0-9]{10}$/.test(mobile)){
-
-alert(
-"Valid 10 digit Mobile Number डालें।"
+"Required profile details सही भरें।"
 );
 
 return;
 
 }
-
-
-if(!house){
-
-alert(
-"House No. / Building Name डालें।"
-);
-
-return;
-
-}
-
-
-if(!road){
-
-alert(
-"Road / Area / Colony Name डालें।"
-);
-
-return;
-
-}
-
-
-if(!city){
-
-alert("City डालें।");
-return;
-
-}
-
-
-if(!state){
-
-alert("State डालें।");
-return;
-
-}
-
-
-if(!/^[0-9]{6}$/.test(pincode)){
-
-alert(
-"Valid 6 digit Pincode डालें।"
-);
-
-return;
-
-}
-
 
 try{
 
-const {data,error}=
-await supabaseClient.auth.updateUser({
+const {data,error} =
+await supabaseClient.auth
+.updateUser({
 
 data:{
-
 name:name,
-
-last_name:lastName,
-
+last_name:last,
 mobile:mobile,
-
 house:house,
-
 road:road,
-
 city:city,
-
 state:state,
-
-pincode:pincode
-
+pincode:pin
 }
 
 });
 
-
 if(error)
 throw error;
-
 
 updateMenuUser(data.user);
 
@@ -4384,19 +3946,16 @@ showToast(
 "Profile saved successfully ✅"
 );
 
+setTimeout(
+()=>openProfile(),
+400
+);
 
-setTimeout(()=>{
-
-openProfile();
-
-},400);
-
-
-}catch(error){
+}catch(e){
 
 alert(
-"Profile save failed ❌\n\n"+
-error.message
+"Profile save failed ❌\n\n" +
+e.message
 );
 
 }
@@ -4404,219 +3963,120 @@ error.message
 }
 
 
-/* =====================================================
+/* =========================
 CURRENT LOCATION
-===================================================== */
+========================= */
 
 function useCurrentLocation(){
 
-const status=
+const s =
 document.getElementById("locationStatus");
+
+if(!s)
+return;
 
 if(!navigator.geolocation){
 
-if(status){
-
-status.innerText=
-"इस device/browser में location service उपलब्ध नहीं है।";
-
-}
+s.innerText =
+"Location service उपलब्ध नहीं है।";
 
 return;
 
 }
 
+s.innerText =
+"📍 Location प्राप्त की जा रही है...";
 
-if(status){
+navigator.geolocation
+.getCurrentPosition(
 
-status.innerText=
-"📍 Location प्राप्त की जा रही है... कृपया थोड़ा इंतजार करें।";
-
-}
-
-
-navigator.geolocation.getCurrentPosition(
-
-async(position)=>{
-
-const lat=
-position.coords.latitude;
-
-const lon=
-position.coords.longitude;
-
-
-if(status){
-
-status.innerText=
-"📍 Location मिल गई। Address पता किया जा रहा है...";
-
-}
-
+async pos=>{
 
 try{
 
-const url=
-"https://nominatim.openstreetmap.org/reverse"+
-"?format=jsonv2"+
-"&lat="+encodeURIComponent(lat)+
-"&lon="+encodeURIComponent(lon)+
-"&addressdetails=1";
-
-
-const response=
-await fetch(url,{
-headers:{
-"Accept":"application/json"
-}
-});
-
-
-if(!response.ok){
-
-throw new Error(
-"Address service unavailable"
+const r =
+await fetch(
+`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&addressdetails=1`
 );
 
+const j =
+await r.json();
+
+const a =
+j.address || {};
+
+const set =
+(id,v)=>{
+
+if(
+v &&
+document.getElementById(id)
+){
+
+document.getElementById(id)
+.value=v;
+
 }
 
+};
 
-const result=
-await response.json();
-
-const a=
-result.address||{};
-
-
-const house=
+set(
+"profileHouse",
 [
 a.house_number,
 a.building
 ]
 .filter(Boolean)
-.join(" / ");
+.join(" / ")
+);
 
-
-const road=
+set(
+"profileRoad",
 [
 a.road,
 a.neighbourhood,
-a.suburb,
-a.residential
+a.suburb
 ]
 .filter(Boolean)
-.join(", ");
+.join(", ")
+);
 
-
-const city=
+set(
+"profileCity",
 a.city ||
 a.town ||
 a.village ||
-a.municipality ||
-"";
+""
+);
 
+set(
+"profileState",
+a.state || ""
+);
 
-const state=
-a.state||"";
+set(
+"profilePincode",
+(a.postcode || "")
+.replace(/\D/g,"")
+.slice(0,6)
+);
 
+s.innerText =
+"✓ Address details fill हो गई हैं। Check करके Save Profile दबाएँ।";
 
-const pincode=
-a.postcode||"";
+}catch(e){
 
-
-if(document.getElementById("profileHouse") && house){
-
-document.getElementById("profileHouse").value=
-house;
-
-}
-
-
-if(document.getElementById("profileRoad") && road){
-
-document.getElementById("profileRoad").value=
-road;
-
-}
-
-
-if(document.getElementById("profileCity") && city){
-
-document.getElementById("profileCity").value=
-city;
-
-}
-
-
-if(document.getElementById("profileState") && state){
-
-document.getElementById("profileState").value=
-state;
-
-}
-
-
-if(document.getElementById("profilePincode") && pincode){
-
-document.getElementById("profilePincode").value=
-pincode.replace(/\D/g,"").slice(0,6);
-
-}
-
-
-if(status){
-
-status.innerText=
-"✓ Location से available address details fill हो गई हैं। नीचे details check करके Save Profile दबाएँ।";
-
-}
-
-}catch(error){
-
-console.log(error);
-
-if(status){
-
-status.innerText=
-"Location मिल गई, लेकिन automatic address नहीं मिल पाया। कृपया address details manually भरें।";
-
-}
+s.innerText =
+"Automatic address नहीं मिला। Manually भरें।";
 
 }
 
 },
 
-(error)=>{
+()=>{
 
-console.log(error);
-
-const status=
-document.getElementById("locationStatus");
-
-if(!status)return;
-
-
-if(error.code===1){
-
-status.innerText=
-"Location permission denied. Browser में location permission allow करके फिर कोशिश करें.";
-
-}else if(error.code===2){
-
-status.innerText=
-"Location उपलब्ध नहीं है. GPS/Location ON करके फिर कोशिश करें.";
-
-}else if(error.code===3){
-
-status.innerText=
-"Location मिलने में ज्यादा समय लगा. फिर से कोशिश करें.";
-
-}else{
-
-status.innerText=
-"Location प्राप्त नहीं हो सकी. कृपया manually address भरें.";
-
-}
+s.innerText =
+"Location permission unavailable. Manually address भरें.";
 
 },
 
@@ -4631,91 +4091,35 @@ maximumAge:0
 }
 
 
-/* =====================================================
-LOGOUT
-===================================================== */
+/* LOGOUT */
 
 async function logoutUser(){
 
-try{
-
-const {error}=
 await supabaseClient.auth.signOut();
-
-
-if(error)
-throw error;
-
 
 closeModal();
 
 updateMenuUser(null);
 
-
 showToast(
 "Logout successful 👋"
 );
 
-
-}catch(error){
-
-alert(
-"Logout failed ❌\n\n"+
-error.message
-);
-
-}
-
 }
 
 
-/* =====================================================
-MENU
-===================================================== */
+/* =========================
+ORDERS
+========================= */
 
-function openMenu(){
+async function openOrders(){
 
-document
-.getElementById("menuOverlay")
-.style.display="block";
-
-checkUser();
-
-}
-
-
-function closeMenu(){
-
-document
-.getElementById("menuOverlay")
-.style.display="none";
-
-}
-
-
-function closeMenuOutside(event){
-
-if(
-event.target.id==="menuOverlay"
-){
-
-closeMenu();
-
-}
-
-}
-
-
-/* =====================================================
-ADDRESS
-===================================================== */
-
-async function showAddress(){
-
-const user=
+const user =
 await getCurrentUser();
 
 if(!user){
+
+alert("Please login first.");
 
 openAuth();
 
@@ -4723,508 +4127,55 @@ return;
 
 }
 
-openProfile();
-
-}
-
-
-/* =====================================================
-NOTIFICATIONS
-===================================================== */
-
-function showNotifications(){
-
 showModal(`
 
-<h2>
-🔔 Notifications
-</h2>
-
-<div style="
-text-align:center;
-padding:30px">
-
-<div style="font-size:55px">
-🔔
-</div>
-
-<h3>
-No new notifications
-</h3>
-
-<p style="
-color:var(--muted);
-margin-top:8px">
-
-आपके latest updates यहाँ दिखाई देंगे।
-
-</p>
-
-</div>
-
-`);
-
-}
-
-
-/* =====================================================
-FRAME
-===================================================== */
-
-function openFrame(){
-
-showModal(`
-
-<h2>
-🖼️ Photo Frame
-</h2>
-
-<p style="
-color:var(--muted);
-margin-bottom:15px">
-
-अपना frame size और printing option चुनें।
-
-</p>
-
+<h2>📦 My Orders</h2>
 
 <div
-class="frame-option"
-onclick="selectFrame('8x12','General Print',149,this)">
+id="myOrdersList"
+style="margin-top:15px">
 
-<div>
-
-<strong>
-8×12
-</strong>
-
-<br>
-
-General Print
-
-</div>
-
-<strong>
-₹149
-</strong>
-
-</div>
-
-
-<div
-class="frame-option"
-onclick="selectFrame('8x12','Your Photo',199,this)">
-
-<div>
-
-<strong>
-8×12
-</strong>
-
-<br>
-
-Your Photo
-
-</div>
-
-<strong>
-₹199
-</strong>
-
-</div>
-
-
-<div
-class="frame-option"
-onclick="selectFrame('12x18','General Print',399,this)">
-
-<div>
-
-<strong>
-12×18
-</strong>
-
-<br>
-
-General Print
-
-</div>
-
-<strong>
-₹399
-</strong>
-
-</div>
-
-
-<div
-class="frame-option"
-onclick="selectFrame('12x18','Your Photo',499,this)">
-
-<div>
-
-<strong>
-12×18
-</strong>
-
-<br>
-
-Your Photo
-
-</div>
-
-<strong>
-₹499
-</strong>
-
-</div>
-
-
-<div id="frameUpload">
-</div>
-
-
-<div id="frameButton">
-</div>
-
-`);
-
-}
-
-
-function selectFrame(
-size,
-type,
-price,
-element
-){
-
-document
-.querySelectorAll(".frame-option")
-.forEach(
-x=>
-x.classList.remove("selected")
-);
-
-element.classList.add("selected");
-
-
-if(type==="Your Photo"){
-
-document.getElementById(
-"frameUpload"
-).innerHTML=`
-
-<div class="upload">
-
-<h3>
-📤 Upload Your Photo
-</h3>
-
-<input
-type="file"
-accept="image/*"
-id="framePhoto">
-
-</div>
-
-`;
-
-}else{
-
-document.getElementById(
-"frameUpload"
-).innerHTML="";
-
-}
-
-
-document.getElementById(
-"frameButton"
-).innerHTML=`
-
-<button
-class="checkout"
-style="margin-top:15px"
-onclick="
-addFrame(
-'${size}',
-'${type}',
-${price}
-)">
-
-🛒 Add Frame to Cart
-
-</button>
-
-`;
-
-}
-
-
-function addFrame(
-size,
-type,
-price
-){
-
-cart.push({
-
-name:
-`Photo Frame ${size} - ${type}`,
-
-price:price,
-
-qty:1
-
-});
-
-saveCart();
-
-showToast(
-"Frame added to cart 🖼️"
-);
-
-}
-
-
-/* =====================================================
-MODAL
-===================================================== */
-
-function showModal(content){
-
-document.getElementById(
-"modalContent"
-).innerHTML=content;
-
-document.getElementById(
-"modal"
-).style.display="flex";
-
-}
-
-
-function closeModal(){
-
-document.getElementById(
-"modal"
-).style.display="none";
-
-}
-
-
-function outsideModal(event){
-
-if(
-event.target.id==="modal"
-){
-
-closeModal();
-
-}
-
-}
-
-
-/* =====================================================
-INFO
-===================================================== */
-
-function showInfo(title){
-
-let content="";
-
-
-if(title==="Terms & Conditions"){
-
-content=`
-
-<h2>
-Terms & Conditions
-</h2>
-
-<p style="
-line-height:1.7;
-color:var(--muted)">
-
-Printzy पर order करने से पहले product details,
-price और customization information ध्यान से check करें।
-Customized products की cancellation policy product
-के अनुसार अलग हो सकती है।
-
-</p>
-
-`;
-
-}
-
-
-if(title==="Privacy Policy"){
-
-content=`
-
-<h2>
-Privacy Policy
-</h2>
-
-<p style="
-line-height:1.7;
-color:var(--muted)">
-
-आपकी personal information को order processing,
-account management और customer support के लिए उपयोग
-किया जा सकता है।
-
-</p>
-
-`;
-
-}
-
-
-if(title==="Contact Us"){
-
-content=`
-
-<h2>
-📞 Contact Printzy
-</h2>
-
-<p style="
-line-height:1.8;
-color:var(--muted)">
-
-Customer Support<br>
-Email: support@printzy.in<br>
-Phone: +91 XXXXX XXXXX
-
-</p>
-
-`;
-
-}
-
-
-if(title==="About Printzy"){
-
-content=`
-
-<h2>
-ℹ️ About Printzy
-</h2>
-
-<p style="
-line-height:1.8;
-color:var(--muted)">
-
-Printzy आपका online printing platform है जहाँ
-Visiting Card, Wedding Card, Poster, Banner,
-Pamphlet, Sticker और Photo Print जैसे products
-एक ही जगह से order किए जा सकते हैं।
-
-</p>
-
-`;
-
-}
-
-
-showModal(content);
-
-}
-
-
-/* =====================================================
-ORDERS
-===================================================== */
-
-async function openOrders(){
-
-const user =
-await getCurrentUser();
-
-
-if(!user){
-
-alert("Please login first.");
-return;
-
-}
-
-
-showModal(`
-
-<div style="
-padding:20px;
-">
-
-<h2 style="
-margin-bottom:18px;
-">
-📦 My Orders
-</h2>
-
-<div id="myOrdersList">
-
-<p style="
-text-align:center;
-color:var(--muted);
-">
 Loading orders...
-</p>
-
-</div>
 
 </div>
 
 `);
-
 
 try{
 
-const { data, error } =
+const {data,error} =
 await supabaseClient
 .from("orders")
 .select("*")
-.eq("customer_email", user.email)
-.order("created_at", {
-ascending:false
-});
+.eq("customer_email",user.email)
+.order(
+"created_at",
+{ascending:false}
+);
 
-
-if(error){
-
+if(error)
 throw error;
-
-}
-
 
 const box =
 document.getElementById("myOrdersList");
 
-
-if(!data || data.length === 0){
+if(!data || !data.length){
 
 box.innerHTML = `
 
-<div style="
+<div
+style="
 text-align:center;
-padding:30px 10px;
+padding:30px;
 color:var(--muted);
+font-size:16px
 ">
 
-<div style="
-font-size:50px;
-">
 📦
-</div>
 
-<p style="
-margin-top:10px;
-">
+<br><br>
+
 अभी कोई order नहीं है।
-</p>
 
 </div>
 
@@ -5234,93 +4185,60 @@ return;
 
 }
 
-
 box.innerHTML =
-data.map(order => `
+data.map(o=>`
 
-<div style="
-border:1px solid var(--border);
-border-radius:14px;
-padding:16px;
-margin-bottom:14px;
-background:var(--soft);
-">
+<div class="order-card">
 
-<div style="
+<div
+style="
 display:flex;
 justify-content:space-between;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
+gap:10px
 ">
 
-<strong>
-${escapeHtml(order.order_number || "")}
-</strong>
+<b>
+${escapeHtml(o.order_number || "")}
+</b>
 
-<span style="
-font-weight:800;
-color:var(--pink);
-text-transform:capitalize;
-">
-${escapeHtml(
-order.order_status || "pending"
-)}
+<span class="status">
+${escapeHtml(o.order_status || "pending")}
 </span>
 
 </div>
 
-
-<div style="
-font-size:14px;
+<div
+style="
 color:var(--muted);
-line-height:1.7;
+line-height:1.8;
+margin-top:8px
 ">
 
-<div>
 Total:
-<strong>
-₹${Number(order.total_amount || 0)}
-</strong>
-</div>
+<b>₹${Number(o.total_amount || 0)}</b>
 
-<div>
+<br>
+
 Payment:
-${escapeHtml(
-order.payment_method || "COD"
-)}
-</div>
+${escapeHtml(o.payment_method || "COD")}
 
-<div>
+<br>
+
 Date:
 ${
-order.created_at
+o.created_at
 ?
-new Date(
-order.created_at
-).toLocaleString("en-IN")
+new Date(o.created_at)
+.toLocaleString("en-IN")
 :
 "-"
 }
-</div>
 
 </div>
-
 
 <button
-onclick='viewOrderDetails(${JSON.stringify(order).replace(/'/g,"&#039;")})'
-style="
-width:100%;
-margin-top:14px;
-padding:12px;
-border:0;
-border-radius:10px;
-background:var(--blue2);
-color:white;
-font-weight:800;
-cursor:pointer;
-"
->
+class="checkout"
+onclick='viewOrderDetails(${JSON.stringify(o).replace(/'/g,"&#039;")})'>
 👁️ View Details
 </button>
 
@@ -5328,38 +4246,18 @@ cursor:pointer;
 
 `).join("");
 
+}catch(e){
 
-}catch(error){
+document.getElementById("myOrdersList")
+.innerHTML = `
 
-console.error(
-"My Orders Error:",
-error
-);
-
-
-const box =
-document.getElementById(
-"myOrdersList"
-);
-
-
-if(box){
-
-box.innerHTML = `
-
-<div style="
-text-align:center;
-padding:20px;
-color:red;
-">
+<div style="color:red">
 
 Orders load नहीं हो पाए ❌
 
 <br><br>
 
-${escapeHtml(
-error.message
-)}
+${escapeHtml(e.message)}
 
 </div>
 
@@ -5369,153 +4267,122 @@ error.message
 
 }
 
-}
 
+/* ORDER DETAILS */
 
-/* =====================================================
-ORDER DETAILS
-===================================================== */
-
-function viewOrderDetails(order){
+function viewOrderDetails(o){
 
 showModal(`
 
-<div style="
-padding:20px;
-max-height:80vh;
-overflow-y:auto;
-">
+<h2>📦 Order Details</h2>
 
-<h2 style="
-margin-bottom:18px;
-">
-📦 Order Details
-</h2>
+<div class="order-card">
 
+<h3 style="color:var(--pink)">
+${escapeHtml(o.order_number || "-")}
+</h3>
 
-<div style="
-background:var(--soft);
-border:1px solid var(--border);
-border-radius:14px;
-padding:16px;
-">
-
-<div style="
-font-size:19px;
-font-weight:900;
-margin-bottom:15px;
-color:var(--pink);
-">
-${escapeHtml(
-order.order_number || "-"
-)}
-</div>
-
-
-<div style="
+<p
+style="
 line-height:1.9;
-font-size:14px;
+margin-top:10px
 ">
 
-<div>
-<strong>Status:</strong>
-${escapeHtml(
-order.order_status || "pending"
-)}
-</div>
-
-
-<div>
-<strong>Payment Method:</strong>
-${escapeHtml(
-order.payment_method || "COD"
-)}
-</div>
-
-
-<div>
-<strong>Payment Status:</strong>
-${escapeHtml(
-order.payment_status || "pending"
-)}
-</div>
-
-
-<div>
-<strong>Total Amount:</strong>
-₹${Number(
-order.total_amount || 0
-)}
-</div>
-
-
-<div>
-<strong>Customer Name:</strong>
-${escapeHtml(
-order.customer_name || "-"
-)}
-</div>
-
-
-<div>
-<strong>Phone:</strong>
-${escapeHtml(
-order.customer_phone || "-"
-)}
-</div>
-
-
-<div style="
-margin-top:8px;
-">
-
-<strong>
-Delivery Address:
-</strong>
+Status:
+<b>
+${escapeHtml(o.order_status || "pending")}
+</b>
 
 <br>
 
-${escapeHtml(
-order.shipping_address || "-"
-)}
+Payment:
+${escapeHtml(o.payment_method || "COD")}
 
-</div>
+<br>
 
+Payment Status:
+${escapeHtml(o.payment_status || "pending")}
 
-<div style="
-margin-top:8px;
-">
+<br>
 
-<strong>
+Total:
+<b>₹${Number(o.total_amount || 0)}</b>
+
+<br>
+
+Customer:
+${escapeHtml(o.customer_name || "-")}
+
+<br>
+
+Phone:
+${escapeHtml(o.customer_phone || "-")}
+
+<br><br>
+
+<b>Delivery Address</b>
+
+<br>
+
+${escapeHtml(o.shipping_address || "-")}
+
+<br><br>
+
+<b>Order Items</b>
+
+<br>
+
+${escapeHtml(o.notes || "-")}
+
+<br><br>
+
 Order Date:
-</strong>
-
 ${
-order.created_at
+o.created_at
 ?
-new Date(
-order.created_at
-).toLocaleString("en-IN")
+new Date(o.created_at).toLocaleString("en-IN")
 :
 "-"
 }
 
-</div>
+</p>
 
 </div>
-
-</div>
-
 
 <button
 class="checkout"
-style="
-margin-top:16px;
-"
-onclick="openOrders()"
->
+onclick="openOrders()">
 ← Back to My Orders
 </button>
+
+`);
+
+}
+
+
+/* =========================
+INFO
+========================= */
+
+function showNotifications(){
+
+showModal(`
+
+<h2>🔔 Notifications</h2>
+
+<div
+style="
+text-align:center;
+padding:30px;
+color:var(--muted);
+font-size:16px
+">
+
+🔔
+
+<br><br>
+
+No new notifications
 
 </div>
 
@@ -5524,278 +4391,97 @@ onclick="openOrders()"
 }
 
 
-/* =====================================================
-LANGUAGE
-===================================================== */
+function showInfo(t){
 
-const translations={
+const c={
 
-hi:{
-subtitle:"अपने विचारों को प्रिंट करें",
-profile:"मेरी प्रोफाइल / लॉगिन",
-orders:"मेरे ऑर्डर",
-wishlist:"विशलिस्ट",
-cart:"मेरी कार्ट",
-language:"भाषा",
-theme:"डार्क / लाइट मोड",
-address:"डिलीवरी पता",
-notifications:"सूचनाएँ",
-support:"मदद और सहायता",
-about:"प्रिंटज़ी के बारे में",
-terms:"नियम और शर्तें",
-privacy:"गोपनीयता नीति",
-search:"Visiting Card, Banner आदि खोजें..."
-},
+"Terms & Conditions":`
 
-en:{
-subtitle:"Print Your Ideas",
-profile:"My Profile / Login",
-orders:"My Orders",
-wishlist:"Wishlist",
-cart:"My Cart",
-language:"Language",
-theme:"Dark / Light Mode",
-address:"Delivery Address",
-notifications:"Notifications",
-support:"Help & Support",
-about:"About Printzy",
-terms:"Terms & Conditions",
-privacy:"Privacy Policy",
-search:"Search for products like Visiting Card, Banner, etc..."
-},
+<h2>Terms & Conditions</h2>
 
-mr:{
-subtitle:"तुमच्या कल्पना प्रिंट करा",
-profile:"माझी प्रोफाइल / लॉगिन",
-orders:"माझे ऑर्डर",
-wishlist:"विशलिस्ट",
-cart:"माझी कार्ट",
-language:"भाषा",
-theme:"डार्क / लाइट मोड",
-address:"डिलिव्हरी पत्ता",
-notifications:"सूचना",
-support:"मदत आणि सहाय्य",
-about:"Printzy बद्दल",
-terms:"अटी व शर्ती",
-privacy:"गोपनीयता धोरण"
-},
+<p
+style="
+line-height:1.8;
+color:var(--muted)
+">
 
-gu:{
-subtitle:"તમારા વિચારો પ્રિન્ટ કરો",
-profile:"મારી પ્રોફાઇલ / લોગિન",
-orders:"મારા ઓર્ડર",
-wishlist:"વિશલિસ્ટ",
-cart:"મારી કાર્ટ",
-language:"ભાષા",
-theme:"ડાર્ક / લાઇટ મોડ",
-address:"ડિલિવરી સરનામું",
-notifications:"સૂચનાઓ",
-support:"મદદ અને સહાય",
-about:"Printzy વિશે",
-terms:"નિયમો અને શરતો",
-privacy:"ગોપનીયતા નીતિ"
-},
+Order करने से पहले product details, price और customization information check करें।
+Customized products की cancellation policy अलग हो सकती है।
 
-bn:{
-subtitle:"আপনার ধারণা প্রিন্ট করুন",
-profile:"আমার প্রোফাইল / লগইন",
-orders:"আমার অর্ডার",
-wishlist:"উইশলিস্ট",
-cart:"আমার কার্ট",
-language:"ভাষা",
-theme:"ডার্ক / লাইট মোড",
-address:"ডেলিভারি ঠিকানা",
-notifications:"বিজ্ঞপ্তি",
-support:"সহায়তা",
-about:"Printzy সম্পর্কে",
-terms:"শর্তাবলী",
-privacy:"গোপনীয়তা নীতি"
-},
+</p>
+`,
 
-pa:{
-subtitle:"ਆਪਣੇ ਵਿਚਾਰ ਪ੍ਰਿੰਟ ਕਰੋ",
-profile:"ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ / ਲਾਗਇਨ",
-orders:"ਮੇਰੇ ਆਰਡਰ",
-wishlist:"ਵਿਸ਼ਲਿਸਟ",
-cart:"ਮੇਰੀ ਕਾਰਟ",
-language:"ਭਾਸ਼ਾ",
-theme:"ਡਾਰਕ / ਲਾਈਟ ਮੋਡ",
-address:"ਡਿਲਿਵਰੀ ਪਤਾ",
-notifications:"ਸੂਚਨਾਵਾਂ",
-support:"ਮਦਦ ਅਤੇ ਸਹਾਇਤਾ",
-about:"Printzy ਬਾਰੇ",
-terms:"ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
-privacy:"ਪਰਾਈਵੇਸੀ ਨੀਤੀ"
-},
+"Privacy Policy":`
 
-ta:{
-subtitle:"உங்கள் யோசனைகளை அச்சிடுங்கள்",
-profile:"எனது சுயவிவரம் / உள்நுழைவு",
-orders:"எனது ஆர்டர்கள்",
-wishlist:"விருப்பப்பட்டியல்",
-cart:"எனது கார்ட்",
-language:"மொழி",
-theme:"டார்க் / லைட் மோட்",
-address:"டெலிவரி முகவரி",
-notifications:"அறிவிப்புகள்",
-support:"உதவி மற்றும் ஆதரவு",
-about:"Printzy பற்றி",
-terms:"விதிமுறைகள்",
-privacy:"தனியுரிமைக் கொள்கை"
-},
+<h2>Privacy Policy</h2>
 
-te:{
-subtitle:"మీ ఆలోచనలను ప్రింట్ చేయండి",
-profile:"నా ప్రొఫైల్ / లాగిన్",
-orders:"నా ఆర్డర్లు",
-wishlist:"విష్‌లిస్ట్",
-cart:"నా కార్ట్",
-language:"భాష",
-theme:"డార్క్ / లైట్ మోడ్",
-address:"డెలివరీ చిరునామా",
-notifications:"నోటిఫికేషన్లు",
-support:"సహాయం",
-about:"Printzy గురించి",
-terms:"నిబంధనలు",
-privacy:"గోప్యతా విధానం"
-},
+<p
+style="
+line-height:1.8;
+color:var(--muted)
+">
 
-kn:{
-subtitle:"ನಿಮ್ಮ ಆಲೋಚನೆಗಳನ್ನು ಮುದ್ರಿಸಿ",
-profile:"ನನ್ನ ಪ್ರೊಫೈಲ್ / ಲಾಗಿನ್",
-orders:"ನನ್ನ ಆರ್ಡರ್‌ಗಳು",
-wishlist:"ವಿಶ್‌ಲಿಸ್ಟ್",
-cart:"ನನ್ನ ಕಾರ್ಟ್",
-language:"ಭಾಷೆ",
-theme:"ಡಾರ್ಕ್ / ಲೈಟ್ ಮೋಡ್",
-address:"ವಿತರಣಾ ವಿಳಾಸ",
-notifications:"ಅಧಿಸೂಚನೆಗಳು",
-support:"ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ",
-about:"Printzy ಬಗ್ಗೆ",
-terms:"ನಿಯಮಗಳು",
-privacy:"ಗೌಪ್ಯತಾ ನೀತಿ"
-},
+आपकी information account management,
+order processing और customer support के लिए
+उपयोग की जा सकती है।
 
-ml:{
-subtitle:"നിങ്ങളുടെ ആശയങ്ങൾ പ്രിന്റ് ചെയ്യൂ",
-profile:"എന്റെ പ്രൊഫൈൽ / ലോഗിൻ",
-orders:"എന്റെ ഓർഡറുകൾ",
-wishlist:"വിഷ്‌ലിസ്റ്റ്",
-cart:"എന്റെ കാർട്ട്",
-language:"ഭാഷ",
-theme:"ഡാർക്ക് / ലൈറ്റ് മോഡ്",
-address:"ഡെലിവറി വിലാസം",
-notifications:"അറിയിപ്പുകൾ",
-support:"സഹായം",
-about:"Printzyയെ കുറിച്ച്",
-terms:"നിബന്ധനകൾ",
-privacy:"സ്വകാര്യതാ നയം"
-},
+</p>
+`,
 
-ur:{
-subtitle:"اپنے خیالات پرنٹ کریں",
-profile:"میری پروفائل / لاگ ان",
-orders:"میرے آرڈرز",
-wishlist:"پسندیدہ",
-cart:"میری کارٹ",
-language:"زبان",
-theme:"ڈارک / لائٹ موڈ",
-address:"ڈیلیوری پتہ",
-notifications:"اطلاعات",
-support:"مدد اور معاونت",
-about:"Printzy کے بارے میں",
-terms:"شرائط و ضوابط",
-privacy:"رازداری کی پالیسی"
-}
+"Contact Us":`
+
+<h2>📞 Contact Printzy</h2>
+
+<p
+style="
+line-height:1.8;
+color:var(--muted)
+">
+
+Customer Support
+
+<br>
+
+Email: support@printzy.in
+
+<br>
+
+Phone: +91 XXXXX XXXXX
+
+</p>
+`,
+
+"About Printzy":`
+
+<h2>ℹ️ About Printzy</h2>
+
+<p
+style="
+line-height:1.8;
+color:var(--muted)
+">
+
+Printzy आपका online printing platform है
+जहाँ customized printing products एक ही जगह
+से order किए जा सकते हैं।
+
+</p>
+`
 
 };
 
-
-function changeLanguage(lang){
-
-localStorage.setItem(
-"printzyLanguage",
-lang
-);
-
-const data=
-translations[lang]||
-translations.en;
-
-
-document
-.querySelectorAll("[data-i18n]")
-.forEach(el=>{
-
-const key=
-el.getAttribute("data-i18n");
-
-if(data[key]){
-
-el.innerText=data[key];
-
-}
-
-});
-
-
-const search=
-document.getElementById("search");
-
-
-if(search){
-
-search.placeholder=
-data.search||
-translations.en.search;
+showModal(c[t] || "");
 
 }
 
 
-showToast(
-"Language changed 🌐"
-);
-
-}
-
-
-function loadLanguage(){
-
-const saved=
-localStorage.getItem(
-"printzyLanguage"
-)||
-"hi";
-
-
-const select=
-document.getElementById(
-"languageSelect"
-);
-
-
-if(select){
-
-select.value=saved;
-
-}
-
-
-changeLanguage(saved);
-
-}
-
-
-/* =====================================================
-THEME
-===================================================== */
+/* =========================
+DARK MODE
+========================= */
 
 function toggleDark(){
 
-document.body
-.classList
-.toggle("dark");
-
+document.body.classList.toggle("dark");
 
 localStorage.setItem(
 "printzyDark",
@@ -5804,105 +4490,115 @@ document.body.classList.contains("dark")
 
 }
 
-
 if(
-localStorage.getItem("printzyDark")
-==="true"
+localStorage.getItem("printzyDark")==="true"
 ){
 
-document.body
-.classList
-.add("dark");
+document.body.classList.add("dark");
 
 }
 
 
-/* =====================================================
-TOAST
-===================================================== */
+/* =========================
+LANGUAGE
+========================= */
 
-function showToast(message){
+function changeLanguage(v){
 
-const old=
-document.getElementById(
-"printzyToast"
+localStorage.setItem(
+"printzyLanguage",
+v
 );
+
+const s =
+document.getElementById("languageSelect");
+
+if(s)
+s.value=v;
+
+showToast(
+"Language changed 🌐"
+);
+
+}
+
+
+/* =========================
+TOAST
+========================= */
+
+function showToast(m){
+
+const old =
+document.getElementById("printzyToast");
 
 if(old)
 old.remove();
 
-
-const toast=
+const t =
 document.createElement("div");
 
+t.id="printzyToast";
 
-toast.id=
-"printzyToast";
+t.className="toast";
 
+t.innerText=m;
 
-toast.innerText=
-message;
+document.body.appendChild(t);
 
-
-toast.style=`
-
-position:fixed;
-left:50%;
-bottom:85px;
-transform:translateX(-50%);
-background:#071b3a;
-color:white;
-padding:12px 20px;
-border-radius:25px;
-z-index:1000;
-font-size:14px;
-box-shadow:0 8px 25px rgba(0,0,0,.25);
-
-`;
-
-
-document.body.appendChild(toast);
-
-
-setTimeout(()=>{
-
-toast.remove();
-
-},2200);
+setTimeout(
+()=>t.remove(),
+2200
+);
 
 }
 
 
-/* =====================================================
-SCROLL
-===================================================== */
+/* =========================
+FILE UPLOAD STATUS
+========================= */
 
-function scrollProducts(){
+document.addEventListener(
+"change",
+function(e){
 
-document
-.getElementById("productList")
-.scrollIntoView({
+if(e.target.id==="productUpload"){
 
-behavior:"smooth",
+const file =
+e.target.files[0];
 
-block:"start"
+const status =
+document.getElementById("uploadStatus");
 
-});
+if(!status)
+return;
+
+if(file){
+
+status.innerText =
+"✓ " + file.name;
+
+}else{
+
+status.innerText="Optional";
 
 }
 
+}
 
-/* =====================================================
+}
+);
+
+
+/* =========================
 INITIALIZE
-===================================================== */
+========================= */
 
 showProducts();
 
 updateCartCount();
 
 checkUser();
-
-loadLanguage();
 
 </script>
 
