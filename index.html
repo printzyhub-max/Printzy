@@ -1332,7 +1332,7 @@ padding:14px 12px 100px
 <header>
 <div class="nav">
 
-<div class="logo" onclick="closeProductPage();window.scrollTo({top:0,behavior:'smooth'})">
+<div class="logo" onclick="goHome()">
 <div class="logo-mark">P</div>
 <div>
 <div class="logo-text">PRINTZY</div>
@@ -1581,7 +1581,7 @@ Other Printing
 
 <div class="bottom-nav">
 
-<button class="active" onclick="closeProductPage();window.scrollTo({top:0,behavior:'smooth'})">
+<button class="active" onclick="goHome()">
 <div>🏠</div>
 Home
 </button>
@@ -1977,6 +1977,306 @@ let currentDetailProduct = null;
 let detailQty = 1;
 
 
+/* =====================================================
+PAGE ROUTING - REFRESH SAFE
+===================================================== */
+
+let restoringPage = false;
+
+let currentRoute = "home";
+
+let lastBaseRoute = "home";
+
+const modalRoutes = [
+"cart",
+"wishlist",
+"orders",
+"profile",
+"auth",
+"notifications",
+"about",
+"contact",
+"privacy",
+"terms"
+];
+
+
+/* SET URL ROUTE */
+
+function setPageRoute(route){
+
+if(restoringPage)
+return;
+
+currentRoute = route;
+
+if(!modalRoutes.includes(route)){
+lastBaseRoute = route;
+}
+
+const newHash =
+"#" + route;
+
+if(location.hash !== newHash){
+
+history.pushState(
+{route:route},
+"",
+newHash
+);
+
+}
+
+}
+
+
+/* HOME */
+
+function goHome(){
+
+closeProductPage(true);
+
+closeModal(true);
+
+currentRoute="home";
+
+lastBaseRoute="home";
+
+history.pushState(
+{route:"home"},
+"",
+"#home"
+);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* RESTORE PAGE FROM URL */
+
+function restorePageFromURL(){
+
+const hash =
+decodeURIComponent(
+location.hash || "#home"
+);
+
+restoringPage = true;
+
+try{
+
+/* PRODUCT */
+
+if(hash.startsWith("#product/")){
+
+const name =
+decodeURIComponent(
+hash.replace("#product/","")
+);
+
+const product =
+products.find(
+p=>p.name===name
+);
+
+if(product){
+
+currentRoute =
+"product/" +
+encodeURIComponent(name);
+
+lastBaseRoute =
+currentRoute;
+
+closeModal(true);
+
+openProduct(name);
+
+}
+
+else{
+
+history.replaceState(
+{route:"home"},
+"",
+"#home"
+);
+
+currentRoute="home";
+
+lastBaseRoute="home";
+
+closeProductPage(true);
+
+closeModal(true);
+
+}
+
+}
+
+
+/* CART */
+
+else if(hash==="#cart"){
+
+currentRoute="cart";
+
+openCart();
+
+}
+
+
+/* WISHLIST */
+
+else if(hash==="#wishlist"){
+
+currentRoute="wishlist";
+
+openWishlist();
+
+}
+
+
+/* ORDERS */
+
+else if(hash==="#orders"){
+
+currentRoute="orders";
+
+openOrders();
+
+}
+
+
+/* PROFILE */
+
+else if(hash==="#profile"){
+
+currentRoute="profile";
+
+openProfile();
+
+}
+
+
+/* AUTH */
+
+else if(hash==="#auth"){
+
+currentRoute="auth";
+
+openAuth();
+
+}
+
+
+/* NOTIFICATIONS */
+
+else if(hash==="#notifications"){
+
+currentRoute="notifications";
+
+showNotifications();
+
+}
+
+
+/* ABOUT */
+
+else if(hash==="#about"){
+
+currentRoute="about";
+
+showInfo("About Printzy");
+
+}
+
+
+/* CONTACT */
+
+else if(hash==="#contact"){
+
+currentRoute="contact";
+
+showInfo("Contact Us");
+
+}
+
+
+/* PRIVACY */
+
+else if(hash==="#privacy"){
+
+currentRoute="privacy";
+
+showInfo("Privacy Policy");
+
+}
+
+
+/* TERMS */
+
+else if(hash==="#terms"){
+
+currentRoute="terms";
+
+showInfo("Terms & Conditions");
+
+}
+
+
+/* HOME */
+
+else{
+
+currentRoute="home";
+
+lastBaseRoute="home";
+
+closeProductPage(true);
+
+closeModal(true);
+
+}
+
+}catch(e){
+
+console.error(
+"Route restore error:",
+e
+);
+
+}finally{
+
+setTimeout(
+()=>{
+restoringPage=false;
+},
+100
+);
+
+}
+
+}
+
+
+/* BROWSER BACK / FORWARD */
+
+window.addEventListener(
+"popstate",
+restorePageFromURL
+);
+
+window.addEventListener(
+"hashchange",
+restorePageFromURL
+);
+
+
 /* =========================
 HELPERS
 ========================= */
@@ -2016,12 +2316,14 @@ cart.reduce(
 const el =
 document.getElementById("cartCount");
 
-if(el) el.innerText = count;
+if(el)
+el.innerText=count;
 
 const pp =
 document.getElementById("ppCartCount");
 
-if(pp) pp.innerText = count;
+if(pp)
+pp.innerText=count;
 
 }
 
@@ -2036,7 +2338,8 @@ error
 } =
 await supabaseClient.auth.getUser();
 
-if(error) return null;
+if(error)
+return null;
 
 return data.user || null;
 
@@ -2058,23 +2361,35 @@ function showProducts(list=products){
 const box =
 document.getElementById("products");
 
-if(!box) return;
+if(!box)
+return;
 
 if(!list.length){
 
-box.innerHTML = `
+box.innerHTML=`
+
 <div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--muted)">
+
 <div style="font-size:60px">🔍</div>
-<h3 style="margin-top:10px">Product नहीं मिला</h3>
-<p style="margin-top:8px">Search करके दूसरा product try करें।</p>
+
+<h3 style="margin-top:10px">
+Product नहीं मिला
+</h3>
+
+<p style="margin-top:8px">
+Search करके दूसरा product try करें।
+</p>
+
 </div>
+
 `;
 
 return;
 
 }
 
-box.innerHTML = list.map(p=>{
+box.innerHTML =
+list.map(p=>{
 
 const active =
 wishlist.includes(p.name);
@@ -2105,9 +2420,13 @@ ${p.icon}
 ${escapeHtml(p.name)}
 </h3>
 
-<div class="price">₹${p.price}</div>
+<div class="price">
+₹${p.price}
+</div>
 
-<div class="starting">Starting price</div>
+<div class="starting">
+Starting price
+</div>
 
 <div class="product-desc">
 ${escapeHtml(p.desc)}
@@ -2143,7 +2462,8 @@ Order
 function searchProducts(){
 
 const q =
-document.getElementById("search").value
+document.getElementById("search")
+.value
 .trim()
 .toLowerCase();
 
@@ -2173,8 +2493,9 @@ products.filter(p=>p.name===name);
 
 showProducts(result);
 
-document.getElementById("productsSection")
-.scrollIntoView({
+document.getElementById(
+"productsSection"
+).scrollIntoView({
 behavior:"smooth"
 });
 
@@ -2188,43 +2509,73 @@ PRODUCT DETAIL
 function openProduct(name){
 
 const p =
-products.find(x=>x.name===name);
+products.find(
+x=>x.name===name
+);
 
-if(!p) return;
+if(!p)
+return;
 
-currentDetailProduct = p;
 
-detailQty = 1;
+/* ROUTE */
 
-document.getElementById("detailQty").innerText =
-detailQty;
+if(!restoringPage){
 
-document.getElementById("ppTitle").innerText =
-p.name;
+setPageRoute(
+"product/" +
+encodeURIComponent(name)
+);
 
-document.getElementById("detailName").innerText =
-p.name;
+}
 
-document.getElementById("detailIcon").innerText =
-p.icon;
 
-document.getElementById("detailPrice").innerText =
-"₹" + p.price;
+currentDetailProduct=p;
 
-document.getElementById("detailMrp").innerText =
-"₹" + Math.round(p.price * 1.5);
+detailQty=1;
 
-document.getElementById("detailShort").innerText =
-p.desc;
+document.getElementById(
+"detailQty"
+).innerText=detailQty;
 
-document.getElementById("detailDescription").innerText =
-p.description;
+document.getElementById(
+"ppTitle"
+).innerText=p.name;
+
+document.getElementById(
+"detailName"
+).innerText=p.name;
+
+document.getElementById(
+"detailIcon"
+).innerText=p.icon;
+
+document.getElementById(
+"detailPrice"
+).innerText=
+"₹"+p.price;
+
+document.getElementById(
+"detailMrp"
+).innerText=
+"₹"+Math.round(p.price*1.5);
+
+document.getElementById(
+"detailShort"
+).innerText=p.desc;
+
+document.getElementById(
+"detailDescription"
+).innerText=p.description;
 
 const wish =
-document.getElementById("detailWishBtn");
+document.getElementById(
+"detailWishBtn"
+);
 
 wish.innerText =
-wishlist.includes(p.name) ? "♥" : "♡";
+wishlist.includes(p.name)
+? "♥"
+: "♡";
 
 wish.classList.toggle(
 "active",
@@ -2235,63 +2586,101 @@ wish.onclick =
 ()=>toggleWishlist(p.name);
 
 const upload =
-document.getElementById("productUpload");
+document.getElementById(
+"productUpload"
+);
 
-if(upload) upload.value="";
+if(upload)
+upload.value="";
 
 const status =
-document.getElementById("uploadStatus");
+document.getElementById(
+"uploadStatus"
+);
 
 if(status)
 status.innerText="Optional";
 
 renderRelatedProducts();
 
-document.getElementById("productPage")
-.classList.add("active");
+document.getElementById(
+"productPage"
+).classList.add("active");
 
 document.body.style.overflow="hidden";
 
 }
 
 
-function closeProductPage(){
+/* CLOSE PRODUCT */
 
-document.getElementById("productPage")
-.classList.remove("active");
+function closeProductPage(skipRoute=false){
+
+document.getElementById(
+"productPage"
+).classList.remove("active");
 
 document.body.style.overflow="";
 
+if(
+!skipRoute &&
+!restoringPage &&
+currentRoute.startsWith("product/")
+){
+
+currentRoute =
+lastBaseRoute || "home";
+
+history.pushState(
+{route:currentRoute},
+"",
+"#"+currentRoute
+);
+
 }
 
+}
+
+
+/* QTY */
 
 function changeDetailQty(change){
 
 detailQty += change;
 
-if(detailQty < 1)
-detailQty = 1;
+if(detailQty<1)
+detailQty=1;
 
-if(detailQty > 100)
-detailQty = 100;
+if(detailQty>100)
+detailQty=100;
 
-document.getElementById("detailQty").innerText =
-detailQty;
+document.getElementById(
+"detailQty"
+).innerText=detailQty;
 
 }
 
 
+/* RELATED */
+
 function renderRelatedProducts(){
 
 const box =
-document.getElementById("relatedProducts");
+document.getElementById(
+"relatedProducts"
+);
 
-if(!box || !currentDetailProduct)
+if(
+!box ||
+!currentDetailProduct
+)
 return;
 
 const related =
 products
-.filter(p=>p.name!==currentDetailProduct.name)
+.filter(
+p=>p.name!==currentDetailProduct.name
+)
 .slice(0,4);
 
 box.innerHTML =
@@ -2306,8 +2695,15 @@ ${p.icon}
 </div>
 
 <div class="related-info">
-<b>${escapeHtml(p.name)}</b>
-<div>₹${p.price}</div>
+
+<b>
+${escapeHtml(p.name)}
+</b>
+
+<div>
+₹${p.price}
+</div>
+
 </div>
 
 </div>
@@ -2317,21 +2713,28 @@ ${p.icon}
 }
 
 
+/* DETAIL CART */
+
 function addDetailToCart(){
 
 if(!currentDetailProduct)
 return;
 
 const quality =
-document.getElementById("customQuality")?.value ||
+document.getElementById(
+"customQuality"
+)?.value ||
 "Standard";
 
 const finish =
-document.getElementById("customFinish")?.value ||
+document.getElementById(
+"customFinish"
+)?.value ||
 "Matte";
 
 const existing =
-cart.find(i=>
+cart.find(
+i=>
 i.name===currentDetailProduct.name &&
 i.quality===quality &&
 i.finish===finish
@@ -2369,6 +2772,8 @@ currentDetailProduct.name +
 }
 
 
+/* BUY NOW */
+
 function buyDetailNow(){
 
 addDetailToCart();
@@ -2382,6 +2787,8 @@ setTimeout(
 
 }
 
+
+/* QUICK ORDER */
 
 function quickOrder(name){
 
@@ -2404,15 +2811,21 @@ function toggleWishlist(name){
 if(wishlist.includes(name)){
 
 wishlist =
-wishlist.filter(x=>x!==name);
+wishlist.filter(
+x=>x!==name
+);
 
-showToast("Wishlist से removed");
+showToast(
+"Wishlist से removed"
+);
 
 }else{
 
 wishlist.push(name);
 
-showToast("Wishlist में added ❤️");
+showToast(
+"Wishlist में added ❤️"
+);
 
 }
 
@@ -2429,12 +2842,16 @@ currentDetailProduct.name===name
 ){
 
 const b =
-document.getElementById("detailWishBtn");
+document.getElementById(
+"detailWishBtn"
+);
 
 if(b){
 
 b.innerText =
-wishlist.includes(name) ? "♥" : "♡";
+wishlist.includes(name)
+? "♥"
+: "♡";
 
 b.classList.toggle(
 "active",
@@ -2450,9 +2867,12 @@ wishlist.includes(name)
 
 function openWishlist(){
 
+if(!restoringPage)
+setPageRoute("wishlist");
+
 const items =
-products.filter(p=>
-wishlist.includes(p.name)
+products.filter(
+p=>wishlist.includes(p.name)
 );
 
 let html =
@@ -2493,17 +2913,27 @@ border-bottom:1px solid var(--border)
 ">
 
 <div>
-<strong>${p.icon} ${escapeHtml(p.name)}</strong>
-<div style="color:var(--pink);margin-top:5px">
+
+<strong>
+${p.icon} ${escapeHtml(p.name)}
+</strong>
+
+<div
+style="color:var(--pink);margin-top:5px">
+
 ₹${p.price}
+
 </div>
+
 </div>
 
 <button
 class="order"
 style="padding:8px 14px"
 onclick="closeModal();openProduct('${escapeHtml(p.name)}')">
+
 View
+
 </button>
 
 </div>
@@ -2514,7 +2944,10 @@ View
 
 }
 
-showModal(html);
+showModal(
+html,
+true
+);
 
 }
 
@@ -2525,50 +2958,87 @@ MENU / MODAL
 
 function openMenu(){
 
-document.getElementById("menuOverlay")
-.style.display="block";
+document.getElementById(
+"menuOverlay"
+).style.display="block";
 
 checkUser();
 
 }
 
+
 function closeMenu(){
 
-document.getElementById("menuOverlay")
-.style.display="none";
+document.getElementById(
+"menuOverlay"
+).style.display="none";
 
 }
 
+
 function closeMenuOutside(e){
 
-if(e.target.id==="menuOverlay")
+if(
+e.target.id==="menuOverlay"
+)
 closeMenu();
 
 }
 
 
-function showModal(content){
+/* SHOW MODAL */
 
-document.getElementById("modalContent")
-.innerHTML=content;
+function showModal(
+content,
+keepRoute=false
+){
 
-document.getElementById("modal")
-.style.display="flex";
+document.getElementById(
+"modalContent"
+).innerHTML=content;
+
+document.getElementById(
+"modal"
+).style.display="flex";
 
 }
 
 
-function closeModal(){
+/* CLOSE MODAL */
 
-document.getElementById("modal")
-.style.display="none";
+function closeModal(skipRoute=false){
+
+document.getElementById(
+"modal"
+).style.display="none";
+
+if(
+!skipRoute &&
+!restoringPage &&
+modalRoutes.includes(currentRoute)
+){
+
+const route =
+lastBaseRoute || "home";
+
+currentRoute=route;
+
+history.pushState(
+{route:route},
+"",
+"#"+route
+);
+
+}
 
 }
 
 
 function outsideModal(e){
 
-if(e.target.id==="modal")
+if(
+e.target.id==="modal"
+)
 closeModal();
 
 }
@@ -2580,7 +3050,11 @@ CART
 
 function openCart(){
 
-let html="<h2>🛒 My Cart</h2>";
+if(!restoringPage)
+setPageRoute("cart");
+
+let html =
+"<h2>🛒 My Cart</h2>";
 
 if(!cart.length){
 
@@ -2598,15 +3072,17 @@ Products add करके checkout करें।
 
 <button
 class="checkout"
-onclick="closeModal();window.scrollTo({top:0,behavior:'smooth'})">
+onclick="closeModal();goHome()">
+
 Continue Shopping
+
 </button>
 
 </div>
 
 `;
 
-showModal(html);
+showModal(html,true);
 
 return;
 
@@ -2614,7 +3090,8 @@ return;
 
 let total=0;
 
-cart.forEach((item,index)=>{
+cart.forEach(
+(item,index)=>{
 
 const amount =
 Number(item.price) *
@@ -2635,23 +3112,41 @@ gap:12px
 
 <div style="flex:1">
 
-<strong>${escapeHtml(item.name)}</strong>
+<strong>
+${escapeHtml(item.name)}
+</strong>
 
-<div style="font-size:12px;color:var(--muted);margin-top:5px">
+<div
+style="
+font-size:12px;
+color:var(--muted);
+margin-top:5px">
+
 ${escapeHtml(item.quality || "Standard")}
- •
+
+•
+
 ${escapeHtml(item.finish || "Matte")}
+
 </div>
 
-<div style="color:var(--pink);font-weight:bold;margin-top:6px">
+<div
+style="
+color:var(--pink);
+font-weight:bold;
+margin-top:6px">
+
 ₹${item.price} × ${item.qty}
+
 </div>
 
 </div>
 
 <div style="text-align:right">
 
-<strong>₹${amount}</strong>
+<strong>
+₹${amount}
+</strong>
 
 <br>
 
@@ -2665,7 +3160,9 @@ padding:7px 10px;
 border-radius:8px
 "
 onclick="removeFromCart(${index})">
+
 Remove
+
 </button>
 
 </div>
@@ -2698,12 +3195,17 @@ padding-top:18px
 <button
 class="checkout"
 onclick="checkout()">
+
 Proceed to Checkout →
+
 </button>
 
 `;
 
-showModal(html);
+showModal(
+html,
+true
+);
 
 }
 
@@ -2716,7 +3218,9 @@ saveCart();
 
 openCart();
 
-showToast("Product removed");
+showToast(
+"Product removed"
+);
 
 }
 
@@ -2818,7 +3322,9 @@ async function checkout(){
 
 if(!cart.length){
 
-alert("Your cart is empty.");
+alert(
+"Your cart is empty."
+);
 
 return;
 
@@ -2829,7 +3335,9 @@ await getCurrentUser();
 
 if(!user){
 
-alert("पहले Customer Login करें।");
+alert(
+"पहले Customer Login करें।"
+);
 
 closeModal();
 
@@ -2872,10 +3380,15 @@ items += `
 
 <div>
 
-<strong>${escapeHtml(i.name)}</strong>
+<strong>
+${escapeHtml(i.name)}
+</strong>
 
-<div style="font-size:12px;color:var(--muted)">
+<div
+style="font-size:12px;color:var(--muted)">
+
 ₹${i.price} × ${i.qty}
+
 </div>
 
 </div>
@@ -2980,7 +3493,8 @@ border-radius:10px;
 font-size:13px
 ">
 
-💵 <b>Payment Method:</b> Cash on Delivery (COD)
+💵 <b>Payment Method:</b>
+Cash on Delivery (COD)
 
 </div>
 
@@ -2988,7 +3502,9 @@ font-size:13px
 class="checkout"
 style="margin-top:20px"
 onclick="placeOrder()">
+
 Place Order →
+
 </button>
 
 `);
@@ -3013,7 +3529,9 @@ return;
 
 if(!isProfileComplete(user)){
 
-alert("Profile पूरी करना जरूरी है।");
+alert(
+"Profile पूरी करना जरूरी है।"
+);
 
 openProfile(true);
 
@@ -3116,8 +3634,11 @@ showModal(`
 Order Placed Successfully!
 </h2>
 
-<p style="color:var(--muted);margin:10px">
+<p
+style="color:var(--muted);margin:10px">
+
 आपका order successfully place हो गया है।
+
 </p>
 
 <div
@@ -3147,14 +3668,18 @@ ${orderNumber}
 <button
 class="checkout"
 onclick="closeModal()">
+
 Continue Shopping
+
 </button>
 
 </div>
 
 `);
 
-showToast("Order placed successfully ✅");
+showToast(
+"Order placed successfully ✅"
+);
 
 }catch(e){
 
@@ -3174,7 +3699,11 @@ AUTH
 
 function openAuth(){
 
-getCurrentUser().then(user=>{
+if(!restoringPage)
+setPageRoute("auth");
+
+getCurrentUser()
+.then(user=>{
 
 if(user){
 
@@ -3213,7 +3742,9 @@ placeholder="Password">
 <button
 class="auth-submit"
 onclick="loginUser()">
+
 Login
+
 </button>
 
 <button
@@ -3224,7 +3755,9 @@ color:var(--pink);
 border:2px solid var(--pink)
 "
 onclick="showSignup()">
+
 Create New Account
+
 </button>
 
 </div>
@@ -3271,7 +3804,9 @@ placeholder="Confirm Password">
 <button
 class="auth-submit"
 onclick="signupUser()">
+
 Create Account
+
 </button>
 
 <button
@@ -3282,14 +3817,19 @@ color:var(--pink);
 border:2px solid var(--pink)
 "
 onclick="showLogin()">
+
 ← Back to Login
+
 </button>
 
 </div>
 
 `;
 
-showModal(html);
+showModal(
+html,
+true
+);
 
 });
 
@@ -3298,22 +3838,26 @@ showModal(html);
 
 function showLogin(){
 
-document.getElementById("loginForm")
-.style.display="block";
+document.getElementById(
+"loginForm"
+).style.display="block";
 
-document.getElementById("signupForm")
-.style.display="none";
+document.getElementById(
+"signupForm"
+).style.display="none";
 
 }
 
 
 function showSignup(){
 
-document.getElementById("loginForm")
-.style.display="none";
+document.getElementById(
+"loginForm"
+).style.display="none";
 
-document.getElementById("signupForm")
-.style.display="block";
+document.getElementById(
+"signupForm"
+).style.display="block";
 
 }
 
@@ -3321,7 +3865,9 @@ document.getElementById("signupForm")
 function togglePassword(){
 
 const x =
-document.getElementById("authPassword");
+document.getElementById(
+"authPassword"
+);
 
 x.type =
 x.type==="password"
@@ -3336,16 +3882,20 @@ x.type==="password"
 async function loginUser(){
 
 const email =
-document.getElementById("authEmail")
-.value.trim();
+document.getElementById(
+"authEmail"
+).value.trim();
 
 const password =
-document.getElementById("authPassword")
-.value;
+document.getElementById(
+"authPassword"
+).value;
 
 if(!email || !password){
 
-alert("Email और Password डालें।");
+alert(
+"Email और Password डालें।"
+);
 
 return;
 
@@ -3367,7 +3917,9 @@ closeModal();
 
 updateMenuUser(data.user);
 
-showToast("Login successful ✅");
+showToast(
+"Login successful ✅"
+);
 
 }catch(e){
 
@@ -3386,28 +3938,34 @@ e.message
 async function signupUser(){
 
 const name =
-document.getElementById("signupName")
-.value.trim();
+document.getElementById(
+"signupName"
+).value.trim();
 
 const last =
-document.getElementById("signupLastName")
-.value.trim();
+document.getElementById(
+"signupLastName"
+).value.trim();
 
 const mobile =
-document.getElementById("signupMobile")
-.value.trim();
+document.getElementById(
+"signupMobile"
+).value.trim();
 
 const email =
-document.getElementById("signupEmail")
-.value.trim();
+document.getElementById(
+"signupEmail"
+).value.trim();
 
 const pass =
-document.getElementById("signupPassword")
-.value;
+document.getElementById(
+"signupPassword"
+).value;
 
 const confirm =
-document.getElementById("signupConfirmPassword")
-.value;
+document.getElementById(
+"signupConfirmPassword"
+).value;
 
 if(
 !name ||
@@ -3417,7 +3975,9 @@ if(
 !pass
 ){
 
-alert("सभी required details सही भरें।");
+alert(
+"सभी required details सही भरें।"
+);
 
 return;
 
@@ -3425,7 +3985,9 @@ return;
 
 if(pass.length<6){
 
-alert("Password कम से कम 6 characters का होना चाहिए।");
+alert(
+"Password कम से कम 6 characters का होना चाहिए।"
+);
 
 return;
 
@@ -3433,7 +3995,9 @@ return;
 
 if(pass!==confirm){
 
-alert("Confirm Password match नहीं कर रहा।");
+alert(
+"Confirm Password match नहीं कर रहा।"
+);
 
 return;
 
@@ -3466,7 +4030,9 @@ if(data.session){
 
 closeModal();
 
-updateMenuUser(data.user);
+updateMenuUser(
+data.user
+);
 
 showToast(
 "Account created successfully ✅"
@@ -3531,10 +4097,14 @@ session?.user || null
 function updateMenuUser(user){
 
 const n =
-document.getElementById("menuUserName");
+document.getElementById(
+"menuUserName"
+);
 
 const e =
-document.getElementById("menuUserEmail");
+document.getElementById(
+"menuUserEmail"
+);
 
 if(!n || !e)
 return;
@@ -3570,6 +4140,9 @@ PROFILE MODAL
 ========================= */
 
 async function openProfile(force=false){
+
+if(!restoringPage)
+setPageRoute("profile");
 
 const user =
 await getCurrentUser();
@@ -3730,7 +4303,9 @@ ${escapeHtml(p.pincode)}
 <button
 class="checkout"
 onclick="openProfile(true)">
+
 ✏️ Edit Profile
+
 </button>
 
 `
@@ -3786,7 +4361,9 @@ Delivery Address
 <button
 class="location-btn"
 onclick="useCurrentLocation()">
+
 📍 Use Current Location
+
 </button>
 
 <div
@@ -3847,7 +4424,9 @@ placeholder="Pincode">
 <button
 class="checkout"
 onclick="saveProfile()">
+
 💾 Save Profile
+
 </button>
 
 `
@@ -3860,7 +4439,9 @@ onclick="saveProfile()">
 class="checkout"
 style="margin-top:18px;background:#e21d4d"
 onclick="logoutUser()">
+
 Logout
+
 </button>
 
 `);
@@ -3940,7 +4521,9 @@ pincode:pin
 if(error)
 throw error;
 
-updateMenuUser(data.user);
+updateMenuUser(
+data.user
+);
 
 showToast(
 "Profile saved successfully ✅"
@@ -3970,7 +4553,9 @@ CURRENT LOCATION
 function useCurrentLocation(){
 
 const s =
-document.getElementById("locationStatus");
+document.getElementById(
+"locationStatus"
+);
 
 if(!s)
 return;
@@ -4114,12 +4699,17 @@ ORDERS
 
 async function openOrders(){
 
+if(!restoringPage)
+setPageRoute("orders");
+
 const user =
 await getCurrentUser();
 
 if(!user){
 
-alert("Please login first.");
+alert(
+"Please login first."
+);
 
 openAuth();
 
@@ -4139,7 +4729,7 @@ Loading orders...
 
 </div>
 
-`);
+`,true);
 
 try{
 
@@ -4157,11 +4747,13 @@ if(error)
 throw error;
 
 const box =
-document.getElementById("myOrdersList");
+document.getElementById(
+"myOrdersList"
+);
 
 if(!data || !data.length){
 
-box.innerHTML = `
+box.innerHTML=`
 
 <div
 style="
@@ -4215,7 +4807,9 @@ margin-top:8px
 ">
 
 Total:
-<b>₹${Number(o.total_amount || 0)}</b>
+<b>
+₹${Number(o.total_amount || 0)}
+</b>
 
 <br>
 
@@ -4239,7 +4833,9 @@ new Date(o.created_at)
 <button
 class="checkout"
 onclick='viewOrderDetails(${JSON.stringify(o).replace(/'/g,"&#039;")})'>
+
 👁️ View Details
+
 </button>
 
 </div>
@@ -4248,8 +4844,9 @@ onclick='viewOrderDetails(${JSON.stringify(o).replace(/'/g,"&#039;")})'>
 
 }catch(e){
 
-document.getElementById("myOrdersList")
-.innerHTML = `
+document.getElementById(
+"myOrdersList"
+).innerHTML=`
 
 <div style="color:red">
 
@@ -4306,7 +4903,9 @@ ${escapeHtml(o.payment_status || "pending")}
 <br>
 
 Total:
-<b>₹${Number(o.total_amount || 0)}</b>
+<b>
+₹${Number(o.total_amount || 0)}
+</b>
 
 <br>
 
@@ -4352,7 +4951,9 @@ new Date(o.created_at).toLocaleString("en-IN")
 <button
 class="checkout"
 onclick="openOrders()">
+
 ← Back to My Orders
+
 </button>
 
 `);
@@ -4365,6 +4966,9 @@ INFO
 ========================= */
 
 function showNotifications(){
+
+if(!restoringPage)
+setPageRoute("notifications");
 
 showModal(`
 
@@ -4386,12 +4990,26 @@ No new notifications
 
 </div>
 
-`);
+`,true);
 
 }
 
 
 function showInfo(t){
+
+let route="about";
+
+if(t==="Contact Us")
+route="contact";
+
+if(t==="Privacy Policy")
+route="privacy";
+
+if(t==="Terms & Conditions")
+route="terms";
+
+if(!restoringPage)
+setPageRoute(route);
 
 const c={
 
@@ -4470,7 +5088,10 @@ Printzy आपका online printing platform है
 
 };
 
-showModal(c[t] || "");
+showModal(
+c[t] || "",
+true
+);
 
 }
 
@@ -4481,7 +5102,9 @@ DARK MODE
 
 function toggleDark(){
 
-document.body.classList.toggle("dark");
+document.body.classList.toggle(
+"dark"
+);
 
 localStorage.setItem(
 "printzyDark",
@@ -4511,7 +5134,9 @@ v
 );
 
 const s =
-document.getElementById("languageSelect");
+document.getElementById(
+"languageSelect"
+);
 
 if(s)
 s.value=v;
@@ -4530,7 +5155,9 @@ TOAST
 function showToast(m){
 
 const old =
-document.getElementById("printzyToast");
+document.getElementById(
+"printzyToast"
+);
 
 if(old)
 old.remove();
@@ -4562,13 +5189,17 @@ document.addEventListener(
 "change",
 function(e){
 
-if(e.target.id==="productUpload"){
+if(
+e.target.id==="productUpload"
+){
 
 const file =
 e.target.files[0];
 
 const status =
-document.getElementById("uploadStatus");
+document.getElementById(
+"uploadStatus"
+);
 
 if(!status)
 return;
@@ -4599,6 +5230,16 @@ showProducts();
 updateCartCount();
 
 checkUser();
+
+
+/* RESTORE LAST PAGE AFTER REFRESH */
+
+setTimeout(
+()=>{
+restorePageFromURL();
+},
+100
+);
 
 </script>
 
