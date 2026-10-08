@@ -2443,7 +2443,8 @@ openCart();
 
 
 /* =====================================================
-PROFILE COMPLETENESS
+PROFILE DATA
+MIDDLE NAME COMPLETELY REMOVED
 ===================================================== */
 
 function getProfileData(user){
@@ -2454,8 +2455,6 @@ user?.user_metadata||{};
 return {
 
 name:(m.name||"").trim(),
-
-middle_name:(m.middle_name||"").trim(),
 
 last_name:(m.last_name||"").trim(),
 
@@ -2483,7 +2482,6 @@ getProfileData(user);
 
 return !!(
 p.name &&
-p.middle_name &&
 p.last_name &&
 /^[0-9]{10}$/.test(p.mobile) &&
 p.house &&
@@ -2503,15 +2501,29 @@ getProfileData(user);
 
 const missing=[];
 
-if(!p.name)missing.push("Name");
-if(!p.middle_name)missing.push("Middle Name");
-if(!p.last_name)missing.push("Last Name");
-if(!/^[0-9]{10}$/.test(p.mobile))missing.push("Mobile Number");
-if(!p.house)missing.push("House No. / Building Name");
-if(!p.road)missing.push("Road / Area / Colony Name");
-if(!p.city)missing.push("City");
-if(!p.state)missing.push("State");
-if(!/^[0-9]{6}$/.test(p.pincode))missing.push("Pincode");
+if(!p.name)
+missing.push("Name");
+
+if(!p.last_name)
+missing.push("Last Name");
+
+if(!/^[0-9]{10}$/.test(p.mobile))
+missing.push("Mobile Number");
+
+if(!p.house)
+missing.push("House No. / Building Name");
+
+if(!p.road)
+missing.push("Road / Area / Colony Name");
+
+if(!p.city)
+missing.push("City");
+
+if(!p.state)
+missing.push("State");
+
+if(!/^[0-9]{6}$/.test(p.pincode))
+missing.push("Pincode");
 
 return missing;
 
@@ -2620,7 +2632,6 @@ getProfileData(user);
 const fullName=
 [
 profile.name,
-profile.middle_name,
 profile.last_name
 ]
 .filter(Boolean)
@@ -2744,279 +2755,278 @@ Place Order →
 
 
 /* =====================================================
-PLACE ORDER - FINAL
+PLACE ORDER
 ===================================================== */
 
 async function placeOrder(){
 
-  if(!cart || cart.length === 0){
+if(!cart || cart.length === 0){
 
-    alert("Cart खाली है।");
-    return;
+alert("Cart खाली है।");
+return;
 
-  }
+}
 
 
-  const user =
-    await getCurrentUser();
+const user =
+await getCurrentUser();
 
 
-  if(!user){
+if(!user){
 
-    alert("Account required.");
-    return;
+alert("Account required.");
+return;
 
-  }
+}
 
 
-  if(!isProfileComplete(user)){
+if(!isProfileComplete(user)){
 
-    alert("Profile पूरी करना जरूरी है।");
-    openProfile(true);
-    return;
+alert("Profile पूरी करना जरूरी है।");
+openProfile(true);
+return;
 
-  }
+}
 
 
-  try{
+try{
 
-    const profile =
-      getProfileData(user);
+const profile =
+getProfileData(user);
 
 
-    const fullName =
-      [
-        profile.name,
-        profile.middle_name,
-        profile.last_name
-      ]
-      .filter(Boolean)
-      .join(" ");
+const fullName =
+[
+profile.name,
+profile.last_name
+]
+.filter(Boolean)
+.join(" ");
 
 
-    const shippingAddress =
-      [
-        profile.house,
-        profile.road,
-        profile.city,
-        profile.state,
-        profile.pincode
-      ]
-      .filter(Boolean)
-      .join(", ");
+const shippingAddress =
+[
+profile.house,
+profile.road,
+profile.city,
+profile.state,
+profile.pincode
+]
+.filter(Boolean)
+.join(", ");
 
 
-    let totalAmount = 0;
+let totalAmount = 0;
 
 
-    cart.forEach(item => {
+cart.forEach(item => {
 
-      totalAmount +=
-        Number(item.price) *
-        Number(item.qty);
+totalAmount +=
+Number(item.price) *
+Number(item.qty);
 
-    });
+});
 
 
-    const orderNumber =
-      "PZ-" +
-      Date.now().toString().slice(-10);
+const orderNumber =
+"PZ-" +
+Date.now().toString().slice(-10);
 
 
-    const orderItems =
-      cart
-      .map(item => {
+const orderItems =
+cart
+.map(item => {
 
-        const price =
-          Number(item.price);
+const price =
+Number(item.price);
 
-        const qty =
-          Number(item.qty);
+const qty =
+Number(item.qty);
 
-        const amount =
-          price * qty;
+const amount =
+price * qty;
 
-        return (
-          item.name +
-          " × " +
-          qty +
-          " = ₹" +
-          amount
-        );
+return (
+item.name +
+" × " +
+qty +
+" = ₹" +
+amount
+);
 
-      })
-      .join("\n");
+})
+.join("\n");
 
 
-    const { data, error } =
-      await supabaseClient
-      .from("orders")
-      .insert({
+const { data, error } =
+await supabaseClient
+.from("orders")
+.insert({
 
-        order_number:
-          orderNumber,
+order_number:
+orderNumber,
 
-        customer_id:
-          null,
+customer_id:
+null,
 
-        customer_name:
-          fullName,
+customer_name:
+fullName,
 
-        customer_phone:
-          profile.mobile,
+customer_phone:
+profile.mobile,
 
-        customer_email:
-          user.email || "",
+customer_email:
+user.email || "",
 
-        shipping_address:
-          shippingAddress,
+shipping_address:
+shippingAddress,
 
-        total_amount:
-          totalAmount,
+total_amount:
+totalAmount,
 
-        payment_status:
-          "pending",
+payment_status:
+"pending",
 
-        order_status:
-          "pending",
+order_status:
+"pending",
 
-        payment_method:
-          "COD",
+payment_method:
+"COD",
 
-        notes:
-          "Order Items:\n" +
-          orderItems
+notes:
+"Order Items:\n" +
+orderItems
 
-      })
-      .select()
-      .single();
+})
+.select()
+.single();
 
 
-    if(error){
+if(error){
 
-      console.error(
-        "Place Order Error:",
-        error
-      );
+console.error(
+"Place Order Error:",
+error
+);
 
-      alert(
-        "Order place nahi ho paya ❌\n\n" +
-        error.message
-      );
+alert(
+"Order place nahi ho paya ❌\n\n" +
+error.message
+);
 
-      return;
+return;
 
-    }
+}
 
 
-    cart = [];
+cart = [];
 
-    saveCart();
+saveCart();
 
-    updateCartCount();
+updateCartCount();
 
-    closeModal();
+closeModal();
 
 
-    showModal(`
+showModal(`
 
-      <div style="
-        text-align:center;
-        padding:20px 10px;
-      ">
+<div style="
+text-align:center;
+padding:20px 10px;
+">
 
-        <div style="
-          font-size:65px;
-          margin-bottom:10px;
-        ">
-          ✅
-        </div>
+<div style="
+font-size:65px;
+margin-bottom:10px;
+">
+✅
+</div>
 
 
-        <h2 style="
-          color:var(--green);
-          margin-bottom:10px;
-        ">
-          Order Placed Successfully!
-        </h2>
+<h2 style="
+color:var(--green);
+margin-bottom:10px;
+">
+Order Placed Successfully!
+</h2>
 
 
-        <p style="
-          color:var(--muted);
-          line-height:1.6;
-        ">
-          आपका order successfully place हो गया है।
-        </p>
+<p style="
+color:var(--muted);
+line-height:1.6;
+">
+आपका order successfully place हो गया है।
+</p>
 
 
-        <div style="
-          margin:20px 0;
-          padding:18px;
-          background:var(--soft);
-          border:1px solid var(--border);
-          border-radius:14px;
-        ">
+<div style="
+margin:20px 0;
+padding:18px;
+background:var(--soft);
+border:1px solid var(--border);
+border-radius:14px;
+">
 
-          <div style="
-            font-size:13px;
-            color:var(--muted);
-          ">
-            Order Number
-          </div>
+<div style="
+font-size:13px;
+color:var(--muted);
+">
+Order Number
+</div>
 
 
-          <div style="
-            margin-top:7px;
-            font-size:22px;
-            font-weight:900;
-            color:var(--pink);
-          ">
-            ${escapeHtml(orderNumber)}
-          </div>
+<div style="
+margin-top:7px;
+font-size:22px;
+font-weight:900;
+color:var(--pink);
+">
+${escapeHtml(orderNumber)}
+</div>
 
-        </div>
+</div>
 
 
-        <div style="
-          font-size:18px;
-          font-weight:800;
-          margin-bottom:18px;
-        ">
-          Total: ₹${totalAmount}
-        </div>
+<div style="
+font-size:18px;
+font-weight:800;
+margin-bottom:18px;
+">
+Total: ₹${totalAmount}
+</div>
 
 
-        <button
-          class="checkout"
-          onclick="closeModal()">
+<button
+class="checkout"
+onclick="closeModal()">
 
-          Continue Shopping
+Continue Shopping
 
-        </button>
+</button>
 
-      </div>
+</div>
 
-    `);
+`);
 
 
-    showToast(
-      "Order placed successfully ✅"
-    );
+showToast(
+"Order placed successfully ✅"
+);
 
 
-  }catch(error){
+}catch(error){
 
-    console.error(
-      "Place Order Exception:",
-      error
-    );
+console.error(
+"Place Order Exception:",
+error
+);
 
-    alert(
-      "Order place karte waqt error aa gaya ❌\n\n" +
-      error.message
-    );
+alert(
+"Order place karte waqt error aa gaya ❌\n\n" +
+error.message
+);
 
-  }
+}
 
 }
 
@@ -3240,13 +3250,6 @@ id="signupName"
 type="text"
 autocomplete="given-name"
 placeholder="Name">
-
-
-<input
-class="auth-input"
-id="signupMiddleName"
-type="text"
-placeholder="Middle Name">
 
 
 <input
@@ -3488,175 +3491,226 @@ error.message
 
 /* =====================================================
 SIGNUP
+MIDDLE NAME REMOVED
 ===================================================== */
 
 async function signupUser(){
 
-  const name =
-    document.getElementById("signupName")?.value.trim();
-
-  const middleName =
-    document.getElementById("signupMiddleName")?.value.trim();
-
-  const lastName =
-    document.getElementById("signupLastName")?.value.trim();
-
-  const mobile =
-    document.getElementById("signupMobile")?.value.trim();
-
-  const email =
-    document.getElementById("signupEmail")?.value.trim();
-
-  const password =
-    document.getElementById("signupPassword")?.value;
-
-  const confirmPassword =
-    document.getElementById("signupConfirmPassword")?.value;
+const name =
+document
+.getElementById("signupName")
+?.value
+.trim();
 
 
-  if(!name){
-    alert("Name डालें।");
-    return;
-  }
-
-  if(!middleName){
-    alert("Middle Name डालें।");
-    return;
-  }
-
-  if(!lastName){
-    alert("Last Name डालें।");
-    return;
-  }
-
-  if(!/^[0-9]{10}$/.test(mobile)){
-    alert("Valid 10 digit Mobile Number डालें।");
-    return;
-  }
-
-  if(!email){
-    alert("Email address डालें।");
-    return;
-  }
-
-  if(!password){
-    alert("Password डालें।");
-    return;
-  }
-
-  if(password.length < 6){
-    alert("Password कम से कम 6 characters का होना चाहिए।");
-    return;
-  }
-
-  if(password !== confirmPassword){
-    alert("Password और Confirm Password match नहीं कर रहे।");
-    return;
-  }
+const lastName =
+document
+.getElementById("signupLastName")
+?.value
+.trim();
 
 
-  try{
-
-    const { data, error } =
-      await supabaseClient.auth.signUp({
-
-        email: email,
-
-        password: password,
-
-        options: {
-          data: {
-            name: name,
-            middle_name: middleName,
-            last_name: lastName,
-            mobile: mobile
-          }
-        }
-
-      });
+const mobile =
+document
+.getElementById("signupMobile")
+?.value
+.trim();
 
 
-    console.log("SIGNUP RESPONSE:", data);
-    console.log("SIGNUP ERROR:", error);
+const email =
+document
+.getElementById("signupEmail")
+?.value
+.trim();
 
 
-    if(error){
-
-      console.error("Supabase Signup Error:", error);
-
-      alert(
-        "Account creation failed ❌\n\n" +
-        error.message
-      );
-
-      return;
-    }
+const password =
+document
+.getElementById("signupPassword")
+?.value;
 
 
-    if(!data || !data.user){
-
-      alert(
-        "Account create नहीं हुआ ❌\n\n" +
-        "Supabase ने user return नहीं किया।"
-      );
-
-      return;
-    }
+const confirmPassword =
+document
+.getElementById("signupConfirmPassword")
+?.value;
 
 
-    /*
-      Email confirmation OFF होने पर
-      session मिलना चाहिए.
-    */
+if(!name){
 
-    if(data.session){
+alert("Name डालें।");
+return;
 
-      closeModal();
-
-      updateMenuUser(data.user);
-
-      showToast(
-        "Account created successfully ✅"
-      );
+}
 
 
-      setTimeout(() => {
+if(!lastName){
 
-        openProfile(true);
+alert("Last Name डालें।");
+return;
 
-      }, 500);
-
-      return;
-    }
+}
 
 
-    /*
-      अगर user बना लेकिन session नहीं मिला,
-      तो exact situation बताओ.
-    */
+if(!/^[0-9]{10}$/.test(mobile)){
 
-    alert(
-      "Account create हो गया है ✅\n\n" +
-      "लेकिन login session नहीं मिला।\n\n" +
-      "Supabase Authentication settings check करनी होंगी."
-    );
+alert(
+"Valid 10 digit Mobile Number डालें।"
+);
 
-    showLogin();
+return;
+
+}
 
 
-  }catch(error){
+if(!email){
 
-    console.error(
-      "Signup Exception:",
-      error
-    );
+alert(
+"Email address डालें।"
+);
 
-    alert(
-      "Account creation failed ❌\n\n" +
-      (error?.message || "Unknown error")
-    );
+return;
 
-  }
+}
+
+
+if(!password){
+
+alert(
+"Password डालें।"
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+alert(
+"Password कम से कम 6 characters का होना चाहिए।"
+);
+
+return;
+
+}
+
+
+if(password !== confirmPassword){
+
+alert(
+"Password और Confirm Password match नहीं कर रहे।"
+);
+
+return;
+
+}
+
+
+try{
+
+const {data,error} =
+await supabaseClient.auth.signUp({
+
+email:email,
+
+password:password,
+
+options:{
+data:{
+name:name,
+last_name:lastName,
+mobile:mobile
+}
+}
+
+});
+
+
+console.log(
+"SIGNUP RESPONSE:",
+data
+);
+
+console.log(
+"SIGNUP ERROR:",
+error
+);
+
+
+if(error){
+
+console.error(
+"Supabase Signup Error:",
+error
+);
+
+alert(
+"Account creation failed ❌\n\n" +
+error.message
+);
+
+return;
+
+}
+
+
+if(!data || !data.user){
+
+alert(
+"Account create नहीं हुआ ❌\n\n" +
+"Supabase ने user return नहीं किया।"
+);
+
+return;
+
+}
+
+
+if(data.session){
+
+closeModal();
+
+updateMenuUser(data.user);
+
+showToast(
+"Account created successfully ✅"
+);
+
+
+setTimeout(()=>{
+
+openProfile(true);
+
+},500);
+
+return;
+
+}
+
+
+alert(
+"Account create हो गया है ✅\n\n" +
+"लेकिन login session नहीं मिला।\n\n" +
+"Supabase Authentication settings check करनी होंगी."
+);
+
+showLogin();
+
+
+}catch(error){
+
+console.error(
+"Signup Exception:",
+error
+);
+
+alert(
+"Account creation failed ❌\n\n" +
+(error?.message || "Unknown error")
+);
+
+}
 
 }
 
@@ -3734,7 +3788,6 @@ getProfileData(user);
 const name=
 [
 p.name,
-p.middle_name,
 p.last_name
 ]
 .filter(Boolean)
@@ -3824,24 +3877,43 @@ ${complete && !forceEdit ? `
 Personal Details
 </div>
 
-<div class="profile-row">
-<div class="profile-label">NAME</div>
-<div class="profile-value">${escapeHtml(p.name)}</div>
-</div>
 
 <div class="profile-row">
-<div class="profile-label">MIDDLE NAME</div>
-<div class="profile-value">${escapeHtml(p.middle_name)}</div>
+
+<div class="profile-label">
+NAME
 </div>
 
-<div class="profile-row">
-<div class="profile-label">LAST NAME</div>
-<div class="profile-value">${escapeHtml(p.last_name)}</div>
+<div class="profile-value">
+${escapeHtml(p.name)}
 </div>
 
+</div>
+
+
 <div class="profile-row">
-<div class="profile-label">MOBILE NUMBER</div>
-<div class="profile-value">${escapeHtml(p.mobile)}</div>
+
+<div class="profile-label">
+LAST NAME
+</div>
+
+<div class="profile-value">
+${escapeHtml(p.last_name)}
+</div>
+
+</div>
+
+
+<div class="profile-row">
+
+<div class="profile-label">
+MOBILE NUMBER
+</div>
+
+<div class="profile-value">
+${escapeHtml(p.mobile)}
+</div>
+
 </div>
 
 
@@ -3849,30 +3921,71 @@ Personal Details
 Delivery Address
 </div>
 
-<div class="profile-row">
-<div class="profile-label">HOUSE NO. / BUILDING NAME</div>
-<div class="profile-value">${escapeHtml(p.house)}</div>
-</div>
 
 <div class="profile-row">
-<div class="profile-label">ROAD / AREA / COLONY NAME</div>
-<div class="profile-value">${escapeHtml(p.road)}</div>
+
+<div class="profile-label">
+HOUSE NO. / BUILDING NAME
 </div>
 
-<div class="profile-row">
-<div class="profile-label">CITY</div>
-<div class="profile-value">${escapeHtml(p.city)}</div>
+<div class="profile-value">
+${escapeHtml(p.house)}
 </div>
 
-<div class="profile-row">
-<div class="profile-label">STATE</div>
-<div class="profile-value">${escapeHtml(p.state)}</div>
 </div>
 
+
 <div class="profile-row">
-<div class="profile-label">PINCODE</div>
-<div class="profile-value">${escapeHtml(p.pincode)}</div>
+
+<div class="profile-label">
+ROAD / AREA / COLONY NAME
 </div>
+
+<div class="profile-value">
+${escapeHtml(p.road)}
+</div>
+
+</div>
+
+
+<div class="profile-row">
+
+<div class="profile-label">
+CITY
+</div>
+
+<div class="profile-value">
+${escapeHtml(p.city)}
+</div>
+
+</div>
+
+
+<div class="profile-row">
+
+<div class="profile-label">
+STATE
+</div>
+
+<div class="profile-value">
+${escapeHtml(p.state)}
+</div>
+
+</div>
+
+
+<div class="profile-row">
+
+<div class="profile-label">
+PINCODE
+</div>
+
+<div class="profile-value">
+${escapeHtml(p.pincode)}
+</div>
+
+</div>
+
 
 <button
 class="checkout"
@@ -3887,13 +4000,20 @@ onclick="openProfile(true)">
 
 <div class="profile-required">
 
-<strong>⚠️ Profile Complete करना जरूरी है</strong>
+<strong>
+⚠️ Profile Complete करना जरूरी है
+</strong>
 
 <br><br>
 
-${missing.length
-? "बाकी details: "+missing.join(", ")
-: "सभी delivery details भरें।"}
+${
+missing.length
+?
+"बाकी details: "+
+missing.join(", ")
+:
+"सभी delivery details भरें।"
+}
 
 <br><br>
 
@@ -3917,18 +4037,6 @@ id="profileName"
 type="text"
 value="${escapeHtml(p.name)}"
 placeholder="Name">
-
-
-<label class="profile-label">
-Middle Name *
-</label>
-
-<input
-class="auth-input"
-id="profileMiddleName"
-type="text"
-value="${escapeHtml(p.middle_name)}"
-placeholder="Middle Name">
 
 
 <label class="profile-label">
@@ -3969,6 +4077,7 @@ onclick="useCurrentLocation()">
 📍 Use Current Location
 
 </button>
+
 
 <div
 id="locationStatus"
@@ -4111,11 +4220,6 @@ document
 ?.value
 .trim();
 
-const middleName=
-document
-.getElementById("profileMiddleName")
-?.value
-.trim();
 
 const lastName=
 document
@@ -4123,11 +4227,13 @@ document
 ?.value
 .trim();
 
+
 const mobile=
 document
 .getElementById("profileMobile")
 ?.value
 .trim();
+
 
 const house=
 document
@@ -4135,11 +4241,13 @@ document
 ?.value
 .trim();
 
+
 const road=
 document
 .getElementById("profileRoad")
 ?.value
 .trim();
+
 
 const city=
 document
@@ -4147,11 +4255,13 @@ document
 ?.value
 .trim();
 
+
 const state=
 document
 .getElementById("profileState")
 ?.value
 .trim();
+
 
 const pincode=
 document
@@ -4167,12 +4277,6 @@ return;
 
 }
 
-if(!middleName){
-
-alert("Middle Name डालें.");
-return;
-
-}
 
 if(!lastName){
 
@@ -4180,6 +4284,7 @@ alert("Last Name डालें.");
 return;
 
 }
+
 
 if(!/^[0-9]{10}$/.test(mobile)){
 
@@ -4191,6 +4296,7 @@ return;
 
 }
 
+
 if(!house){
 
 alert(
@@ -4200,6 +4306,7 @@ alert(
 return;
 
 }
+
 
 if(!road){
 
@@ -4211,6 +4318,7 @@ return;
 
 }
 
+
 if(!city){
 
 alert("City डालें।");
@@ -4218,12 +4326,14 @@ return;
 
 }
 
+
 if(!state){
 
 alert("State डालें।");
 return;
 
 }
+
 
 if(!/^[0-9]{6}$/.test(pincode)){
 
@@ -4244,8 +4354,6 @@ await supabaseClient.auth.updateUser({
 data:{
 
 name:name,
-
-middle_name:middleName,
 
 last_name:lastName,
 
@@ -5033,217 +5141,233 @@ ORDERS
 
 async function openOrders(){
 
-  const user = await getCurrentUser();
-
-  if(!user){
-
-    alert("Please login first.");
-    return;
-
-  }
-
-  showModal(`
-    <div style="
-      padding:20px;
-    ">
-
-      <h2 style="
-        margin-bottom:18px;
-      ">
-        📦 My Orders
-      </h2>
-
-      <div id="myOrdersList">
-
-        <p style="
-          text-align:center;
-          color:var(--muted);
-        ">
-          Loading orders...
-        </p>
-
-      </div>
-
-    </div>
-  `);
-
-  try{
-
-    const { data, error } =
-      await supabaseClient
-      .from("orders")
-      .select("*")
-      .eq("customer_email", user.email)
-      .order("created_at", {
-        ascending:false
-      });
-
-    if(error){
-      throw error;
-    }
-
-    const box =
-      document.getElementById("myOrdersList");
-
-    if(!data || data.length === 0){
-
-      box.innerHTML = `
-
-        <div style="
-          text-align:center;
-          padding:30px 10px;
-          color:var(--muted);
-        ">
-
-          <div style="
-            font-size:50px;
-          ">
-            📦
-          </div>
-
-          <p style="
-            margin-top:10px;
-          ">
-            अभी कोई order नहीं है।
-          </p>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-    box.innerHTML =
-      data.map(order => `
-
-        <div style="
-          border:1px solid var(--border);
-          border-radius:14px;
-          padding:16px;
-          margin-bottom:14px;
-          background:var(--soft);
-        ">
-
-          <div style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px;
-            margin-bottom:10px;
-          ">
-
-            <strong>
-              ${escapeHtml(order.order_number || "")}
-            </strong>
-
-            <span style="
-              font-weight:800;
-              color:var(--pink);
-              text-transform:capitalize;
-            ">
-              ${escapeHtml(
-                order.order_status || "pending"
-              )}
-            </span>
-
-          </div>
+const user =
+await getCurrentUser();
 
 
-          <div style="
-            font-size:14px;
-            color:var(--muted);
-            line-height:1.7;
-          ">
+if(!user){
 
-            <div>
-              Total:
-              <strong>
-                ₹${Number(order.total_amount || 0)}
-              </strong>
-            </div>
+alert("Please login first.");
+return;
 
-            <div>
-              Payment:
-              ${escapeHtml(
-                order.payment_method || "COD"
-              )}
-            </div>
-
-            <div>
-              Date:
-              ${
-                order.created_at
-                ? new Date(
-                    order.created_at
-                  ).toLocaleString("en-IN")
-                : "-"
-              }
-            </div>
-
-          </div>
+}
 
 
-          <button
-            onclick='viewOrderDetails(${JSON.stringify(order).replace(/'/g,"&#039;")})'
-            style="
-              width:100%;
-              margin-top:14px;
-              padding:12px;
-              border:0;
-              border-radius:10px;
-              background:var(--blue2);
-              color:white;
-              font-weight:800;
-              cursor:pointer;
-            "
-          >
-            👁️ View Details
-          </button>
+showModal(`
 
-        </div>
+<div style="
+padding:20px;
+">
 
-      `).join("");
+<h2 style="
+margin-bottom:18px;
+">
+📦 My Orders
+</h2>
+
+<div id="myOrdersList">
+
+<p style="
+text-align:center;
+color:var(--muted);
+">
+Loading orders...
+</p>
+
+</div>
+
+</div>
+
+`);
 
 
-  }catch(error){
+try{
 
-    console.error(
-      "My Orders Error:",
-      error
-    );
+const { data, error } =
+await supabaseClient
+.from("orders")
+.select("*")
+.eq("customer_email", user.email)
+.order("created_at", {
+ascending:false
+});
 
-    const box =
-      document.getElementById(
-        "myOrdersList"
-      );
 
-    if(box){
+if(error){
 
-      box.innerHTML = `
+throw error;
 
-        <div style="
-          text-align:center;
-          padding:20px;
-          color:red;
-        ">
+}
 
-          Orders load नहीं हो पाए ❌
 
-          <br><br>
+const box =
+document.getElementById("myOrdersList");
 
-          ${escapeHtml(
-            error.message
-          )}
 
-        </div>
+if(!data || data.length === 0){
 
-      `;
+box.innerHTML = `
 
-    }
+<div style="
+text-align:center;
+padding:30px 10px;
+color:var(--muted);
+">
 
-  }
+<div style="
+font-size:50px;
+">
+📦
+</div>
+
+<p style="
+margin-top:10px;
+">
+अभी कोई order नहीं है।
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML =
+data.map(order => `
+
+<div style="
+border:1px solid var(--border);
+border-radius:14px;
+padding:16px;
+margin-bottom:14px;
+background:var(--soft);
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+">
+
+<strong>
+${escapeHtml(order.order_number || "")}
+</strong>
+
+<span style="
+font-weight:800;
+color:var(--pink);
+text-transform:capitalize;
+">
+${escapeHtml(
+order.order_status || "pending"
+)}
+</span>
+
+</div>
+
+
+<div style="
+font-size:14px;
+color:var(--muted);
+line-height:1.7;
+">
+
+<div>
+Total:
+<strong>
+₹${Number(order.total_amount || 0)}
+</strong>
+</div>
+
+<div>
+Payment:
+${escapeHtml(
+order.payment_method || "COD"
+)}
+</div>
+
+<div>
+Date:
+${
+order.created_at
+?
+new Date(
+order.created_at
+).toLocaleString("en-IN")
+:
+"-"
+}
+</div>
+
+</div>
+
+
+<button
+onclick='viewOrderDetails(${JSON.stringify(order).replace(/'/g,"&#039;")})'
+style="
+width:100%;
+margin-top:14px;
+padding:12px;
+border:0;
+border-radius:10px;
+background:var(--blue2);
+color:white;
+font-weight:800;
+cursor:pointer;
+"
+>
+👁️ View Details
+</button>
+
+</div>
+
+`).join("");
+
+
+}catch(error){
+
+console.error(
+"My Orders Error:",
+error
+);
+
+
+const box =
+document.getElementById(
+"myOrdersList"
+);
+
+
+if(box){
+
+box.innerHTML = `
+
+<div style="
+text-align:center;
+padding:20px;
+color:red;
+">
+
+Orders load नहीं हो पाए ❌
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+
+`;
+
+}
+
+}
 
 }
 
@@ -5254,146 +5378,148 @@ ORDER DETAILS
 
 function viewOrderDetails(order){
 
-  showModal(`
+showModal(`
 
-    <div style="
-      padding:20px;
-      max-height:80vh;
-      overflow-y:auto;
-    ">
+<div style="
+padding:20px;
+max-height:80vh;
+overflow-y:auto;
+">
 
-      <h2 style="
-        margin-bottom:18px;
-      ">
-        📦 Order Details
-      </h2>
-
-
-      <div style="
-        background:var(--soft);
-        border:1px solid var(--border);
-        border-radius:14px;
-        padding:16px;
-      ">
-
-        <div style="
-          font-size:19px;
-          font-weight:900;
-          margin-bottom:15px;
-          color:var(--pink);
-        ">
-          ${escapeHtml(
-            order.order_number || "-"
-          )}
-        </div>
+<h2 style="
+margin-bottom:18px;
+">
+📦 Order Details
+</h2>
 
 
-        <div style="
-          line-height:1.9;
-          font-size:14px;
-        ">
+<div style="
+background:var(--soft);
+border:1px solid var(--border);
+border-radius:14px;
+padding:16px;
+">
 
-          <div>
-            <strong>Status:</strong>
-            ${escapeHtml(
-              order.order_status || "pending"
-            )}
-          </div>
-
-
-          <div>
-            <strong>Payment Method:</strong>
-            ${escapeHtml(
-              order.payment_method || "COD"
-            )}
-          </div>
+<div style="
+font-size:19px;
+font-weight:900;
+margin-bottom:15px;
+color:var(--pink);
+">
+${escapeHtml(
+order.order_number || "-"
+)}
+</div>
 
 
-          <div>
-            <strong>Payment Status:</strong>
-            ${escapeHtml(
-              order.payment_status || "pending"
-            )}
-          </div>
+<div style="
+line-height:1.9;
+font-size:14px;
+">
+
+<div>
+<strong>Status:</strong>
+${escapeHtml(
+order.order_status || "pending"
+)}
+</div>
 
 
-          <div>
-            <strong>Total Amount:</strong>
-            ₹${Number(
-              order.total_amount || 0
-            )}
-          </div>
+<div>
+<strong>Payment Method:</strong>
+${escapeHtml(
+order.payment_method || "COD"
+)}
+</div>
 
 
-          <div>
-            <strong>Customer Name:</strong>
-            ${escapeHtml(
-              order.customer_name || "-"
-            )}
-          </div>
+<div>
+<strong>Payment Status:</strong>
+${escapeHtml(
+order.payment_status || "pending"
+)}
+</div>
 
 
-          <div>
-            <strong>Phone:</strong>
-            ${escapeHtml(
-              order.customer_phone || "-"
-            )}
-          </div>
+<div>
+<strong>Total Amount:</strong>
+₹${Number(
+order.total_amount || 0
+)}
+</div>
 
 
-          <div style="
-            margin-top:8px;
-          ">
-
-            <strong>
-              Delivery Address:
-            </strong>
-
-            <br>
-
-            ${escapeHtml(
-              order.shipping_address || "-"
-            )}
-
-          </div>
+<div>
+<strong>Customer Name:</strong>
+${escapeHtml(
+order.customer_name || "-"
+)}
+</div>
 
 
-          <div style="
-            margin-top:8px;
-          ">
-
-            <strong>
-              Order Date:
-            </strong>
-
-            ${
-              order.created_at
-              ? new Date(
-                  order.created_at
-                ).toLocaleString("en-IN")
-              : "-"
-            }
-
-          </div>
-
-        </div>
-
-      </div>
+<div>
+<strong>Phone:</strong>
+${escapeHtml(
+order.customer_phone || "-"
+)}
+</div>
 
 
-      <button
-        class="checkout"
-        style="
-          margin-top:16px;
-        "
-        onclick="openOrders()"
-      >
-        ← Back to My Orders
-      </button>
+<div style="
+margin-top:8px;
+">
 
-    </div>
+<strong>
+Delivery Address:
+</strong>
 
-  `);
+<br>
+
+${escapeHtml(
+order.shipping_address || "-"
+)}
+
+</div>
+
+
+<div style="
+margin-top:8px;
+">
+
+<strong>
+Order Date:
+</strong>
+
+${
+order.created_at
+?
+new Date(
+order.created_at
+).toLocaleString("en-IN")
+:
+"-"
+}
+
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="checkout"
+style="
+margin-top:16px;
+"
+onclick="openOrders()"
+>
+← Back to My Orders
+</button>
+
+</div>
+
+`);
 
 }
 
