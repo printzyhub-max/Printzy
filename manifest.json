@@ -1,0 +1,12 @@
+{
+  "background_color": "#f51462",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "PRINTZY - Print Your Ideas",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "PRINTZY",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "Printzy - Custom Printing and Personalized Products"
+}
