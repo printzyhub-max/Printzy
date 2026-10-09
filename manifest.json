@@ -1,12 +1,14 @@
+
 {
-  "background_color": "#f51462",
-  "dir": "ltr",
-  "display": "standalone",
+  "id": "/Printzy/",
   "name": "PRINTZY - Print Your Ideas",
-  "orientation": "any",
-  "scope": "/",
   "short_name": "PRINTZY",
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "description": "Printzy - Custom Printing and Personalized Products"
+  "description": "Printzy - Custom Printing and Personalized Products",
+  "start_url": "/Printzy/",
+  "scope": "/Printzy/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#f51663",
+  "dir": "ltr"
 }
