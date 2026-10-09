@@ -1885,81 +1885,101 @@ SUPABASE_KEY
 PRODUCTS
 ========================= */
 
-const products = [
-
-{
-name:"Visiting Card",
-price:99,
-icon:"💳",
-className:"tshirt",
-desc:"Professional visiting cards for your business.",
-description:"High quality professional visiting cards suitable for business, shops, services and personal branding."
-},
-
-{
-name:"Wedding Card",
-price:149,
-icon:"💌",
-className:"gift",
-desc:"Beautiful wedding invitation printing.",
-description:"Create beautiful wedding invitation cards with premium printing and customizable designs."
-},
-
-{
-name:"Poster",
-price:79,
-icon:"🖼️",
-className:"frameimg",
-desc:"High quality poster printing.",
-description:"Premium poster printing for promotions, events, shops, advertisements and special occasions."
-},
-
-{
-name:"Banner",
-price:199,
-icon:"🏳️",
-className:"hoodie",
-desc:"Durable promotional banner printing.",
-description:"Professional banner printing for shops, events, promotions and outdoor advertising."
-},
-
-{
-name:"Pamphlet",
-price:99,
-icon:"📄",
-className:"cap",
-desc:"Affordable promotional pamphlets.",
-description:"High quality pamphlet printing for business promotions, events and advertisements."
-},
-
-{
-name:"Sticker",
-price:49,
-icon:"🏷️",
-className:"mugimg",
-desc:"Custom printed stickers.",
-description:"Custom sticker printing for branding, packaging, products and personal use."
-},
-
-{
-name:"Photo Print",
-price:199,
-icon:"📸",
-className:"frameimg",
-desc:"High quality photo printing.",
-description:"Print your memorable photos with excellent color quality and professional finishing."
-},
-
-{
-name:"Other Printing",
-price:99,
-icon:"🖨️",
-className:"tshirt",
-desc:"Other customized printing requirements.",
-description:"Have another printing requirement? Choose this category and contact Printzy for customization."
-}
-
+let products = [
+  {
+    name: "Visiting Card",
+    price: 99,
+    icon: "💳",
+    className: "tshirt",
+    desc: "Professional visiting cards for your business.",
+    description: "High quality professional visiting cards suitable for business, shops, services and personal branding."
+  },
+  {
+    name: "Wedding Card",
+    price: 149,
+    icon: "💌",
+    className: "gift",
+    desc: "Beautiful wedding invitation printing.",
+    description: "Create beautiful wedding invitation cards with premium printing and customizable designs."
+  },
+  {
+    name: "Poster",
+    price: 79,
+    icon: "🖼️",
+    className: "frameimg",
+    desc: "High quality poster printing.",
+    description: "Premium poster printing for promotions, events and advertisements."
+  },
+  {
+    name: "Banner",
+    price: 199,
+    icon: "🏳️",
+    className: "hoodie",
+    desc: "Durable promotional banner printing.",
+    description: "Professional banner printing for shops and events."
+  },
+  {
+    name: "Pamphlet",
+    price: 99,
+    icon: "📄",
+    className: "cap",
+    desc: "Affordable promotional pamphlets.",
+    description: "High quality pamphlet printing for business promotions."
+  },
+  {
+    name: "Sticker",
+    price: 49,
+    icon: "🏷️",
+    className: "mugimg",
+    desc: "Custom printed stickers.",
+    description: "Custom sticker printing for branding and packaging."
+  },
+  {
+    name: "Photo Print",
+    price: 199,
+    icon: "📸",
+    className: "frameimg",
+    desc: "High quality photo printing.",
+    description: "Print your memorable photos with excellent color quality."
+  },
+  {
+    name: "Other Printing",
+    price: 99,
+    icon: "🖨️",
+    className: "tshirt",
+    desc: "Other customized printing requirements.",
+    description: "Customized printing for your requirements."
+  }
 ];
+
+async function loadProductsFromSupabase() {
+  const { data, error } = await supabaseClient
+    .from("products")
+    .select("*, categories(name)")
+    .eq("is_active", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Printzy products error:", error.message);
+    return;
+  }
+
+  if (data && data.length > 0) {
+    products = data.map(p => ({
+      ...p,
+      name: p.name,
+      price: Number(p.sale_price || p.price || 0),
+      icon: "🖨️",
+      className: "tshirt",
+      desc: p.description || p.name,
+      description: p.description || p.name,
+      category: p.categories?.name || "",
+      image_url: p.image_url || ""
+    }));
+
+    showProducts();
+  }
+}
 
 
 /* =========================
