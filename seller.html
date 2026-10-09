@@ -1,2 +1,244 @@
 
-seller.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printzy Seller Portal</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#172033}
+header{background:#063b91;color:white;text-align:center;padding:18px}
+main{max-width:650px;margin:20px auto;padding:14px}
+.card{background:white;padding:20px;border-radius:12px;margin-bottom:16px;box-shadow:0 3px 12px #0001}
+input,textarea,button,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccd3df;border-radius:8px;font-size:15px}
+button{background:#075ee8;color:white;border:0;font-weight:bold}
+.secondary{background:#475569}
+.hidden{display:none}
+.note{background:#eef4ff;padding:12px;border-radius:8px;line-height:1.5}
+.item{padding:12px;border:1px solid #ddd;border-radius:8px;margin:8px 0}
+#message{white-space:pre-wrap;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+<h1>PRINTZY SELLER</h1>
+<p>Seller Registration & Dashboard</p>
+</header>
+<main>
+<section class="card" id="auth">
+<h2>Seller Registration</h2>
+<form id="signup">
+<input id="fullName" placeholder="Full name" required>
+<input id="email" type="email" placeholder="Email" required>
+<input id="password" type="password" minlength="6" placeholder="Password (minimum 6 characters)" required>
+<input id="phone" type="tel" placeholder="Mobile number" required>
+<input id="shopName" placeholder="Shop name" required>
+<textarea id="shopDescription" placeholder="Shop description"></textarea>
+<button type="submit">Create Seller Account</button>
+</form>
+<hr>
+<h2>Seller Login</h2>
+<form id="login">
+<input id="loginEmail" type="email" placeholder="Email" required>
+<input id="loginPassword" type="password" placeholder="Password" required>
+<button type="submit">Login</button>
+</form>
+</section>
+
+<section class="card hidden" id="dashboard">
+<h2>Seller Dashboard</h2>
+<p id="sellerInfo"></p>
+<p id="status" class="note"></p>
+<div id="tools" class="hidden">
+<h3>Add Product</h3>
+<form id="productForm">
+<input id="productName" placeholder="Product name" required>
+<textarea id="description" placeholder="Description" required></textarea>
+<select id="category" required>
+<option value="">Loading categories...</option>
+</select>
+<input id="price" type="number" min="1" step="0.01" placeholder="Price in ₹" required>
+<input id="stock" type="number" min="0" step="1" placeholder="Stock quantity" required>
+<input id="imageUrl" type="url" placeholder="Product image URL (optional)">
+<button type="submit">Submit Product for Approval</button>
+</form>
+<h3>My Products</h3>
+<div id="myProducts">Loading...</div>
+</div>
+<button class="secondary" id="logout" type="button">Logout</button>
+</section>
+<p id="message"></p>
+</main>
+
+<script>
+const URL = "https://yxssyblhziyfbqxzjgxr.supabase.co";
+const KEY = "sb_publishable_RhoD2kI568-a7ddA8iGhdA_dwJo_m_p";
+const db = window.supabase.createClient(URL, KEY);
+const $ = id => document.getElementById(id);
+const say = t => $("message").textContent = t;
+
+async function profileFor(uid) {
+  const {data,error} = await db.from("seller_profiles")
+    .select("*").eq("id",uid).maybeSingle();
+  if(error) throw error;
+  return data;
+}
+
+async function loadCategories() {
+  const select = $("category");
+  const {data,error} = await db.from("categories").select("id,name");
+  select.replaceChildren();
+  const first = document.createElement("option");
+  first.value = "";
+  first.textContent = error ? "Category load error" : "Select category";
+  select.appendChild(first);
+  if(error) { say("Category error: " + error.message); return; }
+  (data || []).forEach(c => {
+    const o = document.createElement("option");
+    o.value = c.id;
+    o.textContent = c.name;
+    select.appendChild(o);
+  });
+}
+
+async function loadMyProducts(uid) {
+  const box = $("myProducts");
+  box.textContent = "Loading products...";
+  const {data,error} = await db.from("products")
+    .select("name,price,stock,is_active")
+    .eq("seller_id",uid).order("created_at",{ascending:false});
+  if(error) { box.textContent = "Products load error: " + error.message; return; }
+  box.replaceChildren();
+  if(!data || !data.length) {
+    box.textContent = "Abhi koi product nahi hai.";
+    return;
+  }
+  data.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.textContent = p.name + " | ₹" + p.price + " | Stock: " +
+      p.stock + " | " + (p.is_active ? "Active" : "Pending approval");
+    box.appendChild(div);
+  });
+}
+
+async function dashboard(user) {
+  try {
+    const p = await profileFor(user.id);
+    if(!p) {
+      say("Seller profile nahi mila. Seller registration isi page se karein.");
+      return;
+    }
+    $("auth").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+    $("sellerInfo").textContent = (p.shop_name || "Seller") + " | " + (p.email || user.email);
+    const approved = p.status === "approved";
+    $("status").textContent = approved
+      ? "Approved. Aap product submit kar sakte hain; har product admin approval tak inactive rahega."
+      : "Status: " + (p.status || "pending") + ". Admin approval ka intezar karein.";
+    $("tools").classList.toggle("hidden",!approved);
+    if(approved) {
+      await loadCategories();
+      await loadMyProducts(user.id);
+    }
+  } catch(e) {
+    say("Profile error: " + e.message);
+  }
+}
+
+$("signup").addEventListener("submit",async e => {
+  e.preventDefault();
+  say("Account create ho raha hai...");
+  const email = $("email").value.trim();
+  const {data,error} = await db.auth.signUp({
+    email,
+    password:$("password").value
+  });
+  if(error) { say("Signup error: " + error.message); return; }
+  if(!data.user) { say("Account create nahi hua."); return; }
+  if(!data.session) {
+    say("Account request bani, lekin session nahi mila. Login try karein.");
+    return;
+  }
+  const {error:pe} = await db.from("seller_profiles").insert({
+    id:data.user.id,
+    full_name:$("fullName").value.trim(),
+    email,
+    phone:$("phone").value.trim(),
+    shop_name:$("shopName").value.trim(),
+    shop_description:$("shopDescription").value.trim(),
+    status:"pending"
+  });
+  if(pe) { say("Account bana, profile save error: " + pe.message); return; }
+  $("signup").reset();
+  say("Registration successful. Admin approval ka wait karein.");
+  await dashboard(data.user);
+});
+
+$("login").addEventListener("submit",async e => {
+  e.preventDefault();
+  say("Login ho raha hai...");
+  const {data,error} = await db.auth.signInWithPassword({
+    email:$("loginEmail").value.trim(),
+    password:$("loginPassword").value
+  });
+  if(error) { say("Login error: " + error.message); return; }
+  await dashboard(data.user);
+});
+
+$("productForm").addEventListener("submit",async e => {
+  e.preventDefault();
+  say("Product submit ho raha hai...");
+  const {data:sd,error:se} = await db.auth.getSession();
+  if(se) { say(se.message); return; }
+  const user = sd.session && sd.session.user;
+  if(!user) { say("Pehle login karein."); return; }
+
+  let p;
+  try { p = await profileFor(user.id); }
+  catch(err) { say(err.message); return; }
+  if(!p || p.status !== "approved") {
+    say("Admin approval ke baad product add kar sakte hain.");
+    return;
+  }
+
+  const name = $("productName").value.trim();
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"") + "-" + Date.now();
+  const record = {
+    name,
+    slug,
+    description:$("description").value.trim(),
+    category_id:Number($("category").value),
+    price:Number($("price").value),
+    stock:Number($("stock").value),
+    image_url:$("imageUrl").value.trim() || null,
+    seller_id:user.id,
+    is_active:false,
+    is_featured:false
+  };
+  const {error} = await db.from("products").insert(record);
+  if(error) { say("Product upload error: " + error.message); return; }
+  $("productForm").reset();
+  say("Product submit ho gaya. Admin approval ke baad website par dikhega.");
+  await loadMyProducts(user.id);
+});
+
+$("logout").addEventListener("click",async () => {
+  const {error} = await db.auth.signOut();
+  if(error) { say(error.message); return; }
+  $("dashboard").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  say("Logout successful.");
+});
+
+(async () => {
+  const {data,error} = await db.auth.getSession();
+  if(error) { say(error.message); return; }
+  if(data.session) await dashboard(data.session.user);
+})();
+</script>
+</body>
+</html>
