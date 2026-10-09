@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +24,7 @@ button{cursor:pointer;border:0}
 .field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;outline:none}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:#ec4899}
 .login-btn{width:100%;padding:14px;border-radius:12px;background:linear-gradient(90deg,#2563eb,#ec4899);color:#fff;font-weight:bold;font-size:16px}
+.login-btn:disabled{opacity:.65;cursor:wait}
 .error{color:#dc2626;margin-top:12px;text-align:center;font-size:14px}
 .app{display:none;min-height:100vh}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#111827;color:white;padding:22px 15px;z-index:1000}
@@ -101,11 +103,11 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
     </div>
     <form id="loginForm">
       <div class="field">
-        <label>Email</label>
+        <label for="loginEmail">Email</label>
         <input type="email" id="loginEmail" required placeholder="Admin email" autocomplete="username">
       </div>
       <div class="field">
-        <label>Password</label>
+        <label for="loginPassword">Password</label>
         <input type="password" id="loginPassword" required placeholder="Password" autocomplete="current-password">
       </div>
       <button class="login-btn" id="loginButton" type="submit">Login</button>
@@ -120,24 +122,26 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
       <div class="brand-icon">P</div>
       <strong>Printzy</strong>
     </div>
+
     <div class="menu">
-      <button class="active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
-      <button onclick="showPage('products',this)">📦 Products</button>
-      <button onclick="showPage('categories',this)">🏷️ Categories</button>
-      <button onclick="showPage('orders',this)">🛒 Orders</button>
-      <button onclick="showPage('customers',this)">👥 Customers</button>
+      <button type="button" class="active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
+      <button type="button" onclick="showPage('products',this)">📦 Products</button>
+      <button type="button" onclick="showPage('categories',this)">🏷️ Categories</button>
+      <button type="button" onclick="showPage('orders',this)">🛒 Orders</button>
+      <button type="button" onclick="showPage('customers',this)">👥 Customers</button>
     </div>
-    <button class="logout" onclick="logout()">🚪 Logout</button>
+
+    <button type="button" class="logout" onclick="logout()">🚪 Logout</button>
   </aside>
 
   <main class="main">
     <div class="topbar">
       <div style="display:flex;align-items:center;gap:12px">
-        <button class="icon-btn mobile-menu" onclick="toggleSidebar()">☰</button>
+        <button type="button" class="icon-btn mobile-menu" onclick="toggleSidebar()">☰</button>
         <h2 id="pageTitle">Dashboard</h2>
       </div>
       <div class="top-actions">
-        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+        <button type="button" class="icon-btn" onclick="toggleTheme()">🌙</button>
       </div>
     </div>
 
@@ -148,10 +152,11 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
         <div class="stat"><div class="stat-title">Customers</div><div class="stat-value" id="totalCustomers">0</div></div>
         <div class="stat"><div class="stat-title">Sales</div><div class="stat-value" id="totalSales">₹0</div></div>
       </div>
+
       <div class="card">
         <div class="card-head">
           <h3>Recent Orders</h3>
-          <button class="secondary" onclick="showPageByName('orders')">View All</button>
+          <button type="button" class="secondary" onclick="showPageByName('orders')">View All</button>
         </div>
         <div class="table-box" style="margin-top:0">
           <table>
@@ -164,7 +169,10 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
 
     <section class="page" id="products">
       <div class="card">
-        <div class="card-head"><h3>Products</h3><button class="primary" onclick="openProductModal()">+ Add Product</button></div>
+        <div class="card-head">
+          <h3>Products</h3>
+          <button type="button" class="primary" onclick="openProductModal()">+ Add Product</button>
+        </div>
       </div>
       <div class="table-box">
         <table>
@@ -176,7 +184,10 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
 
     <section class="page" id="categories">
       <div class="card">
-        <div class="card-head"><h3>Categories</h3><button class="primary" onclick="openCategoryModal()">+ Add Category</button></div>
+        <div class="card-head">
+          <h3>Categories</h3>
+          <button type="button" class="primary" onclick="openCategoryModal()">+ Add Category</button>
+        </div>
       </div>
       <div class="table-box">
         <table>
@@ -208,19 +219,22 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
 
 <div class="modal" id="productModal">
   <div class="modal-box">
-    <div class="modal-head"><h3 id="productModalTitle">Add Product</h3><button class="close" onclick="closeProductModal()">×</button></div>
+    <div class="modal-head">
+      <h3 id="productModalTitle">Add Product</h3>
+      <button type="button" class="close" onclick="closeProductModal()">×</button>
+    </div>
     <form id="productForm">
       <input type="hidden" id="productId">
       <div class="form-grid">
-        <div class="field"><label>Product Name</label><input id="productName" required></div>
-        <div class="field"><label>Slug</label><input id="productSlug" required></div>
-        <div class="field full"><label>Description</label><textarea id="productDescription" rows="3"></textarea></div>
-        <div class="field"><label>Category</label><select id="productCategory"><option value="">Select Category</option></select></div>
-        <div class="field"><label>Image URL</label><input id="productImage" placeholder="https://..."></div>
-        <div class="field"><label>Price</label><input type="number" id="productPrice" min="0" step="0.01" required></div>
-        <div class="field"><label>Sale Price</label><input type="number" id="productSalePrice" min="0" step="0.01"></div>
-        <div class="field"><label>Stock</label><input type="number" id="productStock" min="0" value="0"></div>
-        <div class="field"><label>Status</label><select id="productActive"><option value="true">Active</option><option value="false">Inactive</option></select></div>
+        <div class="field"><label for="productName">Product Name</label><input id="productName" required></div>
+        <div class="field"><label for="productSlug">Slug</label><input id="productSlug" required></div>
+        <div class="field full"><label for="productDescription">Description</label><textarea id="productDescription" rows="3"></textarea></div>
+        <div class="field"><label for="productCategory">Category</label><select id="productCategory"><option value="">Select Category</option></select></div>
+        <div class="field"><label for="productImage">Image URL</label><input id="productImage" placeholder="https://..."></div>
+        <div class="field"><label for="productPrice">Price</label><input type="number" id="productPrice" min="0" step="0.01" required></div>
+        <div class="field"><label for="productSalePrice">Sale Price</label><input type="number" id="productSalePrice" min="0" step="0.01"></div>
+        <div class="field"><label for="productStock">Stock</label><input type="number" id="productStock" min="0" value="0"></div>
+        <div class="field"><label for="productActive">Status</label><select id="productActive"><option value="true">Active</option><option value="false">Inactive</option></select></div>
         <div class="field full"><label><input type="checkbox" id="productFeatured"> Featured Product</label></div>
       </div>
       <button class="primary" type="submit">Save Product</button>
@@ -230,28 +244,28 @@ th,td{padding:14px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
 
 <div class="modal" id="categoryModal">
   <div class="modal-box">
-    <div class="modal-head"><h3>Add Category</h3><button class="close" onclick="closeCategoryModal()">×</button></div>
+    <div class="modal-head">
+      <h3>Add Category</h3>
+      <button type="button" class="close" onclick="closeCategoryModal()">×</button>
+    </div>
     <form id="categoryForm">
-      <div class="field"><label>Category Name</label><input id="categoryName" required></div>
-      <div class="field"><label>Slug</label><input id="categorySlug" required></div>
-      <div class="field"><label>Image URL</label><input id="categoryImage"></div>
+      <div class="field"><label for="categoryName">Category Name</label><input id="categoryName" required></div>
+      <div class="field"><label for="categorySlug">Slug</label><input id="categorySlug" required></div>
+      <div class="field"><label for="categoryImage">Image URL</label><input id="categoryImage"></div>
       <button class="primary" type="submit">Save Category</button>
     </form>
   </div>
 </div>
 
 <script>
+"use strict";
+
 /* SUPABASE CONNECTION */
 const SUPABASE_URL = "https://yxssyblhziyfbqxzjgxr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_RhoD2kI568-a7ddA8iGhdA_dwJo_m_p";
-const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ADMIN AUTHENTICATION
-   User must have a valid session AND be registered as an admin.
-*/
-let authCheckInProgress = false;
-
+/* LOGIN AND ADMIN VERIFICATION */
 function showLogin(message = "") {
   document.getElementById("loginScreen").style.display = "flex";
   document.getElementById("adminApp").style.display = "none";
@@ -259,18 +273,19 @@ function showLogin(message = "") {
 }
 
 async function verifyAdmin() {
-  const { data: sessionData, error: sessionError } = await db.auth.getSession();
+  const { data: sessionData, error: sessionError } =
+    await db.auth.getSession();
 
   if (sessionError || !sessionData?.session) {
     showLogin();
     return false;
   }
 
-  const { data: isAdmin, error: adminError } = await db.rpc("is_admin");
+  const { data: isAdmin, error: adminError } =
+    await db.rpc("is_admin");
 
   if (adminError) {
-    console.error("Admin verification failed:", adminError.message);
-    await db.auth.signOut();
+    console.error("Admin verification failed:", adminError);
     showLogin("Admin verification failed. Please try again.");
     return false;
   }
@@ -284,42 +299,35 @@ async function verifyAdmin() {
   return true;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const allowed = await verifyAdmin();
-  if (allowed) {
-    await showAdmin();
-  }
-});
-
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
-  const error = document.getElementById("loginError");
+  const errorBox = document.getElementById("loginError");
   const button = document.getElementById("loginButton");
 
-  error.textContent = "Verifying login...";
   button.disabled = true;
   button.textContent = "Please wait...";
+  errorBox.textContent = "Verifying login...";
 
   try {
-    const { error: loginError } = await db.auth.signInWithPassword({ email, password });
+    const { error } = await db.auth.signInWithPassword({ email, password });
 
-    if (loginError) {
-      error.textContent = loginError.message;
+    if (error) {
+      errorBox.textContent = error.message;
       return;
     }
 
     const allowed = await verifyAdmin();
 
     if (allowed) {
-      error.textContent = "";
+      errorBox.textContent = "";
       await showAdmin();
     }
-  } catch (err) {
-    console.error("Login error:", err);
-    error.textContent = "Something went wrong. Please try again.";
+  } catch (error) {
+    console.error("Login error:", error);
+    errorBox.textContent = "Something went wrong. Please try again.";
   } finally {
     button.disabled = false;
     button.textContent = "Login";
@@ -342,12 +350,35 @@ async function logout() {
   showLogin();
 }
 
-/* NAVIGATION */
-function showPage(page, button) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById(page).classList.add("active");
+/* NAVIGATION FIX */
+window.showPage = async function(page, button) {
+  const allowedPages = [
+    "dashboard", "products", "categories", "orders", "customers"
+  ];
 
-  document.querySelectorAll(".menu button").forEach(b => b.classList.remove("active"));
+  if (!allowedPages.includes(page)) {
+    console.error("Invalid page:", page);
+    return;
+  }
+
+  const target = document.getElementById(page);
+
+  if (!target) {
+    console.error("Page section not found:", page);
+    alert("Page section nahi mila: " + page);
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(function(section) {
+    section.classList.remove("active");
+  });
+
+  target.classList.add("active");
+
+  document.querySelectorAll(".menu button").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
   if (button) button.classList.add("active");
 
   const titles = {
@@ -358,24 +389,40 @@ function showPage(page, button) {
     customers: "Customers"
   };
 
-  document.getElementById("pageTitle").textContent = titles[page] || "Printzy Admin";
+  document.getElementById("pageTitle").textContent = titles[page];
   document.getElementById("sidebar").classList.remove("open");
-}
 
-function showPageByName(page) {
-  document.querySelectorAll(".menu button").forEach(b => {
-    if (b.textContent.toLowerCase().includes(page)) showPage(page, b);
-  });
-}
+  try {
+    if (page === "products") await loadProducts();
+    if (page === "categories") await loadCategories();
+    if (page === "orders") await loadOrders();
+    if (page === "customers") await loadCustomers();
+    if (page === "dashboard") await loadDashboard();
+  } catch (error) {
+    console.error("Page loading failed:", error);
+  }
+};
 
-function toggleSidebar() {
+window.showPageByName = function(page) {
+  const button = Array.from(document.querySelectorAll(".menu button"))
+    .find(function(btn) {
+      return btn.getAttribute("onclick")?.includes("'" + page + "'");
+    });
+
+  window.showPage(page, button);
+};
+
+window.toggleSidebar = function() {
   document.getElementById("sidebar").classList.toggle("open");
-}
+};
 
 /* THEME */
 function toggleTheme() {
   document.body.classList.toggle("dark");
-  localStorage.setItem("printzy_theme", document.body.classList.contains("dark") ? "dark" : "light");
+  localStorage.setItem(
+    "printzy_theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
 }
 
 if (localStorage.getItem("printzy_theme") === "dark") {
@@ -388,30 +435,42 @@ async function loadDashboard() {
   const orders = await db.from("orders").select("id,total_amount,payment_status");
   const customers = await db.from("customers").select("id");
 
-  document.getElementById("totalProducts").textContent = products.data?.length || 0;
-  document.getElementById("totalOrders").textContent = orders.data?.length || 0;
-  document.getElementById("totalCustomers").textContent = customers.data?.length || 0;
+  document.getElementById("totalProducts").textContent =
+    products.data?.length ?? "—";
+  document.getElementById("totalOrders").textContent =
+    orders.data?.length ?? "—";
+  document.getElementById("totalCustomers").textContent =
+    customers.data?.length ?? "—";
 
   let sales = 0;
-  (orders.data || []).forEach(order => {
-    if (order.payment_status === "paid") sales += Number(order.total_amount || 0);
+  (orders.data || []).forEach(function(order) {
+    if (order.payment_status === "paid") {
+      sales += Number(order.total_amount || 0);
+    }
   });
 
-  document.getElementById("totalSales").textContent = "₹" + sales.toLocaleString("en-IN");
+  document.getElementById("totalSales").textContent =
+    "₹" + sales.toLocaleString("en-IN");
+
   await loadRecentOrders();
 }
 
 async function loadRecentOrders() {
-  const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false }).limit(5);
+  const { data, error } = await db.from("orders")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(5);
+
   const tbody = document.getElementById("recentOrders");
   tbody.innerHTML = "";
 
   if (error || !data?.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty">No orders found</td></tr>`;
+    tbody.innerHTML =
+      '<tr><td colspan="5" class="empty">No orders found</td></tr>';
     return;
   }
 
-  data.forEach(order => {
+  data.forEach(function(order) {
     tbody.innerHTML += `<tr>
       <td>${escapeHtml(order.order_number || "-")}</td>
       <td>${escapeHtml(order.customer_name || "-")}</td>
@@ -424,35 +483,48 @@ async function loadRecentOrders() {
 
 /* PRODUCTS */
 async function loadProducts() {
+  const tbody = document.getElementById("productsTable");
+  tbody.innerHTML =
+    '<tr><td colspan="7" class="empty">Loading products...</td></tr>';
+
   const { data, error } = await db.from("products")
     .select("*, categories(name)")
     .order("created_at", { ascending: false });
 
-  const tbody = document.getElementById("productsTable");
   tbody.innerHTML = "";
 
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">${escapeHtml(error.message)}</td></tr>`;
+    console.error("Products loading error:", error);
+    tbody.innerHTML =
+      `<tr><td colspan="7" class="empty">${escapeHtml(error.message)}</td></tr>`;
     return;
   }
 
   if (!data?.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No products yet. Click + Add Product.</td></tr>`;
+    tbody.innerHTML =
+      '<tr><td colspan="7" class="empty">No products yet. Click + Add Product.</td></tr>';
     return;
   }
 
-  data.forEach(product => {
+  data.forEach(function(product) {
     const safeProduct = JSON.stringify(product).replace(/</g, "\\u003c");
+
     tbody.innerHTML += `<tr>
-      <td><img class="product-img" src="${escapeAttr(product.image_url || "https://via.placeholder.com/80")}" onerror="this.src='https://via.placeholder.com/80'"></td>
+      <td><img class="product-img"
+        src="${escapeAttr(product.image_url || "https://via.placeholder.com/80")}"
+        onerror="this.onerror=null;this.src='https://via.placeholder.com/80'"
+        alt="Product"></td>
       <td><strong>${escapeHtml(product.name)}</strong></td>
       <td>${escapeHtml(product.categories?.name || "-")}</td>
       <td>₹${Number(product.sale_price || product.price || 0).toLocaleString("en-IN")}</td>
-      <td>${product.stock ?? 0}</td>
+      <td>${Number(product.stock || 0)}</td>
       <td><span class="badge">${product.is_active ? "Active" : "Inactive"}</span></td>
       <td><div class="actions">
-        <button class="edit" data-product="${escapeAttr(safeProduct)}" onclick="editProductFromButton(this)">Edit</button>
-        <button class="danger" onclick="deleteProduct(${Number(product.id)})">Delete</button>
+        <button type="button" class="edit"
+          data-product="${escapeAttr(safeProduct)}"
+          onclick="editProductFromButton(this)">Edit</button>
+        <button type="button" class="danger"
+          onclick="deleteProduct(${Number(product.id)})">Delete</button>
       </div></td>
     </tr>`;
   });
@@ -461,7 +533,8 @@ async function loadProducts() {
 function editProductFromButton(button) {
   try {
     openProductModal(JSON.parse(button.dataset.product));
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     alert("Unable to open this product. Please refresh and try again.");
   }
 }
@@ -493,14 +566,11 @@ function closeProductModal() {
   document.getElementById("productModal").classList.remove("show");
 }
 
-function editProduct(product) {
-  openProductModal(product);
-}
-
 document.getElementById("productForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const id = document.getElementById("productId").value;
+
   const product = {
     name: document.getElementById("productName").value.trim(),
     slug: document.getElementById("productSlug").value.trim(),
@@ -508,7 +578,8 @@ document.getElementById("productForm").addEventListener("submit", async function
     category_id: document.getElementById("productCategory").value || null,
     image_url: document.getElementById("productImage").value.trim() || null,
     price: Number(document.getElementById("productPrice").value || 0),
-    sale_price: document.getElementById("productSalePrice").value ? Number(document.getElementById("productSalePrice").value) : null,
+    sale_price: document.getElementById("productSalePrice").value
+      ? Number(document.getElementById("productSalePrice").value) : null,
     stock: Number(document.getElementById("productStock").value || 0),
     is_active: document.getElementById("productActive").value === "true",
     is_featured: document.getElementById("productFeatured").checked,
@@ -520,7 +591,7 @@ document.getElementById("productForm").addEventListener("submit", async function
     : await db.from("products").insert(product);
 
   if (result.error) {
-    alert(result.error.message);
+    alert("Product save failed: " + result.error.message);
     return;
   }
 
@@ -534,8 +605,9 @@ async function deleteProduct(id) {
   if (!confirm("Delete this product?")) return;
 
   const { error } = await db.from("products").delete().eq("id", id);
+
   if (error) {
-    alert(error.message);
+    alert("Delete failed: " + error.message);
     return;
   }
 
@@ -546,26 +618,34 @@ async function deleteProduct(id) {
 
 /* CATEGORIES */
 async function loadCategories() {
-  const { data, error } = await db.from("categories").select("*").order("created_at", { ascending: false });
+  const { data, error } = await db.from("categories")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   const tbody = document.getElementById("categoriesTable");
   const select = document.getElementById("productCategory");
 
   tbody.innerHTML = "";
-  select.innerHTML = `<option value="">Select Category</option>`;
+  select.innerHTML = '<option value="">Select Category</option>';
+
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty">${escapeHtml(error.message)}</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="4" class="empty">${escapeHtml(error.message)}</td></tr>`;
+    console.error("Categories loading error:", error);
     return;
   }
 
-  (data || []).forEach(category => {
+  (data || []).forEach(function(category) {
     tbody.innerHTML += `<tr>
       <td><strong>${escapeHtml(category.name)}</strong></td>
       <td>${escapeHtml(category.slug)}</td>
       <td><span class="badge">${category.is_active ? "Active" : "Inactive"}</span></td>
-      <td><button class="danger" onclick="deleteCategory(${Number(category.id)})">Delete</button></td>
+      <td><button type="button" class="danger"
+        onclick="deleteCategory(${Number(category.id)})">Delete</button></td>
     </tr>`;
 
-    select.innerHTML += `<option value="${Number(category.id)}">${escapeHtml(category.name)}</option>`;
+    select.innerHTML +=
+      `<option value="${Number(category.id)}">${escapeHtml(category.name)}</option>`;
   });
 }
 
@@ -588,8 +668,9 @@ document.getElementById("categoryForm").addEventListener("submit", async functio
   };
 
   const { error } = await db.from("categories").insert(category);
+
   if (error) {
-    alert(error.message);
+    alert("Category save failed: " + error.message);
     return;
   }
 
@@ -602,8 +683,9 @@ async function deleteCategory(id) {
   if (!confirm("Delete this category?")) return;
 
   const { error } = await db.from("categories").delete().eq("id", id);
+
   if (error) {
-    alert(error.message);
+    alert("Category delete failed: " + error.message);
     return;
   }
 
@@ -613,36 +695,48 @@ async function deleteCategory(id) {
 
 /* ORDERS */
 async function loadOrders() {
-  const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
   const tbody = document.getElementById("ordersTable");
+  tbody.innerHTML =
+    '<tr><td colspan="7" class="empty">Loading orders...</td></tr>';
+
+  const { data, error } = await db.from("orders")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   tbody.innerHTML = "";
 
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">${escapeHtml(error.message)}</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="7" class="empty">${escapeHtml(error.message)}</td></tr>`;
     return;
   }
 
   if (!data?.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No orders found</td></tr>`;
+    tbody.innerHTML =
+      '<tr><td colspan="7" class="empty">No orders found</td></tr>';
     return;
   }
 
-  data.forEach(order => {
+  data.forEach(function(order) {
     tbody.innerHTML += `<tr>
       <td><strong>${escapeHtml(order.order_number || "-")}</strong></td>
       <td>${escapeHtml(order.customer_name || "-")}</td>
       <td>${escapeHtml(order.customer_phone || "-")}</td>
       <td>₹${Number(order.total_amount || 0).toLocaleString("en-IN")}</td>
       <td><span class="badge">${escapeHtml(order.payment_status || "pending")}</span></td>
-      <td><select onchange="changeOrderStatus(${Number(order.id)},this.value)">${orderStatusOptions(order.order_status)}</select></td>
+      <td><select onchange="changeOrderStatus(${Number(order.id)},this.value)">
+        ${orderStatusOptions(order.order_status)}
+      </select></td>
       <td>${formatDate(order.created_at)}</td>
     </tr>`;
   });
 }
 
 function orderStatusOptions(current) {
-  const statuses = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"];
-  return statuses.map(status => `<option value="${status}" ${current === status ? "selected" : ""}>${status}</option>`).join("");
+  const statuses = ["pending","confirmed","processing","shipped","delivered","cancelled"];
+  return statuses.map(function(status) {
+    return `<option value="${status}" ${current === status ? "selected" : ""}>${status}</option>`;
+  }).join("");
 }
 
 async function changeOrderStatus(id, status) {
@@ -652,7 +746,7 @@ async function changeOrderStatus(id, status) {
   }).eq("id", id);
 
   if (error) {
-    alert(error.message);
+    alert("Order update failed: " + error.message);
     await loadOrders();
     return;
   }
@@ -663,21 +757,29 @@ async function changeOrderStatus(id, status) {
 
 /* CUSTOMERS */
 async function loadCustomers() {
-  const { data, error } = await db.from("customers").select("*").order("created_at", { ascending: false });
   const tbody = document.getElementById("customersTable");
+  tbody.innerHTML =
+    '<tr><td colspan="6" class="empty">Loading customers...</td></tr>';
+
+  const { data, error } = await db.from("customers")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   tbody.innerHTML = "";
 
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty">${escapeHtml(error.message)}</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="6" class="empty">${escapeHtml(error.message)}</td></tr>`;
     return;
   }
 
   if (!data?.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty">No customers found</td></tr>`;
+    tbody.innerHTML =
+      '<tr><td colspan="6" class="empty">No customers found</td></tr>';
     return;
   }
 
-  data.forEach(customer => {
+  data.forEach(function(customer) {
     tbody.innerHTML += `<tr>
       <td><strong>${escapeHtml(customer.name || "-")}</strong></td>
       <td>${escapeHtml(customer.phone || "-")}</td>
@@ -694,7 +796,12 @@ function formatDate(date) {
   if (!date) return "-";
   const parsed = new Date(date);
   if (Number.isNaN(parsed.getTime())) return "-";
-  return parsed.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+
+  return parsed.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
 }
 
 function escapeHtml(value) {
@@ -710,10 +817,21 @@ function escapeAttr(value) {
   return escapeHtml(value);
 }
 
-/* KEEP LOGIN UI CLOSED AFTER SIGN-OUT */
-db.auth.onAuthStateChange((event) => {
+/* AUTH STATE */
+db.auth.onAuthStateChange(function(event) {
   if (event === "SIGNED_OUT") {
     showLogin();
+  }
+});
+
+/* INITIAL STARTUP */
+document.addEventListener("DOMContentLoaded", async function() {
+  try {
+    const allowed = await verifyAdmin();
+    if (allowed) await showAdmin();
+  } catch (error) {
+    console.error("Admin startup error:", error);
+    showLogin("Admin panel load nahi hua. Page refresh karke try karo.");
   }
 });
 </script>
